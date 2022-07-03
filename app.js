@@ -17,3 +17,5 @@ function getFullName(firstName, surName) {
 //     return firstName + surName;
 // };
 console.log(getFullName('Маша', 'Петрова'));
+// -------------------------------------------------------------------------------
+// типизация обьектов
