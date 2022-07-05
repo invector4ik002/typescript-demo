@@ -11,27 +11,56 @@
 // использование типов в функциях
 // /**
 //  * протипизированна string
-//  * @param firstName string
-//  * @param surName string
+//  * @param firstname string
+//  * @param surname string
 //  * @returns string
 //  */
-// function getFullName(firstName: string, surName: string): string {
-//     return `${firstName} + ${surName}`
+// function getFullName(firstname: string, surname: string): string {
+//     return `${firstname} + ${surname}`
 // }
-function getFullName(firstName, surName) {
-    if (firstName !== 'string') {
-        throw new Error('!!!!!!!');
-    }
-    return `${firstName} + ${surName}`;
-}
-console.log('getFullName :>> ', getFullName(true, false));
 // /**
 //  * пример стрелочной фуеции
 //  * протипизированна string
-//  * @param firstName 
-//  * @param surName 
+//  * @param firstname 
+//  * @param surname 
 //  * @returns 
 //  */
-// const getFullNameArrow = (firstName: string, surName: string): string => {
-//     return `${firstName} + ${surName}`
+// const getFullNameArrow = (firstname: string, surname: string): string => {
+//     return `${firstname} + ${surname}`
 // }
+// /**
+//  * пример без явной/строгой типизации
+//  * @param firstname any/любой тип
+//  * @param surname any/любой тип
+//  * @returns any/любой тип
+//  */
+// function getFullName(firstname: any, surname: any):any {
+//     if(firstname !== 'string') {
+//         throw new Error('!!!!')
+//     }
+//     return `${firstname} + ${surname}`
+// }
+// console.log('getFullName :>> ', getFullName(true, false));
+// /**
+//  * пример с явной/строгой типизацией
+//  * @param firstname string
+//  * @param surname string
+//  * @returns string
+//  * Вывод как минимум сокращает код :)
+//  */
+// function getFullName(firstname: string, surname: string):string {
+//     return `${firstname} ${surname}`
+// }
+// console.log('getFullName :>> ', getFullName('Devichensky', 'Michail'));
+// =============================================================================
+// Типизация обьектов
+const user = {
+    firstname: 'Devichensky',
+    surname: 'Michail',
+    city: 'Novosibirsk',
+    age: 41,
+};
+function getFullName(userEntity) {
+    return `${userEntity.firstname} ${userEntity.surname}`;
+}
+console.log('getFullName :>> ', getFullName(user));

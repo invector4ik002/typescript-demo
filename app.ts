@@ -70,10 +70,40 @@ const user = {
     surname: 'Michail',
     city: 'Novosibirsk',
     age: 41,
+    skills: {
+        dev: true,
+        devops: true,
+    }
 };
 
-function getFullName(userEntity):string {
+function getFullName(userEntity: { firstname: string, surname: string }): string {
     return `${userEntity.firstname} ${userEntity.surname}`
 }
+
 console.log('getFullName :>> ', getFullName(user));
 
+// ===============================================================================
+// упражнение типизируем обьект
+let office = {
+    "officeId": 45,
+    "isOpened": false,
+    "contacts": {
+        "phone": "+79100000000",
+        "email": "my@email.ru",
+        "address": {
+            "city": "Москва"
+        }
+    }
+}
+
+let officeType: {
+    officeId: number;
+    isOpened: boolean;
+    contacts: {
+        phone: string;
+        email: string;
+        address: {
+            city: string;
+        };
+    };
+}
