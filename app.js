@@ -209,37 +209,40 @@
 // action(1);
 // action('p'); ошибочное обращение к enum 
 // action(StatusCode.IN_PROCESS); так как ГидроГенный enum все таки является числовым обращение нужно делать как указано в примере
+
 // ======================== Продвинутые типы =============================================
+
 // Union/союз
 // Дает возможность сказать что в той или иной переменной могут хрониться данные разного типа
 /**
  * Пример использования Union и зжатие его до простых типов
  * @param id Union
  */
-function LogId(id) {
-    if (typeof id === 'string') {
-        console.log('id :>> ', id);
-    }
-    else if (typeof id === 'number') {
-        console.log('id :>> ', id);
-    }
-    else {
-        console.log('id :>> ', id);
-    }
-}
-;
-LogId(1);
-LogId('>id<');
-LogId(true);
+// function LogId(id) {
+//     if (typeof id === 'string') {
+//         console.log('id :>> ', id);
+//     }
+//     else if (typeof id === 'number') {
+//         console.log('id :>> ', id);
+//     }
+//     else {
+//         console.log('id :>> ', id);
+//     }
+// };
+
+// LogId(1);
+// LogId('>id<');
+// LogId(true);
+
 /**
  * В union могут быть как простые типы так и сложные например массивы и так же сжимаем
  * @param err
  */
-function LogError(err) {
-    if (Array.isArray(err)) {
-        console.log('arr :>> ', err);
-    }
-    else {
-        console.log('err :>> ', err);
-    }
-}
+// function LogError(err) {
+//     if (Array.isArray(err)) {
+//         console.log('arr :>> ', err);
+//     }
+//     else {
+//         console.log('err :>> ', err);
+//     }
+// }

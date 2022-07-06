@@ -254,54 +254,83 @@
  * Пример использования Union и зжатие его до простых типов 
  * @param id Union
  */
-function LogId(id: string | number | boolean) {
-    if (typeof id === 'string') {
-        console.log('id :>> ', id);
-    } else if (typeof id === 'number') {
-        console.log('id :>> ', id);
-    } else {
-        console.log('id :>> ', id);
-    }
-};
+// function LogId(id: string | number | boolean) {
+//     if (typeof id === 'string') {
+//         console.log('id :>> ', id);
+//     } else if (typeof id === 'number') {
+//         console.log('id :>> ', id);
+//     } else {
+//         console.log('id :>> ', id);
+//     }
+// };
 
-LogId(1);
-LogId('>id<');
-LogId(true);
+// LogId(1);
+// LogId('>id<');
+// LogId(true);
 
 /**
  * В union могут быть как простые типы так и сложные например массивы и так же сжимаем 
  * @param err 
  */
-function LogError(err: string | string[]) {
-    if (Array.isArray(err)) {
-        console.log('arr :>> ', err)
-    } else {
-        console.log('err :>> ', err);
-    }
-}
+// function LogError(err: string | string[]) {
+//     if (Array.isArray(err)) {
+//         console.log('arr :>> ', err)
+//     } else {
+//         console.log('err :>> ', err);
+//     }
+// }
 
 /**
  * В union могут быть как простые типы так и сложные например массивы и обьекты, так же сжимаем 
  * @param obj
  */
-function LoпObject(obj: { a: number } | { b: number }) {
-    if ('a' in obj) {
-        console.log('obj.a :>> ', obj.a);
-    } else {
-        console.log('obj.b :>> ', obj.b);
-    }
-}
+// function LoпObject(obj: { a: number } | { b: number }) {
+//     if ('a' in obj) {
+//         console.log('obj.a :>> ', obj.a);
+//     } else {
+//         console.log('obj.b :>> ', obj.b);
+//     }
+// }
 
 /**
  * Пример сжатия Union по средству "==="
  * @param a union
  * @param b union
  */
-function logMultipleIds(a: string | number, b: string | boolean) {
-    if (a === b) {
-        console.log('a :>> ', a);
-    } else {
-        console.log('b :>> ', b);
-    }
+// function logMultipleIds(a: string | number, b: string | boolean) {
+//     if (a === b) {
+//         console.log('a :>> ', a);
+//     } else {
+//         console.log('b :>> ', b);
+//     }
+// }
 
-}
+// =================================================================================================
+
+// Literal/буквальный
+
+/**
+ * 
+ * @param url string
+ * @param methot Literal буквальный или утвержденный что то типа константы перечисленные через или в аргументе
+ * (methot: 'post'|'get') аргументы при вызове функции должны строго соответствовать типу 'post'|'get'
+ * @returns number
+ */
+function fetchWithAuth(url: string, methot: 'post'|'get') : 1 | -1 {
+    return 1
+};
+
+fetchWithAuth('s', 'post');
+
+// let methot = 'post';
+
+/**
+ * строгое переназначение 
+ * получилось что то типа константы )
+ */
+let methot: 'post' = 'post';
+
+fetchWithAuth('s', methot);
+
+// =============================================================================================
+
