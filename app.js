@@ -181,30 +181,65 @@
 // 'f' - откланен
 /**
  * Можно присвоить любые значения enum
- * Рассмотрин Гидрогенный enum
+ * Рассмотрен Гидрогенный enum крайне редкое явление !!!
+ * Гидрогенный enum евляется числовым
  */
-var StatusCode;
-(function (StatusCode) {
-    StatusCode[StatusCode["SUCCSESS"] = 1] = "SUCCSESS";
-    StatusCode["IN_PROCESS"] = "p";
-    StatusCode["FAILED"] = "f";
-})(StatusCode || (StatusCode = {}));
-const res = {
-    message: 'Платеж успешен',
-    statusCode: StatusCode.SUCCSESS
-};
+// enum StatusCode {
+//     SUCCSESS = 1,
+//     IN_PROCESS = 'p',
+//     FAILED = 'f',
+// }
+// const res = {
+//     message: 'Платеж успешен',
+//     statusCode: StatusCode.SUCCSESS
+// }
 // if(res.statusCode === StatusCode.SUCCSESS) {
 //     console.log('res.statusCode :>> ', 'Платеж успешен');
 // } else {
 //     throw new Error('error');
 // }
-function action(status) {
-    if (res.statusCode === StatusCode.SUCCSESS) {
-        console.log('res.statusCode :>> ', 'Платеж успешен');
+// function action(status: StatusCode) {
+//     if (res.statusCode === StatusCode.SUCCSESS) {
+//         console.log('res.statusCode :>> ', 'Платеж успешен');
+//     } else {
+//         throw new Error('error');
+//     }
+// }
+// action(StatusCode.SUCCSESS);
+// action(1);
+// action('p'); ошибочное обращение к enum 
+// action(StatusCode.IN_PROCESS); так как ГидроГенный enum все таки является числовым обращение нужно делать как указано в примере
+// ======================== Продвинутые типы =============================================
+// Union/союз
+// Дает возможность сказать что в той или иной переменной могут хрониться данные разного типа
+/**
+ * Пример использования Union и зжатие его до простых типов
+ * @param id Union
+ */
+function LogId(id) {
+    if (typeof id === 'string') {
+        console.log('id :>> ', id);
+    }
+    else if (typeof id === 'number') {
+        console.log('id :>> ', id);
     }
     else {
-        throw new Error('error');
+        console.log('id :>> ', id);
     }
 }
-// action(StatusCode.SUCCSESS);
-action(1);
+;
+LogId(1);
+LogId('>id<');
+LogId(true);
+/**
+ * В union могут быть как простые типы так и сложные например массивы и так же сжимаем
+ * @param err
+ */
+function LogError(err) {
+    if (Array.isArray(err)) {
+        console.log('arr :>> ', err);
+    }
+    else {
+        console.log('err :>> ', err);
+    }
+}

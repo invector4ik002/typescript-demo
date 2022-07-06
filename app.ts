@@ -215,16 +215,16 @@
  * Рассмотрен Гидрогенный enum крайне редкое явление !!!
  * Гидрогенный enum евляется числовым 
  */
-enum StatusCode {
-    SUCCSESS = 1,
-    IN_PROCESS = 'p',
-    FAILED = 'f',
-}
+// enum StatusCode {
+//     SUCCSESS = 1,
+//     IN_PROCESS = 'p',
+//     FAILED = 'f',
+// }
 
-const res = {
-    message: 'Платеж успешен',
-    statusCode: StatusCode.SUCCSESS
-}
+// const res = {
+//     message: 'Платеж успешен',
+//     statusCode: StatusCode.SUCCSESS
+// }
 
 // if(res.statusCode === StatusCode.SUCCSESS) {
 //     console.log('res.statusCode :>> ', 'Платеж успешен');
@@ -232,15 +232,76 @@ const res = {
 //     throw new Error('error');
 // }
 
-function action(status: StatusCode) {
+// function action(status: StatusCode) {
 
-    if (res.statusCode === StatusCode.SUCCSESS) {
-        console.log('res.statusCode :>> ', 'Платеж успешен');
-    } else {
-        throw new Error('error');
-    }
-}
+//     if (res.statusCode === StatusCode.SUCCSESS) {
+//         console.log('res.statusCode :>> ', 'Платеж успешен');
+//     } else {
+//         throw new Error('error');
+//     }
+// }
 // action(StatusCode.SUCCSESS);
 // action(1);
 // action('p'); ошибочное обращение к enum 
 // action(StatusCode.IN_PROCESS); так как ГидроГенный enum все таки является числовым обращение нужно делать как указано в примере
+
+// ======================== Продвинутые типы =============================================
+
+// Union/союз
+// Дает возможность сказать что в той или иной переменной могут хрониться данные разного типа
+
+/**
+ * Пример использования Union и зжатие его до простых типов 
+ * @param id Union
+ */
+function LogId(id: string | number | boolean) {
+    if (typeof id === 'string') {
+        console.log('id :>> ', id);
+    } else if (typeof id === 'number') {
+        console.log('id :>> ', id);
+    } else {
+        console.log('id :>> ', id);
+    }
+};
+
+LogId(1);
+LogId('>id<');
+LogId(true);
+
+/**
+ * В union могут быть как простые типы так и сложные например массивы и так же сжимаем 
+ * @param err 
+ */
+function LogError(err: string | string[]) {
+    if (Array.isArray(err)) {
+        console.log('arr :>> ', err)
+    } else {
+        console.log('err :>> ', err);
+    }
+}
+
+/**
+ * В union могут быть как простые типы так и сложные например массивы и обьекты, так же сжимаем 
+ * @param obj
+ */
+function LoпObject(obj: { a: number } | { b: number }) {
+    if ('a' in obj) {
+        console.log('obj.a :>> ', obj.a);
+    } else {
+        console.log('obj.b :>> ', obj.b);
+    }
+}
+
+/**
+ * Пример сжатия Union по средству "==="
+ * @param a union
+ * @param b union
+ */
+function logMultipleIds(a: string | number, b: string | boolean) {
+    if (a === b) {
+        console.log('a :>> ', a);
+    } else {
+        console.log('b :>> ', b);
+    }
+
+}
