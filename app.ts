@@ -336,7 +336,7 @@
 // =============================================================================================
 
 // alias/псевдоним или простым языком type типы используются при частом переиспользовании
-// при типизации тех или иных данных . Пример 
+// при типизации тех или иных данных. Пример:
 
 /**
  * type httpMethod
@@ -363,7 +363,7 @@ type coolString = string;
 // }
 /**
  * Рассмотрение обьединения type-alias в так называемый intersection
- * type-alias имеющий одинаковое поле с type-alias User name
+ * type-alias Role имеющий новое поле id с type-alias User 
  */
 // type Role = {
 //     id: number,
@@ -371,7 +371,7 @@ type coolString = string;
 
 /**
  * Обьект протипизирован Type-alias User и type-alias Role c использованием &
- * Что позволило обьединить протипизированные поля в один обьект
+ * Что позволило обьединить типы и протипизировать один обьект, двумя type-alias
  */
 // let user: User & Role = {
 //     neme: 'Михаил',
@@ -382,36 +382,36 @@ type coolString = string;
 
 // -------------------- Пример 2 с применением intersection  ------------------------------------------------
 /**
- * type-alias типизация обьекта user так же можно переиспользовать для типизации 
+ * type-alias User типизируем обьекта user так же можно переиспользовать для типизации 
  * обьектов имеющие такие же поля.
  */
- type User = {
-    neme: string,
-    age: number,
-    skills:string[],
-}
+//  type User = {
+//     neme: string,
+//     age: number,
+//     skills:string[],
+// }
 /**
  * Рассмотрение обьединения type-alias в так называемый intersection
  * type-alias имеющий одинаковое КОНФЛИКТУЮЩИЕ поле name с type-alias User
  * Правильное использование это создание единого type-alias 
  */
-type Role = {
-    name: string,
-    id: number,
-}
+// type Role = {
+//     name: string,
+//     id: number,
+// }
 /**
  * Пример обьединения type-alias в один комбенированый type-alias UserWithRole
  * 
  */
-type UserWithRole = {
-    user: UserWithRole,
-    role: Role
-}
+// type UserWithRole = {
+//     user: UserWithRole,
+//     role: Role
+// }
 
 /**
  * Обьект протипизирован Type-alias User и type-alias Role c использованием &
  * Что позволило обьединить протипизированные поля в один обьект
- * Ошибка очевидна по пречине конфликта поля name что требует перестройки обьекта с 
+ * Ошибка очевидна по пречине конфликта полей name что требует перестройки обьекта с 
  * добавлением обьекта role. 
  */
 // let user: UserWithRole = {
@@ -427,12 +427,14 @@ type UserWithRole = {
  * @param methot httpMethod тип union
  * @returns number
  */
-function fetchWithAuth(url: coolString, methot: httpMethod) : 1 | -1 {
-    return 1
-};
+// function fetchWithAuth(url: coolString, methot: httpMethod) : 1 | -1 {
+//     return 1
+// };
 
-fetchWithAuth('s', 'post');
+// fetchWithAuth('s', 'post');
 
-let methot = 'post';
+// let methot = 'post';
  
-fetchWithAuth('s', methot as 'post');
+// fetchWithAuth('s', methot as 'post');
+
+// ===================================== Интерфейсы interface  ============================================
