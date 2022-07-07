@@ -316,11 +316,11 @@
  * (methot: 'post'|'get') аргументы при вызове функции должны строго соответствовать типу 'post'|'get'
  * @returns number
  */
-function fetchWithAuth(url: string, methot: 'post'|'get') : 1 | -1 {
-    return 1
-};
+// function fetchWithAuth(url: string, methot: 'post'|'get') : 1 | -1 {
+//     return 1
+// };
 
-fetchWithAuth('s', 'post');
+// fetchWithAuth('s', 'post');
 
 // let methot = 'post';
 
@@ -328,9 +328,111 @@ fetchWithAuth('s', 'post');
  * строгое переназначение 
  * получилось что то типа константы )
  */
-let methot: 'post' = 'post';
+// let methot: 'post' = 'post';
 
-fetchWithAuth('s', methot);
+// Еще один способ привязки типа methot as 'post'
+// fetchWithAuth('s', methot as 'post');
 
 // =============================================================================================
 
+// alias/псевдоним или простым языком type типы используются при частом переиспользовании
+// при типизации тех или иных данных . Пример 
+
+/**
+ * type httpMethod
+ * Тип который можно переиспользовать обьявляется ключивым словом type 
+ * который соодержит в себе union 
+ */
+type httpMethod = 'post' |'get';
+
+/**
+ * type coolString
+ * Этот тип содержит в себе типизирование string и способен к переиспользованию .
+ */
+type coolString = string;
+
+// -------------------- Пример 1 с применением intersection  ------------------------------------------------
+/**
+ * type-alias типизация обьекта user так же можно переиспользовать для типизации 
+ * обьектов имеющие такие же поля.
+ */
+// type User = {
+//     neme: string,
+//     age: number,
+//     skills:string[],
+// }
+/**
+ * Рассмотрение обьединения type-alias в так называемый intersection
+ * type-alias имеющий одинаковое поле с type-alias User name
+ */
+// type Role = {
+//     id: number,
+// }
+
+/**
+ * Обьект протипизирован Type-alias User и type-alias Role c использованием &
+ * Что позволило обьединить протипизированные поля в один обьект
+ */
+// let user: User & Role = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills:['dev','DevOps'],
+//     id:1
+// }
+
+// -------------------- Пример 2 с применением intersection  ------------------------------------------------
+/**
+ * type-alias типизация обьекта user так же можно переиспользовать для типизации 
+ * обьектов имеющие такие же поля.
+ */
+ type User = {
+    neme: string,
+    age: number,
+    skills:string[],
+}
+/**
+ * Рассмотрение обьединения type-alias в так называемый intersection
+ * type-alias имеющий одинаковое КОНФЛИКТУЮЩИЕ поле name с type-alias User
+ * Правильное использование это создание единого type-alias 
+ */
+type Role = {
+    name: string,
+    id: number,
+}
+/**
+ * Пример обьединения type-alias в один комбенированый type-alias UserWithRole
+ * 
+ */
+type UserWithRole = {
+    user: UserWithRole,
+    role: Role
+}
+
+/**
+ * Обьект протипизирован Type-alias User и type-alias Role c использованием &
+ * Что позволило обьединить протипизированные поля в один обьект
+ * Ошибка очевидна по пречине конфликта поля name что требует перестройки обьекта с 
+ * добавлением обьекта role. 
+ */
+// let user: UserWithRole = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills:['dev','DevOps'],
+//     id:1
+// }
+
+/**
+ * 
+ * @param url coolString тип string
+ * @param methot httpMethod тип union
+ * @returns number
+ */
+function fetchWithAuth(url: coolString, methot: httpMethod) : 1 | -1 {
+    return 1
+};
+
+fetchWithAuth('s', 'post');
+
+let methot = 'post';
+ 
+fetchWithAuth('s', methot as 'post');
