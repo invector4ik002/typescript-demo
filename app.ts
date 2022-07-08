@@ -343,7 +343,7 @@
  * Тип который можно переиспользовать обьявляется ключивым словом type 
  * который соодержит в себе union 
  */
-type httpMethod = 'post' |'get';
+type httpMethod = 'post' | 'get';
 
 /**
  * type coolString
@@ -434,7 +434,78 @@ type coolString = string;
 // fetchWithAuth('s', 'post');
 
 // let methot = 'post';
- 
+
 // fetchWithAuth('s', methot as 'post');
 
 // ===================================== Интерфейсы interface  ============================================
+
+/**
+ * ИНтерфейс обьявляется через ключивое слово interface без равенства перед фигурной скобкой
+ */
+// interface User {
+//     neme: string,
+//     age: number,
+//     skills: string[],
+// }
+
+// =============================== Пример 1 ==============================================================
+
+/**
+ * обьединение interface/интерфейсов происходит по средству ключевого слова extends/расширяет
+ */
+// interface UserWithRole extends User {
+//     roleId: number,
+// }
+
+// =============================== Пример 2 ==============================================================
+// Пример с обьединением трех интерфейсов
+/**
+ * 
+ */
+// interface Role {
+//     roleId: number,
+// }
+/**
+ * Способ обьединения через extends после перечисляем через запятую
+ * extends User, Role
+ */
+// interface UserWithRole extends User, Role {
+//     createdAt: Date,
+// }
+
+/**
+ * Типизация обьекта через обьединение interface User и UserWithRole
+ */
+// let user: UserWithRole = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills: ['dev', 'DevOps'],
+//     roleId: 1,
+//     createdAt: new Date,
+// }
+// =============================== Пример 3 ====================================================
+// типизация через интерфейс функции в обьекте 
+// также можно описывать функции и в type-alias
+/**
+ * функция log: (id:number) => string;
+ */
+interface User {
+    neme: string,
+    age: number,
+    skills: string[]
+
+    log: (id:number) => string;
+}
+/**
+ * описание фуекций в обьектах не самая лучшая практика. 
+ */
+let user: User = {
+    neme: 'Михаил',
+    age: 40,
+    skills: ['dev', 'DevOps'],
+
+    log(id) {
+        return ''
+    },
+
+}
