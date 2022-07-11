@@ -343,13 +343,13 @@
  * Тип который можно переиспользовать обьявляется ключивым словом type 
  * который соодержит в себе union 
  */
-type httpMethod = 'post' | 'get';
+// type httpMethod = 'post' | 'get';
 
 /**
  * type coolString
  * Этот тип содержит в себе типизирование string и способен к переиспользованию .
  */
-type coolString = string;
+// type coolString = string;
 
 // -------------------- Пример 1 с применением intersection  ------------------------------------------------
 /**
@@ -489,31 +489,60 @@ type coolString = string;
 /**
  * функция log: (id:number) => string;
  */
-interface User {
-    neme: string,
-    age: number,
-    skills: string[]
+// interface User {
+//     neme: string,
+//     age: number,
+//     skills: string[]
 
-    log: (id:number) => string;
-}
+//     log: (id:number) => string;
+// }
 /**
  * описание функций в обьектах не самая лучшая практика. 
  */
-let user: User = {
-    neme: 'Михаил',
-    age: 40,
-    skills: ['dev', 'DevOps'],
+// let user: User = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills: ['dev', 'DevOps'],
 
-    log(id) {
-        return ''
-    },
-}
+//     log(id) {
+//         return ''
+//     },
+// }
 
 // Типизация СЛОВАРЕЙ JS средством interface
 
 /**
  * 
  */
-interface UserDic {
-    [index: number | string]: User
-}
+// interface UserDic {
+//     [index: number | string]: User
+// }
+
+// ======================================= РАЗНИЦА TYPE-ALIAS И INTRFACE ==========================================
+/**
+ * В интерфейсфх нет конфликта имен если разные interface имеют одинаковые имена 
+ * происходит мерж между ними слияния и дополнение.
+ * В type-alias возникнет ошибка в совпадении имен. 
+ * Может быть не очень полезным и возникнуть путаница.
+ */
+// interface User {
+//     name: string;
+// }
+
+// interface User {
+//     age: number;
+// }
+
+// const User: User = {
+//     name: 'Michail',
+//     age: 40
+// }
+
+/**
+ * type-alias позволяет рпоще работать с приметивными данными заложены в продвинутые типы Union или intersection
+ */
+// type UserOnline = number | boolean;
+
+// type ID = number | string;
+
+// Вывод для типизации обьектов или классов используем interface для простых типов type-alias.
