@@ -592,6 +592,78 @@
  * @param user 
  */
 // function testPassword(user: User): void {
-    // const t = user.password ? user.password?.type : undefined;
-    // const t =  user.password!.type; знак "!" это сокращенная проверка на undefined, говорим что тут не будет undefined
+// const t = user.password ? user.password?.type : undefined;
+// const t =  user.password!.type; знак "!" это сокращенная проверка на undefined, говорим что тут не будет undefined
 // }
+/**
+ * Рассмотр синтаксиса "??"
+ * @param b
+ * Если const T = b ?? 'work'; перед ?? null или undefined то возвращает то что после "??" 
+ * Если значение есть то вернет то что проверялось то есть то что перед "??"
+ */
+// function test(b = 1): void {
+//     const T = b ?? 'work';
+//     console.log('T :>> ', T);
+// };
+
+// test();
+
+interface IPayment {
+    sum: number;
+    from: number;
+    to: number;
+}
+
+interface IPaymentRequest extends IPayment { }
+
+interface IDataSuccess {
+    databaseId: number;
+    sum: number;
+    from: number;
+    to: number;
+}
+
+enum PaymentStatus {
+    Success = 'success',
+    Failed = 'failed',
+}
+
+interface IDataFailed {
+    errorMessage: string;
+    errorCode: number;
+}
+
+interface IResponseSuccess {
+    status: PaymentStatus.Success;
+
+}
+
+interface IResponseFailed {
+    status: PaymentStatus.Failed;
+    data: IDataFailed;
+}
+
+const Payment = {
+    sum: 10000,
+    from: 2,
+    to: 4
+}
+
+const response = {
+    status: "success",
+    data: {
+        databaseId: 567,
+        sum: 10000,
+        from: 2,
+        to: 4
+    }
+}
+
+const failed: IResponseFailed = {
+    status: "failed",
+	data: {
+		errorMessage: "Недостаточно средств",
+		errorCode: 4
+	}
+}
+
