@@ -608,62 +608,89 @@
 
 // test();
 
-interface IPayment {
-    sum: number;
-    from: number;
-    to: number;
-}
+// interface IPayment {
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
 
-interface IPaymentRequest extends IPayment { }
+// interface IPaymentRequest extends IPayment { }
 
-interface IDataSuccess {
-    databaseId: number;
-    sum: number;
-    from: number;
-    to: number;
-}
+// interface IDataSuccess {
+//     databaseId: number;
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
 
-enum PaymentStatus {
-    Success = 'success',
-    Failed = 'failed',
-}
+// enum PaymentStatus {
+//     Success = 'success',
+//     Failed = 'failed',
+// }
 
-interface IDataFailed {
-    errorMessage: string;
-    errorCode: number;
-}
+// interface IDataFailed {
+//     errorMessage: string;
+//     errorCode: number;
+// }
 
-interface IResponseSuccess {
-    status: PaymentStatus.Success;
+// interface IResponseSuccess {
+//     status: PaymentStatus.Success;
 
-}
+// }
 
-interface IResponseFailed {
-    status: PaymentStatus.Failed;
-    data: IDataFailed;
-}
+// interface IResponseFailed {
+//     status: PaymentStatus.Failed;
+//     data: IDataFailed;
+// }
 
-const Payment = {
-    sum: 10000,
-    from: 2,
-    to: 4
-}
+// const Payment = {
+//     sum: 10000,
+//     from: 2,
+//     to: 4
+// }
 
-const response = {
-    status: "success",
-    data: {
-        databaseId: 567,
-        sum: 10000,
-        from: 2,
-        to: 4
+// const response = {
+//     status: "success",
+//     data: {
+//         databaseId: 567,
+//         sum: 10000,
+//         from: 2,
+//         to: 4
+//     }
+// }
+
+// const failed: IResponseFailed = {
+//     status: "failed",
+// 	data: {
+// 		errorMessage: "Недостаточно средств",
+// 		errorCode: 4
+// 	}
+// }
+
+// ====================================== Void ========================================
+
+/**
+ * Рассмотрим тип void. Типизация функции как void означает то что функции ничего не возвращает.
+ * не нужно путать void и undefined 
+ * @param id union
+ */
+function logId(id: string | number): void {
+    console.log('id :>> ', id);
+};
+
+/**
+ * так же имеет тип void.
+ * const a: void
+ */
+const a = logId(1);
+
+/**
+ * 
+ * @param f number
+ * @param s string
+ */
+function multiply(f: number, s?: string) {
+    if(!s) {
+        return f*f
     }
 }
-
-const failed: IResponseFailed = {
-    status: "failed",
-	data: {
-		errorMessage: "Недостаточно средств",
-		errorCode: 4
-	}
-}
-
