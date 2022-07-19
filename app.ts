@@ -824,3 +824,86 @@
 // type U2 = unknown & boolean; type U2 = boolean
 // //type U2 = number
 // type U2 = unknown & number; 
+
+// ============================== Never ========================================
+
+// Never/Никогда говрит что никогда
+// /**
+//  * @function в явной типизации never означает что функция никогда не возвращается
+//  * @param message string
+//  */
+// function generateReeor(message: string): never {
+//     throw new Error(message);
+// }
+
+// /**
+//  * Пример этой функции в том что код в теле функции не возвращается по условию в цикле
+//  * явно типизируется never.
+//  */
+// function dumpError(): never {
+//     while(true){}
+// }
+
+// /**
+//  * Запртит return 
+//  * @returns
+//  */
+// function recursion(): never{
+//     return recursion()
+// }
+
+// ============================== пример отличий never и void ================================
+
+// /**
+//  * Пример отличия void и never
+//  * в void можно присвоить undefined в случае с never ничего нельзя присвоить в переменную
+//  */
+// const a: never = undefined
+
+// ============================== пример с literal ициклом switch ===========================================
+
+// type paymentAction = 'refund' | 'checkout' | 'reject';
+// /**
+//  * Пример применения never. 
+//  * Перехват ошибки в процессе разработки если например добавляется новый тип который не предусмотрен 
+//  * в цикле в фукции на примере цикла switch/case в default прописывается прошлушка const _: never = action 
+//  * которая даст ошибку если добавится новый тип
+//  * @param action string
+//  */
+// function processAction(action: paymentAction) {
+//     switch(action) {
+//         case 'refund':
+//             // ...
+//             break;
+//         case 'checkout':
+//             // ...
+//             break
+//         default:
+//             const _: never = action
+//             throw new Error('Нет такого Action')
+//     }
+// }
+
+// ============================== пример 
+
+// /* @function в явной типизации never означает что функция никогда не возвращается
+// * @param message string
+// */
+// function generateReeor(message: string): never {
+//     throw new Error(message);
+// }
+// /**
+//  * В данном примере при else if брок считается не законченым неявно возвращается return undefined
+//  * это особенность TypeScript по этой причине нужно ставить блокировку, блокировкой считается в данном
+//  * примере функция которая выбрасывает ошибку и никогда не возвращает ничего то есть :never 
+//  * @param x string | number
+//  * @returns : never
+//  */
+// function isString(x: string | number): boolean {
+//     if (typeof x === 'string') {
+//         return true;
+//     } else if (typeof x === 'number') {
+//         return false
+//     }
+//     generateReeor('Бряка');
+// }
