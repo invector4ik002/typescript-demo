@@ -216,30 +216,305 @@
  * Пример использования Union и зжатие его до простых типов
  * @param id Union
  */
-function LogId(id) {
-    if (typeof id === 'string') {
-        console.log('id :>> ', id);
-    }
-    else if (typeof id === 'number') {
-        console.log('id :>> ', id);
-    }
-    else {
-        console.log('id :>> ', id);
-    }
-}
-;
-LogId(1);
-LogId('>id<');
-LogId(true);
+// function LogId(id: string | number | boolean) {
+//     if (typeof id === 'string') {
+//         console.log('id :>> ', id);
+//     } else if (typeof id === 'number') {
+//         console.log('id :>> ', id);
+//     } else {
+//         console.log('id :>> ', id);
+//     }
+// };
+// LogId(1);
+// LogId('>id<');
+// LogId(true);
 /**
  * В union могут быть как простые типы так и сложные например массивы и так же сжимаем
  * @param err
  */
-function LogError(err) {
-    if (Array.isArray(err)) {
-        console.log('arr :>> ', err);
-    }
-    else {
-        console.log('err :>> ', err);
-    }
+// function LogError(err: string | string[]) {
+//     if (Array.isArray(err)) {
+//         console.log('arr :>> ', err)
+//     } else {
+//         console.log('err :>> ', err);
+//     }
+// }
+/**
+ * В union могут быть как простые типы так и сложные например массивы и обьекты, так же сжимаем
+ * @param obj
+ */
+// function LoпObject(obj: { a: number } | { b: number }) {
+//     if ('a' in obj) {
+//         console.log('obj.a :>> ', obj.a);
+//     } else {
+//         console.log('obj.b :>> ', obj.b);
+//     }
+// }
+/**
+ * Пример сжатия Union по средству "==="
+ * @param a union
+ * @param b union
+ */
+// function logMultipleIds(a: string | number, b: string | boolean) {
+//     if (a === b) {
+//         console.log('a :>> ', a);
+//     } else {
+//         console.log('b :>> ', b);
+//     }
+// }
+// =================================================================================================
+// Literal/буквальный
+/**
+ *
+ * @param url string
+ * @param methot Literal буквальный или утвержденный что то типа константы перечисленные через или в аргументе
+ * (methot: 'post'|'get') аргументы при вызове функции должны строго соответствовать типу 'post'|'get'
+ * @returns number
+ */
+// function fetchWithAuth(url: string, methot: 'post'|'get') : 1 | -1 {
+//     return 1
+// };
+// fetchWithAuth('s', 'post');
+// let methot = 'post';
+/**
+ * строгое переназначение
+ * получилось что то типа константы )
+ */
+// let methot: 'post' = 'post';
+// Еще один способ привязки типа methot as 'post'
+// fetchWithAuth('s', methot as 'post');
+// =============================================================================================
+// alias/псевдоним или простым языком type типы используются при частом переиспользовании
+// при типизации тех или иных данных. Пример:
+/**
+ * type httpMethod
+ * Тип который можно переиспользовать обьявляется ключивым словом type
+ * который соодержит в себе union
+ */
+// type httpMethod = 'post' | 'get';
+/**
+ * type coolString
+ * Этот тип содержит в себе типизирование string и способен к переиспользованию .
+ */
+// type coolString = string;
+// -------------------- Пример 1 с применением intersection  ------------------------------------------------
+/**
+ * type-alias типизация обьекта user так же можно переиспользовать для типизации
+ * обьектов имеющие такие же поля.
+ */
+// type User = {
+//     neme: string,
+//     age: number,
+//     skills:string[],
+// }
+/**
+ * Рассмотрение обьединения type-alias в так называемый intersection
+ * type-alias Role имеющий новое поле id с type-alias User
+ */
+// type Role = {
+//     id: number,
+// }
+/**
+ * Обьект протипизирован Type-alias User и type-alias Role c использованием &
+ * Что позволило обьединить типы и протипизировать один обьект, двумя type-alias
+ */
+// let user: User & Role = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills:['dev','DevOps'],
+//     id:1
+// }
+// -------------------- Пример 2 с применением intersection  ------------------------------------------------
+/**
+ * type-alias User типизируем обьекта user так же можно переиспользовать для типизации
+ * обьектов имеющие такие же поля.
+ */
+//  type User = {
+//     neme: string,
+//     age: number,
+//     skills:string[],
+// }
+/**
+ * Рассмотрение обьединения type-alias в так называемый intersection
+ * type-alias имеющий одинаковое КОНФЛИКТУЮЩИЕ поле name с type-alias User
+ * Правильное использование это создание единого type-alias
+ */
+// type Role = {
+//     name: string,
+//     id: number,
+// }
+/**
+ * Пример обьединения type-alias в один комбенированый type-alias UserWithRole
+ *
+ */
+// type UserWithRole = {
+//     user: UserWithRole,
+//     role: Role
+// }
+/**
+ * Обьект протипизирован Type-alias User и type-alias Role c использованием &
+ * Что позволило обьединить протипизированные поля в один обьект
+ * Ошибка очевидна по пречине конфликта полей name что требует перестройки обьекта с
+ * добавлением обьекта role.
+ */
+// let user: UserWithRole = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills:['dev','DevOps'],
+//     id:1
+// }
+/**
+ *
+ * @param url coolString тип string
+ * @param methot httpMethod тип union
+ * @returns number
+ */
+// function fetchWithAuth(url: coolString, methot: httpMethod) : 1 | -1 {
+//     return 1
+// };
+// fetchWithAuth('s', 'post');
+// let methot = 'post';
+// fetchWithAuth('s', methot as 'post');
+// ===================================== Интерфейсы interface  ============================================
+/**
+ * Интерфейс обьявляется через ключивое слово interface без равенства перед фигурной скобкой
+ */
+// interface User {
+//     neme: string,
+//     age: number,
+//     skills: string[],
+// }
+// =============================== Пример 1 ==============================================================
+/**
+ * обьединение interface/интерфейсов происходит по средству ключевого слова extends/расширяет
+ */
+// interface UserWithRole extends User {
+//     roleId: number,
+// }
+// =============================== Пример 2 ==============================================================
+// Пример с обьединением трех интерфейсов
+/**
+ *
+ */
+// interface Role {
+//     roleId: number,
+// }
+/**
+ * Способ обьединения через extends после перечисляем через запятую
+ * extends User, Role
+ */
+// interface UserWithRole extends User, Role {
+//     createdAt: Date,
+// }
+/**
+ * Типизация обьекта через обьединение interface User и UserWithRole
+ */
+// let user: UserWithRole = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills: ['dev', 'DevOps'],
+//     roleId: 1,
+//     createdAt: new Date,
+// }
+// =============================== Пример 3 ====================================================
+// типизация через интерфейс функции в обьекте 
+// также можно описывать функции и в type-alias
+/**
+ * функция log: (id:number) => string;
+ */
+// interface User {
+//     neme: string,
+//     age: number,
+//     skills: string[]
+//     log: (id:number) => string;
+// }
+/**
+ * описание функций в обьектах не самая лучшая практика.
+ */
+// let user: User = {
+//     neme: 'Михаил',
+//     age: 40,
+//     skills: ['dev', 'DevOps'],
+//     log(id) {
+//         return ''
+//     },
+// }
+// Типизация СЛОВАРЕЙ JS средством interface
+/**
+ *
+ */
+// interface UserDic {
+//     [index: number | string]: User
+// }
+// ======================================= РАЗНИЦА TYPE-ALIAS И INTRFACE ==========================================
+/**
+ * В интерфейсфх нет конфликта имен если разные interface имеют одинаковые имена
+ * происходит мерж между ними слияния и дополнение.
+ * В type-alias возникнет ошибка в совпадении имен.
+ * Может быть не очень полезным и возникнуть путаница.
+ */
+// interface User {
+//     name: string;
+// }
+// interface User {
+//     age: number;
+// }
+// const User: User = {
+//     name: 'Michail',
+//     age: 40
+// }
+/**
+ * type-alias позволяет рпоще работать с приметивными данными заложены в продвинутые типы Union или intersection
+ */
+// type UserOnline = number | boolean;
+// type ID = number | string;
+// Вывод для типизации обьектов или классов используем interface для простых типов type-alias.
+// ============================================ Optional =========================================
+/**
+ * Рассмотрим пример оционального св-ва в типах
+ * Условия этого interface что поле password может быть а может и не быть
+ * Что бы сделать поле не обязательным/опциональныс пишется знак "?" перед двоеточием,пример: password?: string;
+ */
+// interface User {
+//     mail: string;
+//     password?: string;
+// }
+// const user: User = {
+//     mail: 'a@a.ru',
+//     password: 'password'
+// }
+//  =============================== Пример на функции ================================================
+/**
+ * Пример на функции опционального типа
+ * @param a: number
+ * @param b?: number опциональный
+ * Использование в функциях опционального типа всегдаа сопровождается применением условного ветвления: if, '?'
+ */
+// function multiply(a: number, b?: number): number {
+//     return !b ? a * a : a * b;
+// }
+// =============================== Пример опционального типа во вложенном обьекте =================
+/**
+ *
+ */
+// interface User {
+//     mail: string;
+//     password?: {
+//         type: 'primary' | 'secondary';
+//     }
+// }
+/**
+ * Пример опционального типа во вложенном обьекте
+ *
+ * @param user
+ */
+// function testPassword(user: User): void {
+// const t = user.password ? user.password?.type : undefined;
+// const t =  user.password!.type; знак "!" это сокращенная проверка на undefined, говорим что тут не будет undefined
+// }
+function test(b = 1) {
+    const T = b !== null && b !== void 0 ? b : 'work';
+    console.log('T :>> ', T);
 }
+;
+test();
