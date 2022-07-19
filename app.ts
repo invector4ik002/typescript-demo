@@ -907,3 +907,48 @@
 //     }
 //     generateReeor('Бряка');
 // }
+
+// ============================== Null =============================
+
+//  Null какой он в TS. в TS Null является типом!!!!!
+
+// ============================= пример =============================
+/**
+ * В TS нельзя null ложить никуда кроме null и any. Это можно обойти в настройках strict режима в tsconfig.json
+ * изменив "strictNullChecks": true, на "strictNullChecks": false,
+ */
+const a: null = null;
+const a1: any = null;
+const a2: number = null;
+const a3: string = null;
+const a4: boolean = null;
+const a5: undefined = null;
+// =============================== Пример важности null =============================
+/**
+ * Создаем интерфейс 
+ */
+interface User {
+  name: string;
+}
+
+/**
+ * Важность этого примера в разнице между null и undefined 
+ * Разница между null и undefined. 
+ * null - это явно заданный неопределенный обьект 
+ * undefined - это не заданный обьект образовавшейся автоматически в результате возврата или еще какой то причине
+ * И в возврате в этой функцие 
+ */
+function getUser() {
+  if (Math.random() > 0.5) {
+    return null;
+  } else {
+    return {
+      name: 'Michail'
+    } as User;
+  }
+}
+
+const user = getUser();
+if (user) {
+  const saveName = user.name;
+}
