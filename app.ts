@@ -737,3 +737,90 @@
 // skills.forEach(sk => {
 //     return user.s.push(sk)
 // });
+
+// =============================== unknown ======================================
+
+// unknown/неизвестный используется для данных которых тип не известен, приходящих па пример из вне 
+
+// let input: unknown;
+// /**
+//  * при типизации unknown любой тип данных будет валидным.
+//  */
+// input = 3;
+// input = ['dev', 'DevOps'];
+
+// let res: string = input;
+
+// ============================== пример сужения типов  =============================
+
+// /**
+//  * Пример работы с unknown, в скоупе функции производится проверка на входящий тип данных
+//  * и таким образом при выявлении типа продолжается работа с ним к примеру number тогда допустимы 
+//  * все методы для number
+//  * Назвал бы метод исключения
+//  * @param i unknown 
+//  */
+// function run(i: unknown) {
+
+//     if (typeof i == 'number') {
+//         i++;
+//     } else {
+//         i
+//     }
+// }
+// run(input);
+
+// ============================== пример tru/catch с проверкой в блоке if(error instanceof Error) =============================
+
+/**
+ * Пример из реального, обработка ошибки в асинхронной функции при запросе 
+ * Ошибки в TS версии 4,4 имеют тип unknown по этому обязательно нужна проверка 
+ * на instanceof Error
+ */
+// async function getData() {
+
+//     try {
+//        await fetch('');
+//     } catch(error) {
+//         if(error instanceof Error){
+//             console.log('error.message :>> ', error.message);        
+//         }
+//     }
+// }
+
+/**
+ * Пример приведения к типу Error по средсту кастомизации
+ * Используем явное приведение к типу Error. const a = error as Error
+ * Возникает возможность поймать ошибку если в catch упадет не Error а на пример строка
+ */
+// async function getDataForse() {
+
+//     try {
+//        await fetch('');
+//     } catch(error) {
+//        const a = error as Error
+//     }
+// }
+
+// ============================== пример unknown в union и intersection =============================
+
+/**
+ *  В union unknown всегда будет unknown
+ */
+//// type U1 = unknown
+// type U1 = unknown | string;
+//// type U1 = unknown
+// type U1 = unknown | boolean;
+//// type U1 = unknown
+// type U1 = unknown | number;
+
+/**
+ * В intersection unknown всегда будет intersection
+ */
+
+// //type U2 = string
+// type U2 = unknown & string; type U2 = string
+// //type U2 = boolean
+// type U2 = unknown & boolean; type U2 = boolean
+// //type U2 = number
+// type U2 = unknown & number; 
