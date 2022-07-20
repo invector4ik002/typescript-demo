@@ -908,47 +908,130 @@
 //     generateReeor('Бряка');
 // }
 
-// ============================== Null =============================
+// // ============================== Null =============================
 
-//  Null какой он в TS. в TS Null является типом!!!!!
+// //  Null какой он в TS. в TS Null является типом!!!!!
 
-// ============================= пример =============================
+// // ============================= пример =============================
+// /**
+//  * В TS нельзя null ложить никуда кроме null и any. Это можно обойти в настройках strict режима в tsconfig.json
+//  * изменив "strictNullChecks": true, на "strictNullChecks": false,
+//  * ВАЖНО рекомендуется писать код в режиме "strictNullChecks": true !!!!
+//  */
+// const a: null = null;
+// const a1: any = null;
+// const a2: number = null;
+// const a3: string = null;
+// const a4: boolean = null;
+// const a5: undefined = null;
+// // =============================== Пример важности null =============================
+// /**
+//  * Создаем интерфейс 
+//  */
+// interface User {
+//   name: string;
+// }
+
+// /**
+//  * Важность этого примера в разнице между null и undefined 
+//  * Разница между null и undefined. 
+//  * null - это явно заданный неопределенный обьект 
+//  * undefined - это не заданный обьект образовавшейся автоматически в результате возврата или еще какой то причине
+//  * И в возврате в этой функцие 
+//  */
+// function getUser() {
+//   if (Math.random() > 0.5) {
+//     return null;
+//   } else {
+//     return {
+//       name: 'Michail'
+//     } as User;
+//   }
+// }
+
+// const user = getUser();
+// if (user) {
+//   const saveName = user.name;
+// }
+
+// ============================== Приведение типов ===============================================================
+
+// /**
+//  * преобразование в тип из числа в строчку требует применения метода преобразования
+//  * переменная в которой число.toString();
+//  */
+// let a = 5;
+// let b:string = a.toString();
+
+// /**
+//  * преобразование в тип через функцию конструктор требует метода .valueOf();
+//  */
+// let e: string = new String(a).valueOf();
+// let f: boolean = new Boolean(a).valueOf();
+
+// /**
+//  * преобразование строки в число лучше использовать метод parseInt(переменная в которой стока);
+//  * console.log('d :>> ', d); NaN
+//  */
+// let c = 'string';
+// let d: number = parseInt(c);
+
+interface IUser {
+    name: string;
+    email: string;
+    login: string;
+}
 /**
- * В TS нельзя null ложить никуда кроме null и any. Это можно обойти в настройках strict режима в tsconfig.json
- * изменив "strictNullChecks": true, на "strictNullChecks": false,
+ * Валидные способы типизации 
  */
-const a: null = null;
-const a1: any = null;
-const a2: number = null;
-const a3: string = null;
-const a4: boolean = null;
-const a5: undefined = null;
-// =============================== Пример важности null =============================
-/**
- * Создаем интерфейс 
- */
-interface User {
-  name: string;
+const user: IUser = {
+    name: 'Michail',
+    email: 'Michail@mail.ru',
+    login: 'Michail123',
 }
 
+// const user = {
+//     name: 'Michail',
+//     email: 'Michail@mail.ru',
+//     login: 'Michail123',
+// } as IUser
+
 /**
- * Важность этого примера в разнице между null и undefined 
- * Разница между null и undefined. 
- * null - это явно заданный неопределенный обьект 
- * undefined - это не заданный обьект образовавшейся автоматически в результате возврата или еще какой то причине
- * И в возврате в этой функцие 
+ * Способ который не валиден в React.js
+ * <IUser>
  */
-function getUser() {
-  if (Math.random() > 0.5) {
-    return null;
-  } else {
+// const user = <IUser> {
+//     name: 'Michail',
+//     email: 'Michail@mail.ru',
+//     login: 'Michail123',
+// }
+
+// =============================== Преобразование одного обьекта к другому =======================
+
+/**
+ * тип админа
+ */
+interface IAdmin {
+    name: string;
+    role: number;
+}
+/**
+ * Рассмотрение обьединения обьектов в один
+ * ...user разворачивает свои поля в обьекте admin под капотом получается то что
+ * обьект admin получит поля mail и ligin  что может привести в дальнейшем к ошибке
+ * например на проверку отсутствия поля mail: 
+ * по этой причине этот пример является не валиднфм хотя не выдает видимых ошибок.
+ */
+const admin: IAdmin = {
+    ...user,
+    role: 1,
+}
+
+// ============================== ПРавильный способ преобразование обьекта через служебную функцию
+
+function userToAdmin(user: IUser): IAdmin {
     return {
-      name: 'Michail'
-    } as User;
-  }
-}
-
-const user = getUser();
-if (user) {
-  const saveName = user.name;
+        name: user.name,
+        role: 1,
+    }
 }

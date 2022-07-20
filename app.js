@@ -512,9 +512,323 @@
 // const t = user.password ? user.password?.type : undefined;
 // const t =  user.password!.type; знак "!" это сокращенная проверка на undefined, говорим что тут не будет undefined
 // }
-function test(b = 1) {
-    const T = b !== null && b !== void 0 ? b : 'work';
-    console.log('T :>> ', T);
-}
-;
-test();
+/**
+ * Рассмотр синтаксиса "??"
+ * @param b
+ * Если const T = b ?? 'work'; перед ?? null или undefined то возвращает то что после "??"
+ * Если значение есть то вернет то что проверялось то есть то что перед "??"
+ */
+// function test(b = 1): void {
+//     const T = b ?? 'work';
+//     console.log('T :>> ', T);
+// };
+// test();
+// interface IPayment {
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
+// interface IPaymentRequest extends IPayment { }
+// interface IDataSuccess {
+//     databaseId: number;
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
+// enum PaymentStatus {
+//     Success = 'success',
+//     Failed = 'failed',
+// }
+// interface IDataFailed {
+//     errorMessage: string;
+//     errorCode: number;
+// }
+// interface IResponseSuccess {
+//     status: PaymentStatus.Success;
+// }
+// interface IResponseFailed {
+//     status: PaymentStatus.Failed;
+//     data: IDataFailed;
+// }
+// const Payment = {
+//     sum: 10000,
+//     from: 2,
+//     to: 4
+// }
+// const response = {
+//     status: "success",
+//     data: {
+//         databaseId: 567,
+//         sum: 10000,
+//         from: 2,
+//         to: 4
+//     }
+// }
+// const failed: IResponseFailed = {
+//     status: "failed",
+// 	data: {
+// 		errorMessage: "Недостаточно средств",
+// 		errorCode: 4
+// 	}
+// }
+// ====================================== Void ========================================
+// /**
+//  * Рассмотрим тип void. Типизация функции как void означает то что функции ничего не возвращает.
+//  * не нужно путать void и undefined 
+//  * @param id union
+//  */
+// function logId(id: string | number): void {
+//     console.log('id :>> ', id);
+// };
+// /**
+//  * так же имеет тип void.
+//  * const a: void
+//  */
+// const a = logId(1);
+// /**
+//  * Если в функцци в какой либо ветке что либо возвратилось (return) это будет койнибуть type или undefined.
+//  * Если функция ничего не возвращает то это будет всегда void.
+//  * @param f number
+//  * @param s string
+//  */
+// function multiply(f: number, s?: string) {
+//     if(!s) {
+//         return f*f
+//     }
+// }
+// /**
+//  * Можно так же типизировать функции
+//  * Данный пример явно указивает на то что функция ничего не должна возвращать
+//  * примеры ниже показывают на особенность void по игнору возврата(return);
+//  */
+// type voidFunction = () => void;
+// /**
+//  * В данном примере функция протипизирована типом с void.
+//  * Данная функция не смотря на return ничего не вернет.
+//  * @returns {boolean}
+//  */
+// const f2: voidFunction = () => {
+//     return true;
+// };
+// /**
+//  * Пример возврата void 
+//  * const b: void
+//  * Далее пример где это применимо точнее как это работает и зачем
+//  */
+// const b = f2();
+// /**
+//  * Обработаем массив методом для каждого эл-та и элемент пушим в массив user
+//  */
+// const skills = ['dev', 'DevOps'];
+// const user = {
+//     s: [''],
+// };
+// /**
+//  * Как тут работает под капотом void
+//  * user.s.push(sk) в методе push в данном примере возвращает новую длинну массива 
+//  * если бы такого поведения не было в ts ты мы бы не могли использовать с ts подоные 
+//  * конструкции 
+//  */
+// skills.forEach(sk => {
+//     return user.s.push(sk)
+// });
+// =============================== unknown ======================================
+// unknown/неизвестный используется для данных которых тип не известен, приходящих па пример из вне 
+// let input: unknown;
+// /**
+//  * при типизации unknown любой тип данных будет валидным.
+//  */
+// input = 3;
+// input = ['dev', 'DevOps'];
+// let res: string = input;
+// ============================== пример сужения типов  =============================
+// /**
+//  * Пример работы с unknown, в скоупе функции производится проверка на входящий тип данных
+//  * и таким образом при выявлении типа продолжается работа с ним к примеру number тогда допустимы 
+//  * все методы для number
+//  * Назвал бы метод исключения
+//  * @param i unknown 
+//  */
+// function run(i: unknown) {
+//     if (typeof i == 'number') {
+//         i++;
+//     } else {
+//         i
+//     }
+// }
+// run(input);
+// ============================== пример tru/catch с проверкой в блоке if(error instanceof Error) =============================
+/**
+ * Пример из реального, обработка ошибки в асинхронной функции при запросе
+ * Ошибки в TS версии 4,4 имеют тип unknown по этому обязательно нужна проверка
+ * на instanceof Error
+ */
+// async function getData() {
+//     try {
+//        await fetch('');
+//     } catch(error) {
+//         if(error instanceof Error){
+//             console.log('error.message :>> ', error.message);        
+//         }
+//     }
+// }
+/**
+ * Пример приведения к типу Error по средсту кастомизации
+ * Используем явное приведение к типу Error. const a = error as Error
+ * Возникает возможность поймать ошибку если в catch упадет не Error а на пример строка
+ */
+// async function getDataForse() {
+//     try {
+//        await fetch('');
+//     } catch(error) {
+//        const a = error as Error
+//     }
+// }
+// ============================== пример unknown в union и intersection =============================
+/**
+ *  В union unknown всегда будет unknown
+ */
+//// type U1 = unknown
+// type U1 = unknown | string;
+//// type U1 = unknown
+// type U1 = unknown | boolean;
+//// type U1 = unknown
+// type U1 = unknown | number;
+/**
+ * В intersection unknown всегда будет intersection
+ */
+// //type U2 = string
+// type U2 = unknown & string; type U2 = string
+// //type U2 = boolean
+// type U2 = unknown & boolean; type U2 = boolean
+// //type U2 = number
+// type U2 = unknown & number; 
+// ============================== Never ========================================
+// Never/Никогда говрит что никогда
+// /**
+//  * @function в явной типизации never означает что функция никогда не возвращается
+//  * @param message string
+//  */
+// function generateReeor(message: string): never {
+//     throw new Error(message);
+// }
+// /**
+//  * Пример этой функции в том что код в теле функции не возвращается по условию в цикле
+//  * явно типизируется never.
+//  */
+// function dumpError(): never {
+//     while(true){}
+// }
+// /**
+//  * Запртит return 
+//  * @returns
+//  */
+// function recursion(): never{
+//     return recursion()
+// }
+// ============================== пример отличий never и void ================================
+// /**
+//  * Пример отличия void и never
+//  * в void можно присвоить undefined в случае с never ничего нельзя присвоить в переменную
+//  */
+// const a: never = undefined
+// ============================== пример с literal ициклом switch ===========================================
+// type paymentAction = 'refund' | 'checkout' | 'reject';
+// /**
+//  * Пример применения never. 
+//  * Перехват ошибки в процессе разработки если например добавляется новый тип который не предусмотрен 
+//  * в цикле в фукции на примере цикла switch/case в default прописывается прошлушка const _: never = action 
+//  * которая даст ошибку если добавится новый тип
+//  * @param action string
+//  */
+// function processAction(action: paymentAction) {
+//     switch(action) {
+//         case 'refund':
+//             // ...
+//             break;
+//         case 'checkout':
+//             // ...
+//             break
+//         default:
+//             const _: never = action
+//             throw new Error('Нет такого Action')
+//     }
+// }
+// ============================== пример 
+// /* @function в явной типизации never означает что функция никогда не возвращается
+// * @param message string
+// */
+// function generateReeor(message: string): never {
+//     throw new Error(message);
+// }
+// /**
+//  * В данном примере при else if брок считается не законченым неявно возвращается return undefined
+//  * это особенность TypeScript по этой причине нужно ставить блокировку, блокировкой считается в данном
+//  * примере функция которая выбрасывает ошибку и никогда не возвращает ничего то есть :never 
+//  * @param x string | number
+//  * @returns : never
+//  */
+// function isString(x: string | number): boolean {
+//     if (typeof x === 'string') {
+//         return true;
+//     } else if (typeof x === 'number') {
+//         return false
+//     }
+//     generateReeor('Бряка');
+// }
+// // ============================== Null =============================
+// //  Null какой он в TS. в TS Null является типом!!!!!
+// // ============================= пример =============================
+// /**
+//  * В TS нельзя null ложить никуда кроме null и any. Это можно обойти в настройках strict режима в tsconfig.json
+//  * изменив "strictNullChecks": true, на "strictNullChecks": false,
+//  * ВАЖНО рекомендуется писать код в режиме "strictNullChecks": true !!!!
+//  */
+// const a: null = null;
+// const a1: any = null;
+// const a2: number = null;
+// const a3: string = null;
+// const a4: boolean = null;
+// const a5: undefined = null;
+// // =============================== Пример важности null =============================
+// /**
+//  * Создаем интерфейс 
+//  */
+// interface User {
+//   name: string;
+// }
+// /**
+//  * Важность этого примера в разнице между null и undefined 
+//  * Разница между null и undefined. 
+//  * null - это явно заданный неопределенный обьект 
+//  * undefined - это не заданный обьект образовавшейся автоматически в результате возврата или еще какой то причине
+//  * И в возврате в этой функцие 
+//  */
+// function getUser() {
+//   if (Math.random() > 0.5) {
+//     return null;
+//   } else {
+//     return {
+//       name: 'Michail'
+//     } as User;
+//   }
+// }
+// const user = getUser();
+// if (user) {
+//   const saveName = user.name;
+// }
+// ============================== Приведение типов ===============================================================
+/**
+ * преобразование в тип из числа в строчку требует применения метода преобразования
+ * переменная в которой число.toString();
+ */
+let a = 5;
+let b = a.toString();
+/**
+ * преобразование в тип через функцию конструктор требует метода .valueOf();
+ */
+let e = new String(a).valueOf();
+let f = new Boolean(a).valueOf();
+let c = 'string';
+let d = parseInt(c);
+console.log('d :>> ', d);
