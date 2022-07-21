@@ -607,7 +607,7 @@
 // };
 
 // test();
-
+//  ============================== Упражнение1
 // interface IPayment {
 //     sum: number;
 //     from: number;
@@ -1038,84 +1038,135 @@
 
 // =============================== Type Guard/Тип гвардии ======================================
 
-interface IUser {
-    name: string;
-    email: string;
-    login: string;
-}
+// interface IUser {
+//     name: string;
+//     email: string;
+//     login: string;
+// }
 
-const user = {
-    name: 'Michail',
-    email: 'Michail@mail.ru',
-    login: 'Michail123',
-}
+// const user = {
+//     name: 'Michail',
+//     email: 'Michail@mail.ru',
+//     login: 'Michail123',
+// }
 
-interface IAdmin {
-    name: string;
-    role: number;
-}
-/**
- * @function дана для рассмотрения примера использования Type Guard;
- * Ниже обьявлена функция isString() которая подставляется в блок if для проверки на типов
- * @param id Union
- * 
- */
-function logId(id: string | number) {
-    if (typeof id === 'string') {
-        console.log('id: string :>> ', id)
-    } else if (typeof id === 'number') {
-        console.log('id: number :>> ', id)
-    }
-}
+// interface IAdmin {
+//     name: string;
+//     role: number;
+// }
+// /**
+//  * @function дана для рассмотрения примера использования Type Guard;
+//  * Ниже обьявлена функция isString() которая подставляется в блок if для проверки на типов
+//  * @param id Union
+//  * 
+//  */
+// function logId(id: string | number) {
+//     if (typeof id === 'string') {
+//         console.log('id: string :>> ', id)
+//     } else if (typeof id === 'number') {
+//         console.log('id: number :>> ', id)
+//     }
+// }
 
-/**
- * Приметивный пример Type Guard
- * что то напоминает кастомный хук который используется для экономии количества кода
- * основная идея переиспользования для сжатия типов
- * @param x string
- * @returns 
- */
-function isString(x: string | number) : x is string {
-    return (
-        typeof x === 'string'
-    );
-}
+// /**
+//  * Приметивный пример Type Guard
+//  * что то напоминает кастомный хук который используется для экономии количества кода
+//  * основная идея переиспользования для сжатия типов
+//  * @param x string
+//  * @returns 
+//  */
+// function isString(x: string | number) : x is string {
+//     return (
+//         typeof x === 'string'
+//     );
+// }
 
 // ============================== Пример использования Type Guard c union интерфейсов ===========================
 
-/**
- * @function выполняет проверку на ноличие поля role у обьекта user
- * функция спрашивает является ли user isAdmin/админом имея или не имеет поле 'role'
- * таким образом сжимая интерфейсы до нужного типа
- * @param user
- * @returns 
- */
-function isAdmin(user: IUser | IAdmin): user is IAdmin {
-    return 'role' in user
-}
-// console.log('isAdmin :>> ', isAdmin(user));
+// /**
+//  * @function Type Guard выполняет проверку на ноличие поля role у обьекта user
+//  * функция спрашивает является ли user isAdmin/админом имея или не имеет поле 'role'
+//  * таким образом сжимая интерфейсы до нужного типа
+//  * @param user
+//  * @returns 
+//  */
+// function isAdmin(user: IUser | IAdmin): user is IAdmin {
+//     return 'role' in user
+// }
+// // console.log('isAdmin :>> ', isAdmin(user));
 
-/**
- * @function  Type Guard альтернативный вариант проверки на админа
- * @param user union
- * @returns 
- */
-function isAdminAltrnative(user: IUser | IAdmin) {
-    return (user as IAdmin).role !== undefined;
-}
+// /**
+//  * @function  Type Guard альтернативный вариант проверки на админа
+//  * @param user union
+//  * @returns 
+//  */
+// function isAdminAltrnative(user: IUser | IAdmin) {
+//     return (user as IAdmin).role !== undefined;
+// }
 
-/**
- * @function выполняет проверку на ноличие поля role у обьекта user 
- * по средству функции Type Guard isAdmin 
- * @param user union интерфейсов
- * @returns 'user не является админестратором'
- */
-function setRoleZero(user: IUser| IAdmin) {
-    if (isAdmin(user)) {
-        user.role = 0;
-    } else {
-        throw new Error('user не является админестратором')
-    }
-}
-  // Error: user не является админестратором
-// setRoleZero(user);
+// /**
+//  * @function выполняет проверку на ноличие поля role у обьекта user 
+//  * по средству функции Type Guard isAdmin 
+//  * @param user union интерфейсов
+//  * @returns 'user не является админестратором'
+//  */
+// function setRoleZero(user: IUser| IAdmin) {
+//     if (isAdmin(user)) {
+//         user.role = 0;
+//     } else {
+//         throw new Error('user не является админестратором')
+//     }
+// }
+//   // Error: user не является админестратором
+// // setRoleZero(user);
+
+// ============================== Упражнение2 =====================================
+
+// interface IPayment {
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
+
+// enum PaymentStatus {
+//     Success = 'success',
+//     Failed = 'failed',
+// }
+
+// interface IPaymentRequest extends IPayment { }
+// interface IDataSuccess extends IPayment {
+//     databaseId: number;
+// }
+
+// interface IDataFailed {
+//     errorMessage: string;
+//     errorCode: number;
+// }
+
+// interface IResponseSuccess {
+//     status: PaymentStatus.Success;
+//     data: IDataSuccess;
+// }
+
+// interface IResponseFailed {
+//     status: PaymentStatus.Failed;
+//     data: IDataFailed;
+// }
+
+// // type f = (res: IResponseFailed | IResponseFailed) => number;
+// type Res = IResponseFailed | IResponseSuccess;
+
+// function isSuccess(res: Res): res is IResponseSuccess {
+//     if (res.status === PaymentStatus.Success) {
+//         return true
+//     }
+//     return false;
+// }
+
+// function getIdFromData(res: Res): number {
+//     if (isSuccess(res)) {
+//         return res.data.databaseId;
+//     } else {
+//         throw new Error(res.data.errorMessage)
+//     }
+// }
