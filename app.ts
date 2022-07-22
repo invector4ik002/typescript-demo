@@ -607,7 +607,7 @@
 // };
 
 // test();
-
+//  ============================== Упражнение1
 // interface IPayment {
 //     sum: number;
 //     from: number;
@@ -976,19 +976,19 @@
 // let c = 'string';
 // let d: number = parseInt(c);
 
-interface IUser {
-    name: string;
-    email: string;
-    login: string;
-}
-/**
- * Валидные способы типизации 
- */
-const user: IUser = {
-    name: 'Michail',
-    email: 'Michail@mail.ru',
-    login: 'Michail123',
-}
+// interface IUser {
+//     name: string;
+//     email: string;
+//     login: string;
+// }
+// /**
+//  * Валидные способы типизации 
+//  */
+// const user: IUser = {
+//     name: 'Michail',
+//     email: 'Michail@mail.ru',
+//     login: 'Michail123',
+// }
 
 // const user = {
 //     name: 'Michail',
@@ -1011,10 +1011,10 @@ const user: IUser = {
 /**
  * тип админа
  */
-interface IAdmin {
-    name: string;
-    role: number;
-}
+// interface IAdmin {
+//     name: string;
+//     role: number;
+// }
 /**
  * Рассмотрение обьединения обьектов в один
  * ...user разворачивает свои поля в обьекте admin под капотом получается то что
@@ -1022,16 +1022,241 @@ interface IAdmin {
  * например на проверку отсутствия поля mail: 
  * по этой причине этот пример является не валиднфм хотя не выдает видимых ошибок.
  */
-const admin: IAdmin = {
-    ...user,
-    role: 1,
-}
+// const admin: IAdmin = {
+//     ...user,
+//     role: 1,
+// }
 
 // ============================== ПРавильный способ преобразование обьекта через служебную функцию
 
-function userToAdmin(user: IUser): IAdmin {
-    return {
-        name: user.name,
-        role: 1,
+// function userToAdmin(user: IUser): IAdmin {
+//     return {
+//         name: user.name,
+//         role: 1,
+//     }
+// }
+
+// =============================== Type Guard/Тип гвардии ======================================
+
+// interface IUser {
+//     name: string;
+//     email: string;
+//     login: string;
+// }
+
+// const user = {
+//     name: 'Michail',
+//     email: 'Michail@mail.ru',
+//     login: 'Michail123',
+// }
+
+// interface IAdmin {
+//     name: string;
+//     role: number;
+// }
+// /**
+//  * @function дана для рассмотрения примера использования Type Guard;
+//  * Ниже обьявлена функция isString() которая подставляется в блок if для проверки на типов
+//  * @param id Union
+//  * 
+//  */
+// function logId(id: string | number) {
+//     if (typeof id === 'string') {
+//         console.log('id: string :>> ', id)
+//     } else if (typeof id === 'number') {
+//         console.log('id: number :>> ', id)
+//     }
+// }
+
+// /**
+//  * Приметивный пример Type Guard
+//  * что то напоминает кастомный хук который используется для экономии количества кода
+//  * основная идея переиспользования для сжатия типов
+//  * @param x string
+//  * @returns 
+//  */
+// function isString(x: string | number) : x is string {
+//     return (
+//         typeof x === 'string'
+//     );
+// }
+
+// ============================== Пример использования Type Guard c union интерфейсов ===========================
+
+// /**
+//  * @function Type Guard выполняет проверку на ноличие поля role у обьекта user
+//  * функция спрашивает является ли user isAdmin/админом имея или не имеет поле 'role'
+//  * таким образом сжимая интерфейсы до нужного типа
+//  * @param user
+//  * @returns 
+//  */
+// function isAdmin(user: IUser | IAdmin): user is IAdmin {
+//     return 'role' in user
+// }
+// // console.log('isAdmin :>> ', isAdmin(user));
+
+// /**
+//  * @function  Type Guard альтернативный вариант проверки на админа
+//  * @param user union
+//  * @returns 
+//  */
+// function isAdminAltrnative(user: IUser | IAdmin) {
+//     return (user as IAdmin).role !== undefined;
+// }
+
+// /**
+//  * @function выполняет проверку на ноличие поля role у обьекта user 
+//  * по средству функции Type Guard isAdmin 
+//  * @param user union интерфейсов
+//  * @returns 'user не является админестратором'
+//  */
+// function setRoleZero(user: IUser| IAdmin) {
+//     if (isAdmin(user)) {
+//         user.role = 0;
+//     } else {
+//         throw new Error('user не является админестратором')
+//     }
+// }
+//   // Error: user не является админестратором
+// // setRoleZero(user);
+
+// ============================== Упражнение2 =====================================
+
+// interface IPayment {
+//     sum: number;
+//     from: number;
+//     to: number;
+// }
+
+// enum PaymentStatus {
+//     Success = 'success',
+//     Failed = 'failed',
+// }
+
+// interface IPaymentRequest extends IPayment { }
+// interface IDataSuccess extends IPayment {
+//     databaseId: number;
+// }
+
+// interface IDataFailed {
+//     errorMessage: string;
+//     errorCode: number;
+// }
+
+// interface IResponseSuccess {
+//     status: PaymentStatus.Success;
+//     data: IDataSuccess;
+// }
+
+// interface IResponseFailed {
+//     status: PaymentStatus.Failed;
+//     data: IDataFailed;
+// }
+
+// // type f = (res: IResponseFailed | IResponseFailed) => number;
+// type Res = IResponseFailed | IResponseSuccess;
+
+// function isSuccess(res: Res): res is IResponseSuccess {
+//     if (res.status === PaymentStatus.Success) {
+//         return true
+//     }
+//     return false;
+// }
+
+// function getIdFromData(res: Res): number {
+//     if (isSuccess(res)) {
+//         return res.data.databaseId;
+//     } else {
+//         throw new Error(res.data.errorMessage)
+//     }
+// }
+
+// ========================================================================================
+// ============================== Class/Классы ============================================
+
+// /**
+//  * Это класс ) Для типизированного класса обязательно нужна инициализация 
+//  * в блоке constructor(){}
+//  */
+// class User {
+//   name: string;
+
+//   constructor(name: string) {
+//     this.name = name;
+//   }
+// }
+// const user = new User('Michail');
+// console.log('user.name :>> ', user.name);
+// // Настройка TS конфига: меняем компеляцию с js6 в js5 поле  "target": "es2016", меняем на  "target": "es5",
+
+// /**
+//  * Создали класс без инициализации Без конструктора. На его базе создаем admin
+//  * Примечание ошибка в JS нет но TS выдает: Свойство "role" не имеет инициализатора, и ему не гарантировано присваивание в конструкторе.
+//  * Есть два способа убрать ошибку 
+//  * 1) поставить знак "!" role!: number; говоря что мы осознанно делаем эту ошибку и знаем о ней 
+//  * 2) Способ настройки конфига TS: "strictPropertyInitialization": true, на "strictPropertyInitialization": false,
+//  */
+// class Admin {
+//   role: number;
+// }
+
+// const admin = new Admin();
+// admin.role = 1;
+
+// ===================================  Констрцктор =================================
+
+/**
+ * Это класс ) Для типизированного класса обязательно нужна инициализация 
+ * в блоке constructor(){}
+ * @constructor(){} особая функция-метод зарезервированная в теле класса.
+ * возвращает класс constructor User(name: string): User
+ * Переопределить нельзя ! например: constructor(name: string): string.
+ * не может принемать ДЖИНЕРИКИ !
+ * сам constructor привязывает классу обьявленные в своем теле свойства
+ * через this.
+ * В отличии от JS в TS можно доопределить класс сделать его оверлоад (
+ *  это значит что можно дополнить сигнатуру constructor альтернотивной сигнатурой
+ * Пример: дополним сигнатуру name альтернотивной сигнатурой age
+ * )
+ */
+class User {
+  name: string;
+  age: number;
+// сигнатуры перезагрузки 1-я)
+  constructor();
+// сигнатуры перезагрузки 2-я)
+  constructor(name: string);
+// сигнатуры перезагрузки 3-я)
+  constructor(age: number);
+// сигнатуры перезагрузки 4-я)
+  constructor(name: string, age: number);
+/**
+ * последний в списке constructor является конструктором реализации/импрементации 
+ * @param name все что распологается в аргументе конструктора реализации должно быть совместимо с теми конструкторами 
+ * которые обьявлены выше.
+ * конструктор реализации/импрементации НЕ является публичным то есть тем который вызывается для созданеия
+ *  
+ */
+  constructor(ageOrName?: string | number, age?: number) {
+
+    if (typeof ageOrName === 'string') {
+      this.name = ageOrName;
+    } else if (typeof ageOrName === 'number') {
+      this.age = ageOrName;
     }
+    if (typeof age === 'number') {
+      this.age = age;
+    }
+
+  }
 }
+// сигнатуры перезагрузки 1-я)
+const user1 = new User();
+// сигнатуры перезагрузки 2-я)
+const user = new User('Michail');
+// сигнатуры перезагрузки 3-я)
+const user2 = new User(33);
+// сигнатуры перезагрузки 4-я)
+const user3 = new User('Michail', 33);
+
+console.log('user.name :>> ', user.name);
