@@ -1205,58 +1205,98 @@
 
 // ===================================  Констрцктор =================================
 
-/**
- * Это класс ) Для типизированного класса обязательно нужна инициализация 
- * в блоке constructor(){}
- * @constructor(){} особая функция-метод зарезервированная в теле класса.
- * возвращает класс constructor User(name: string): User
- * Переопределить нельзя ! например: constructor(name: string): string.
- * не может принемать ДЖИНЕРИКИ !
- * сам constructor привязывает классу обьявленные в своем теле свойства
- * через this.
- * В отличии от JS в TS можно доопределить класс сделать его оверлоад (
- *  это значит что можно дополнить сигнатуру constructor альтернотивной сигнатурой
- * Пример: дополним сигнатуру name альтернотивной сигнатурой age
- * )
- */
-class User {
-  name: string;
-  age: number;
-// сигнатуры перезагрузки 1-я)
-  constructor();
-// сигнатуры перезагрузки 2-я)
-  constructor(name: string);
-// сигнатуры перезагрузки 3-я)
-  constructor(age: number);
-// сигнатуры перезагрузки 4-я)
-  constructor(name: string, age: number);
-/**
- * последний в списке constructor является конструктором реализации/импрементации 
- * @param name все что распологается в аргументе конструктора реализации должно быть совместимо с теми конструкторами 
- * которые обьявлены выше.
- * конструктор реализации/импрементации НЕ является публичным то есть тем который вызывается для созданеия
- *  
- */
-  constructor(ageOrName?: string | number, age?: number) {
+// /**
+//  * Это класс ) Для типизированного класса обязательно нужна инициализация 
+//  * в блоке constructor(){}
+//  * @constructor(){} особая функция-метод зарезервированная в теле класса.
+//  * возвращает класс constructor User(name: string): User
+//  * Переопределить нельзя ! например: constructor(name: string): string.
+//  * не может принемать ДЖИНЕРИКИ !
+//  * сам constructor привязывает классу обьявленные в своем теле свойства
+//  * через this.
+//  * В отличии от JS в TS можно доопределить класс сделать его оверлоад (
+//  *  это значит что можно дополнить сигнатуру constructor альтернотивной сигнатурой
+//  * Пример: дополним сигнатуру name альтернотивной сигнатурой age
+//  * )
+//  */
+// class User {
+//   name: string;
+//   age: number;
+// // сигнатуры перезагрузки 1-я)
+//   constructor();
+// // сигнатуры перезагрузки 2-я)
+//   constructor(name: string);
+// // сигнатуры перезагрузки 3-я)
+//   constructor(age: number);
+// // сигнатуры перезагрузки 4-я)
+//   constructor(name: string, age: number);
+// /**
+//  * последний в списке constructor является конструктором реализации/импрементации 
+//  * @param name все что распологается в аргументе конструктора реализации должно быть совместимо с теми конструкторами 
+//  * которые обьявлены выше.
+//  * конструктор реализации/импрементации НЕ является публичным то есть тем который вызывается для созданеия
+//  *  
+//  */
+//   constructor(ageOrName?: string | number, age?: number) {
 
-    if (typeof ageOrName === 'string') {
-      this.name = ageOrName;
-    } else if (typeof ageOrName === 'number') {
-      this.age = ageOrName;
-    }
-    if (typeof age === 'number') {
-      this.age = age;
-    }
+//     if (typeof ageOrName === 'string') {
+//       this.name = ageOrName;
+//     } else if (typeof ageOrName === 'number') {
+//       this.age = ageOrName;
+//     }
+//     if (typeof age === 'number') {
+//       this.age = age;
+//     }
 
+//   }
+// }
+// // сигнатуры перезагрузки 1-я)
+// const user1 = new User();
+// // сигнатуры перезагрузки 2-я)
+// const user = new User('Michail');
+// // сигнатуры перезагрузки 3-я)
+// const user2 = new User(33);
+// // сигнатуры перезагрузки 4-я)
+// const user3 = new User('Michail', 33);
+
+// console.log('user.name :>> ', user.name);
+
+// ============================== Методы =================================================================
+
+
+enum PaymentStatus {
+  Holded,
+  Processed,
+  Reversed,
+}
+class Payment {
+  id: number;
+  status: PaymentStatus;
+  createdAt: Date;
+  updatedAt: Date;
+
+  constructor(id:number) {
+    this.id = id;
+    this.createdAt = new Date();
+    this.status = PaymentStatus.Holded;
+  }
+
+  getPaymentLifeTime(): number {
+    return new Date().getTime() - this.createdAt.getTime();
+  };
+
+  unholdPayment(): void {
+    if (this.status === PaymentStatus.Processed) {
+      throw new Error('Платеж не может быть возвращен')
+    }
+    this.status = PaymentStatus.Reversed;
+    this.updatedAt = new Date();
   }
 }
-// сигнатуры перезагрузки 1-я)
-const user1 = new User();
-// сигнатуры перезагрузки 2-я)
-const user = new User('Michail');
-// сигнатуры перезагрузки 3-я)
-const user2 = new User(33);
-// сигнатуры перезагрузки 4-я)
-const user3 = new User('Michail', 33);
 
-console.log('user.name :>> ', user.name);
+const payment = new Payment(1);
+payment.unholdPayment();
+const time = payment.getPaymentLifeTime();
+
+console.log('payment :>> ', payment);
+console.log('timtime :>> ',time);
