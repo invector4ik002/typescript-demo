@@ -1263,40 +1263,116 @@
 
 // ============================== Методы =================================================================
 
+// 
 
-enum PaymentStatus {
-  Holded,
-  Processed,
-  Reversed,
-}
-class Payment {
-  id: number;
-  status: PaymentStatus;
-  createdAt: Date;
-  updatedAt: Date;
+// enum PaymentStatus {
+//   Holded,
+//   Processed,
+//   Reversed,
+// }
 
-  constructor(id:number) {
-    this.id = id;
-    this.createdAt = new Date();
-    this.status = PaymentStatus.Holded;
-  }
+// /**
+//  * Поля содержат данные. Возможность изменять данные обеспечивается специальными функциями, являющимися частью класса: методами.
+//  */
+// class Payment {
+//   id: number;
+//   status: PaymentStatus;
+//   createdAt: Date;
+//   updatedAt: Date;
 
-  getPaymentLifeTime(): number {
-    return new Date().getTime() - this.createdAt.getTime();
+//   constructor(id:number) {
+//     this.id = id;
+//     this.createdAt = new Date(); /*цвфцвфцвфцвфцвфцвфцв*/
+//     this.status = PaymentStatus.Holded;
+//   }
+
+//   getPaymentLifeTime(): number {
+//     return new Date().getTime() - this.createdAt.getTime();
+//   };
+
+//   unholdPayment(): void {
+//     if (this.status === PaymentStatus.Processed) {
+//       throw new Error('Платеж не может быть возвращен')
+//     }
+//     this.status = PaymentStatus.Reversed;
+//     this.updatedAt = new Date();
+//   }
+// }
+
+// const payment = new Payment(1);
+// payment.unholdPayment();
+// const time = payment.getPaymentLifeTime();
+
+// console.log('payment :>> ', payment);
+// console.log('timtime :>> ',time);
+
+// ================================= Getter Senner =================================
+
+// ==================== Пример1 =================
+// /**
+//  * Задача в этом примере присвоения текста "user-" полю объекта user
+//  * Пример 
+//  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
+//  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+//  */
+// class User {
+//   login: string;
+//   password: string;
+// }
+// const user = new User();
+// console.log('user :>> ', user.login = 'user-');
+
+//  =================== Пример2 ==================
+
+// /**
+//  * Задача в этом примере присвоения текста "user-" полю объекта user
+//  * Пример пример через метод объекта 
+//  */
+// class User {
+//   login: string;
+//   password: string;
+
+//   getLogin = (i: string) => this.login = 'user-' + i;
+
+// }
+// const user = new User();
+// console.log('user :>> ', user.getLogin('login'));
+
+// ==================== Пример3 ====================
+
+/**
+ * Задача в этом примере присвоения текста "user-" полю объекта user
+ * Пример 
+ */
+class User {
+  _login: string;/*имена гетторов и сетторов должны отличаться от имен пелей объекта добавим _ перед именем поля*/
+  password: string;
+  /**
+   * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту 
+   * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login' 
+   */
+  set login(i: string) {
+    this._login = 'user-' + i
   };
 
-  unholdPayment(): void {
-    if (this.status === PaymentStatus.Processed) {
-      throw new Error('Платеж не может быть возвращен')
-    }
-    this.status = PaymentStatus.Reversed;
-    this.updatedAt = new Date();
+  /*
+   некоторые правила set и get в рамках TS
+   если нет типизации аргумент set функции то аргумент типизируется согласно возврвщенному типу get функции
+  */
+
+  /**
+   * @function c приставкой get говорит нам что через эту функцию будет получение того 
+   * !get всегда что то должен вернуть(return)
+   * что эта функция возвращает находясь в объекте
+   */
+  get noLogin() {
+    return (
+      this._login = 'user-nologin'
+    )
   }
-}
+};
 
-const payment = new Payment(1);
-payment.unholdPayment();
-const time = payment.getPaymentLifeTime();
-
-console.log('payment :>> ', payment);
-console.log('timtime :>> ',time);
+const user = new User();
+user.login = 'login';
+console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
+console.log('user.noLogin :>> ', user.noLogin);/* user.noLogin :>>  user-nologin */
