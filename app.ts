@@ -1306,73 +1306,123 @@
 // console.log('payment :>> ', payment);
 // console.log('timtime :>> ',time);
 
-// ================================= Getter Senner =================================
+// ================================= Getter Setter =================================
 
-// ==================== Пример1 =================
+// // ==================== Пример1 =================
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример 
+// //  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
+// //  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.login = 'user-');
+
+// //  =================== Пример2 ==================
+
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример через метод объекта 
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+
+// //   getLogin = (i: string) => this.login = 'user-' + i;
+
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.getLogin('login'));
+
+// // ==================== Пример3 ====================
+
 // /**
 //  * Задача в этом примере присвоения текста "user-" полю объекта user
-//  * Пример 
-//  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
-//  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+//  * Пример через set Сеттер
 //  */
 // class User {
-//   login: string;
+//   _login: string;/*имена гетторов и сетторов должны отличаться от имен пелей объекта добавим _ перед именем поля*/
 //   password: string;
-// }
+//   /**
+//    * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту 
+//    * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login' 
+//    */
+//   set login(i: string) {
+//     this._login = 'user-' + i
+//   };
+
+//   /*
+//    некоторые правила set и get в рамках TS
+//    !если нет типизации аргумента set функции то аргумент типизируется согласно возврвщенному типу get функции
+//    !можно типизировать аргумент set функции union пример: (string | number)
+//    !если в классе нет set функции становится редонли user.login нет взможности модифицировать.
+//    !get и set не могут быть асинхронны 
+//    !set функции не годятся для операций с паролями, лучше использовать методы они могут быть асинхронны async/await
+//   */
+
+//   /**
+//    * @function c приставкой get говорит нам что через эту функцию будет получение того 
+//    * что эта функция возвращает находясь в объекте
+//    * !get всегда что то должен вернуть(return)
+//    * 
+//    */
+//   get login() {
+//     return (
+//       this._login = 'user-nologin'
+//     )
+//   }
+// };
+
 // const user = new User();
-// console.log('user :>> ', user.login = 'user-');
+// user.login = 'login';
+// console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
+// console.log('user.login :>> ', user.login);/* user.login :>>  user-login */
 
-//  =================== Пример2 ==================
+//  =============================== implements/реализует =====================================
 
+// interface ILogger {
+//     log(...args: any[]): void;
+//     error(...args: any[]): void;
+// }
 // /**
-//  * Задача в этом примере присвоения текста "user-" полю объекта user
-//  * Пример пример через метод объекта 
+//  * Имплеминтация реализуется в классах interface создаются для частого переиспользования 
+//  * могут использоватся как все методы так и не все заложенные в interface
+//  * ! при implements методы могут быть асинхронны async/await.
+//  * Пример:
+//  * async error(...args: any[]): Promis<void> {
+//         console.log('...args :>> ', ...args);
+//     }
 //  */
-// class User {
-//   login: string;
-//   password: string;
-
-//   getLogin = (i: string) => this.login = 'user-' + i;
-
+// class Logger implements ILogger {
+//     log(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
+//     error(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
 // }
-// const user = new User();
-// console.log('user :>> ', user.getLogin('login'));
+// ============================== Пример использования имплеминтации нескольких interface
+interface IPayable {
+    pay(paymentId: number): void;
+    price?: number;
+}
 
-// ==================== Пример3 ====================
+interface Ideletable {
+    delete(): void;
+}
 
-/**
- * Задача в этом примере присвоения текста "user-" полю объекта user
- * Пример 
- */
-class User {
-  _login: string;/*имена гетторов и сетторов должны отличаться от имен пелей объекта добавим _ перед именем поля*/
-  password: string;
-  /**
-   * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту 
-   * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login' 
-   */
-  set login(i: string) {
-    this._login = 'user-' + i
-  };
+class User implements IPayable, Ideletable {
 
-  /*
-   некоторые правила set и get в рамках TS
-   если нет типизации аргумент set функции то аргумент типизируется согласно возврвщенному типу get функции
-  */
-
-  /**
-   * @function c приставкой get говорит нам что через эту функцию будет получение того 
-   * !get всегда что то должен вернуть(return)
-   * что эта функция возвращает находясь в объекте
-   */
-  get noLogin() {
-    return (
-      this._login = 'user-nologin'
-    )
-  }
-};
-
-const user = new User();
-user.login = 'login';
-console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
-console.log('user.noLogin :>> ', user.noLogin);/* user.noLogin :>>  user-nologin */
+    delete(): void {
+        throw new Error("Method not implemented.");
+    };
+    pay(paymentId: number): void {
+        // 
+    }
+    price?: number | undefined;/* не обязательный параметр */
+    
+}
