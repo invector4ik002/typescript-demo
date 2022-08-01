@@ -84,7 +84,7 @@
 
 // ===============================================================================
 // упражнение типизируем обьект
-// let office = {
+// let office: officeType = {
 //     "officeId": 45,
 //     "isOpened": false,
 //     "contacts": {
@@ -96,7 +96,7 @@
 //     }
 // }
 
-// let officeType: {
+// interface officeType: {
 //     officeId: number;
 //     isOpened: boolean;
 //     contacts: {
@@ -351,7 +351,7 @@
  */
 // type coolString = string;
 
-// -------------------- Пример 1 с применением intersection  ------------------------------------------------
+// -------------------- Пример 1 с применением intersection/перекресток  ------------------------------------------------
 /**
  * type-alias типизация обьекта user так же можно переиспользовать для типизации 
  * обьектов имеющие такие же поля.
@@ -1406,23 +1406,31 @@
 //     }
 // }
 // ============================== Пример использования имплеминтации нескольких interface
-interface IPayable {
-    pay(paymentId: number): void;
-    price?: number;
-}
+// /**
+//  * Имплеминтация это типизация классов с передачей методов которые описаны в interface 
+//  * так же работает принцип дополнения св-в интерфейсов через запятую
+//  * 
+//  */
+// interface IPayable {
+//     pay(paymentId: number): void;
+//     price?: number;
+// }
 
-interface Ideletable {
-    delete(): void;
-}
+// interface Ideletable {
+//     delete(): void;
+// }
 
-class User implements IPayable, Ideletable {
+// class User implements IPayable, Ideletable {
 
-    delete(): void {
-        throw new Error("Method not implemented.");
-    };
-    pay(paymentId: number): void {
-        // 
-    }
-    price?: number | undefined;/* не обязательный параметр */
+//     delete(): void {
+//         throw new Error("Method not implemented.");
+//     };
+//     pay(paymentId: number): void {
+//         // 
+//     }
+//     price?: number | undefined;/* не обязательный параметр */
     
-}
+// }
+
+// ============================== Extends/расширяет ====================
+
