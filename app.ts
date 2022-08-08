@@ -84,7 +84,7 @@
 
 // ===============================================================================
 // упражнение типизируем обьект
-// let office = {
+// let office: officeType = {
 //     "officeId": 45,
 //     "isOpened": false,
 //     "contacts": {
@@ -96,7 +96,7 @@
 //     }
 // }
 
-// let officeType: {
+// interface officeType: {
 //     officeId: number;
 //     isOpened: boolean;
 //     contacts: {
@@ -351,7 +351,7 @@
  */
 // type coolString = string;
 
-// -------------------- Пример 1 с применением intersection  ------------------------------------------------
+// -------------------- Пример 1 с применением intersection/перекресток  ------------------------------------------------
 /**
  * type-alias типизация обьекта user так же можно переиспользовать для типизации 
  * обьектов имеющие такие же поля.
@@ -1205,58 +1205,294 @@
 
 // ===================================  Констрцктор =================================
 
-/**
- * Это класс ) Для типизированного класса обязательно нужна инициализация 
- * в блоке constructor(){}
- * @constructor(){} особая функция-метод зарезервированная в теле класса.
- * возвращает класс constructor User(name: string): User
- * Переопределить нельзя ! например: constructor(name: string): string.
- * не может принемать ДЖИНЕРИКИ !
- * сам constructor привязывает классу обьявленные в своем теле свойства
- * через this.
- * В отличии от JS в TS можно доопределить класс сделать его оверлоад (
- *  это значит что можно дополнить сигнатуру constructor альтернотивной сигнатурой
- * Пример: дополним сигнатуру name альтернотивной сигнатурой age
- * )
- */
-class User {
-  name: string;
-  age: number;
-// сигнатуры перезагрузки 1-я)
-  constructor();
-// сигнатуры перезагрузки 2-я)
-  constructor(name: string);
-// сигнатуры перезагрузки 3-я)
-  constructor(age: number);
-// сигнатуры перезагрузки 4-я)
-  constructor(name: string, age: number);
-/**
- * последний в списке constructor является конструктором реализации/импрементации 
- * @param name все что распологается в аргументе конструктора реализации должно быть совместимо с теми конструкторами 
- * которые обьявлены выше.
- * конструктор реализации/импрементации НЕ является публичным то есть тем который вызывается для созданеия
- *  
- */
-  constructor(ageOrName?: string | number, age?: number) {
+// /**
+//  * Это класс ) Для типизированного класса обязательно нужна инициализация 
+//  * в блоке constructor(){}
+//  * @constructor(){} особая функция-метод зарезервированная в теле класса.
+//  * возвращает класс constructor User(name: string): User
+//  * Переопределить нельзя ! например: constructor(name: string): string.
+//  * не может принемать ДЖИНЕРИКИ !
+//  * сам constructor привязывает классу обьявленные в своем теле свойства
+//  * через this.
+//  * В отличии от JS в TS можно доопределить класс сделать его оверлоад (
+//  *  это значит что можно дополнить сигнатуру constructor альтернотивной сигнатурой
+//  * Пример: дополним сигнатуру name альтернотивной сигнатурой age
+//  * )
+//  */
+// class User {
+//   name: string;
+//   age: number;
+// // сигнатуры перезагрузки 1-я)
+//   constructor();
+// // сигнатуры перезагрузки 2-я)
+//   constructor(name: string);
+// // сигнатуры перезагрузки 3-я)
+//   constructor(age: number);
+// // сигнатуры перезагрузки 4-я)
+//   constructor(name: string, age: number);
+// /**
+//  * последний в списке constructor является конструктором реализации/импрементации 
+//  * @param name все что распологается в аргументе конструктора реализации должно быть совместимо с теми конструкторами 
+//  * которые обьявлены выше.
+//  * конструктор реализации/импрементации НЕ является публичным то есть тем который вызывается для созданеия
+//  *  
+//  */
+//   constructor(ageOrName?: string | number, age?: number) {
 
-    if (typeof ageOrName === 'string') {
-      this.name = ageOrName;
-    } else if (typeof ageOrName === 'number') {
-      this.age = ageOrName;
-    }
-    if (typeof age === 'number') {
-      this.age = age;
-    }
+//     if (typeof ageOrName === 'string') {
+//       this.name = ageOrName;
+//     } else if (typeof ageOrName === 'number') {
+//       this.age = ageOrName;
+//     }
+//     if (typeof age === 'number') {
+//       this.age = age;
+//     }
 
-  }
-}
-// сигнатуры перезагрузки 1-я)
-const user1 = new User();
-// сигнатуры перезагрузки 2-я)
-const user = new User('Michail');
-// сигнатуры перезагрузки 3-я)
-const user2 = new User(33);
-// сигнатуры перезагрузки 4-я)
-const user3 = new User('Michail', 33);
+//   }
+// }
+// // сигнатуры перезагрузки 1-я)
+// const user1 = new User();
+// // сигнатуры перезагрузки 2-я)
+// const user = new User('Michail');
+// // сигнатуры перезагрузки 3-я)
+// const user2 = new User(33);
+// // сигнатуры перезагрузки 4-я)
+// const user3 = new User('Michail', 33);
 
-console.log('user.name :>> ', user.name);
+// console.log('user.name :>> ', user.name);
+
+// ============================== Методы =================================================================
+
+// 
+
+// enum PaymentStatus {
+//   Holded,
+//   Processed,
+//   Reversed,
+// }
+
+// /**
+//  * Поля содержат данные. Возможность изменять данные обеспечивается специальными функциями, являющимися частью класса: методами.
+//  */
+// class Payment {
+//   id: number;
+//   status: PaymentStatus;
+//   createdAt: Date;
+//   updatedAt: Date;
+
+//   constructor(id:number) {
+//     this.id = id;
+//     this.createdAt = new Date(); /*цвфцвфцвфцвфцвфцвфцв*/
+//     this.status = PaymentStatus.Holded;
+//   }
+
+//   getPaymentLifeTime(): number {
+//     return new Date().getTime() - this.createdAt.getTime();
+//   };
+
+//   unholdPayment(): void {
+//     if (this.status === PaymentStatus.Processed) {
+//       throw new Error('Платеж не может быть возвращен')
+//     }
+//     this.status = PaymentStatus.Reversed;
+//     this.updatedAt = new Date();
+//   }
+// }
+
+// const payment = new Payment(1);
+// payment.unholdPayment();
+// const time = payment.getPaymentLifeTime();
+
+// console.log('payment :>> ', payment);
+// console.log('timtime :>> ',time);
+
+// ================================= Getter Setter =================================
+
+// // ==================== Пример1 =================
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример 
+// //  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
+// //  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.login = 'user-');
+
+// //  =================== Пример2 ==================
+
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример через метод объекта 
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+
+// //   getLogin = (i: string) => this.login = 'user-' + i;
+
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.getLogin('login'));
+
+// // ==================== Пример3 ====================
+
+// /**
+//  * Задача в этом примере присвоения текста "user-" полю объекта user
+//  * Пример через set Сеттер
+//  */
+// class User {
+//   _login: string;/*имена гетторов и сетторов должны отличаться от имен пелей объекта добавим _ перед именем поля*/
+//   password: string;
+//   /**
+//    * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту 
+//    * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login' 
+//    */
+//   set login(i: string) {
+//     this._login = 'user-' + i
+//   };
+
+//   /*
+//    некоторые правила set и get в рамках TS
+//    !если нет типизации аргумента set функции то аргумент типизируется согласно возврвщенному типу get функции
+//    !можно типизировать аргумент set функции union пример: (string | number)
+//    !если в классе нет set функции становится редонли user.login нет взможности модифицировать.
+//    !get и set не могут быть асинхронны 
+//    !set функции не годятся для операций с паролями, лучше использовать методы они могут быть асинхронны async/await
+//   */
+
+//   /**
+//    * @function c приставкой get говорит нам что через эту функцию будет получение того 
+//    * что эта функция возвращает находясь в объекте
+//    * !get всегда что то должен вернуть(return)
+//    * 
+//    */
+//   get login() {
+//     return (
+//       this._login = 'user-nologin'
+//     )
+//   }
+// };
+
+// const user = new User();
+// user.login = 'login';
+// console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
+// console.log('user.login :>> ', user.login);/* user.login :>>  user-login */
+
+//  =============================== implements/реализует =====================================
+
+// interface ILogger {
+//     log(...args: any[]): void;
+//     error(...args: any[]): void;
+// }
+// /**
+//  * Имплеминтация реализуется в классах interface создаются для частого переиспользования 
+//  * могут использоватся как все методы так и не все заложенные в interface
+//  * ! при implements методы могут быть асинхронны async/await.
+//  * Пример:
+//  * async error(...args: any[]): Promis<void> {
+//         console.log('...args :>> ', ...args);
+//     }
+//  */
+// class Logger implements ILogger {
+//     log(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
+//     error(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
+// }
+// ============================== Пример использования имплеминтации нескольких interface
+// /**
+//  * Имплеминтация это типизация классов с передачей методов которые описаны в interface 
+//  * так же работает принцип дополнения св-в интерфейсов через запятую
+//  * 
+//  */
+// interface IPayable {
+//     pay(paymentId: number): void;
+//     price?: number;
+// }
+
+// interface Ideletable {
+//     delete(): void;
+// }
+
+// class User implements IPayable, Ideletable {
+
+//     delete(): void {
+//         throw new Error("Method not implemented.");
+//     };
+//     pay(paymentId: number): void {
+//         // 
+//     }
+//     price?: number | undefined;/* не обязательный параметр */
+
+// }
+
+// ============================== Extends/расширяет ====================
+
+// Extends расширение или наследование 
+
+// type PaymentStatus = 'new' | 'paid';
+
+// class Payment {
+//     id: number;
+//     status: PaymentStatus = 'new';
+
+//     constructor(id: number) {
+//         this.id = id;
+//     }
+
+//     pay() {
+//         this.status = 'paid';
+//     }
+// }
+// /**
+//  * Рассмотрение примсера class PersistedPayment наследует class Payment
+//  * и получает его методы и св-ва тпе же имеет возможность добавления своих
+//  * методов и св-в 
+//  */
+// class PersistedPayment extends Payment {
+//     databaseId: number;
+//     paidAt: Date;
+//     /**
+//      * переоприделение конструктора должно использоваться с методом super()
+//      * 
+//      */
+//     constructor() {
+//         const id = Math.random();
+//         super(id);
+//     }
+//     /**
+//      * Переопределение методов при наследовании
+//      * при так скажем при переиспользовании с нужными нам аргументами получаем ошибку!
+//      *  
+//      * Свойство "pay" в типе "PersistedPayment" невозможно присвоить тому же свойству в базовом типе "Payment".
+//      * Тип "(date: Date) => void" не может быть назначен для типа "() => void".
+//      * 
+//      * правильное использование через super нам говорит используй метод в этом классе со своей логикой 
+//      * для избежания и контроля над методом который может изменится или пропасть из наследования 
+//      * используется приставка override который покажет ошибку и ссылку на то изменение метода 
+//      */
+//      override pay(date?: Date) {
+//         super.pay();
+//         if(date) {
+//             this.paidAt = date;
+//         }
+//     }
+// }
+// /**
+//  * при обьявлении через new class PersistedPayment().
+//  * имеет всче св-ва class Payment + свои
+//  * .databaseId
+//  * .id
+//  * .status
+//  * .databaseId
+//  * .paidAt
+//  */
+// new PersistedPayment().id;
+
+//  =============================== Особенности наследования ==========================
