@@ -70,7 +70,7 @@
 // console.log('getFullName :>> ', getFullName(user));
 // ===============================================================================
 // упражнение типизируем обьект
-// let office = {
+// let office: officeType = {
 //     "officeId": 45,
 //     "isOpened": false,
 //     "contacts": {
@@ -81,7 +81,7 @@
 //         }
 //     }
 // }
-// let officeType: {
+// interface officeType: {
 //     officeId: number;
 //     isOpened: boolean;
 //     contacts: {
@@ -297,7 +297,7 @@
  * Этот тип содержит в себе типизирование string и способен к переиспользованию .
  */
 // type coolString = string;
-// -------------------- Пример 1 с применением intersection  ------------------------------------------------
+// -------------------- Пример 1 с применением intersection/перекресток  ------------------------------------------------
 /**
  * type-alias типизация обьекта user так же можно переиспользовать для типизации
  * обьектов имеющие такие же поля.
@@ -1121,56 +1121,184 @@
 // const time = payment.getPaymentLifeTime();
 // console.log('payment :>> ', payment);
 // console.log('timtime :>> ',time);
-// ================================= Getter Senner =================================
-// ==================== Пример1 =================
+// ================================= Getter Setter =================================
+// // ==================== Пример1 =================
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример 
+// //  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
+// //  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.login = 'user-');
+// //  =================== Пример2 ==================
+// // /**
+// //  * Задача в этом примере присвоения текста "user-" полю объекта user
+// //  * Пример через метод объекта 
+// //  */
+// // class User {
+// //   login: string;
+// //   password: string;
+// //   getLogin = (i: string) => this.login = 'user-' + i;
+// // }
+// // const user = new User();
+// // console.log('user :>> ', user.getLogin('login'));
+// // ==================== Пример3 ====================
 // /**
 //  * Задача в этом примере присвоения текста "user-" полю объекта user
-//  * Пример 
-//  * С точки зрения ООП это не правильно вынесение логики присвоения за пределы объекта
-//  * Все что относится к пользователю должно быть инкапсулировано то есть заложено в скоупе объекта
+//  * Пример через set Сеттер
 //  */
 // class User {
-//   login: string;
+//   _login: string;/*имена гетторов и сетторов должны отличаться от имен пелей объекта добавим _ перед именем поля*/
 //   password: string;
-// }
+//   /**
+//    * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту 
+//    * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login' 
+//    */
+//   set login(i: string) {
+//     this._login = 'user-' + i
+//   };
+//   /*
+//    некоторые правила set и get в рамках TS
+//    !если нет типизации аргумента set функции то аргумент типизируется согласно возврвщенному типу get функции
+//    !можно типизировать аргумент set функции union пример: (string | number)
+//    !если в классе нет set функции становится редонли user.login нет взможности модифицировать.
+//    !get и set не могут быть асинхронны 
+//    !set функции не годятся для операций с паролями, лучше использовать методы они могут быть асинхронны async/await
+//   */
+//   /**
+//    * @function c приставкой get говорит нам что через эту функцию будет получение того 
+//    * что эта функция возвращает находясь в объекте
+//    * !get всегда что то должен вернуть(return)
+//    * 
+//    */
+//   get login() {
+//     return (
+//       this._login = 'user-nologin'
+//     )
+//   }
+// };
 // const user = new User();
-// console.log('user :>> ', user.login = 'user-');
-//  =================== Пример2 ==================
+// user.login = 'login';
+// console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
+// console.log('user.login :>> ', user.login);/* user.login :>>  user-login */
+//  =============================== implements/реализует =====================================
+// interface ILogger {
+//     log(...args: any[]): void;
+//     error(...args: any[]): void;
+// }
 // /**
-//  * Задача в этом примере присвоения текста "user-" полю объекта user
-//  * Пример пример через метод объекта 
+//  * Имплеминтация реализуется в классах interface создаются для частого переиспользования 
+//  * могут использоватся как все методы так и не все заложенные в interface
+//  * ! при implements методы могут быть асинхронны async/await.
+//  * Пример:
+//  * async error(...args: any[]): Promis<void> {
+//         console.log('...args :>> ', ...args);
+//     }
 //  */
-// class User {
-//   login: string;
-//   password: string;
-//   getLogin = (i: string) => this.login = 'user-' + i;
+// class Logger implements ILogger {
+//     log(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
+//     error(...args: any[]): void {
+//         console.log('...args :>> ', ...args);
+//     }
 // }
-// const user = new User();
-// console.log('user :>> ', user.getLogin('login'));
-// ==================== Пример3 ====================
-/**
- * Задача в этом примере присвоения текста "user-" полю объекта user
- * Пример
- */
+// ============================== Пример использования имплеминтации нескольких interface
+// /**
+//  * Имплеминтация это типизация классов с передачей методов которые описаны в interface 
+//  * так же работает принцип дополнения св-в интерфейсов через запятую
+//  * 
+//  */
+// interface IPayable {
+//     pay(paymentId: number): void;
+//     price?: number;
+// }
+// interface Ideletable {
+//     delete(): void;
+// }
+// class User implements IPayable, Ideletable {
+//     delete(): void {
+//         throw new Error("Method not implemented.");
+//     };
+//     pay(paymentId: number): void {
+//         // 
+//     }
+//     price?: number | undefined;/* не обязательный параметр */
+// }
+// ============================== Extends/расширяет ====================
+// Extends расширение или наследование 
+// type PaymentStatus = 'new' | 'paid';
+// class Payment {
+//     id: number;
+//     status: PaymentStatus = 'new';
+//     constructor(id: number) {
+//         this.id = id;
+//     }
+//     pay() {
+//         this.status = 'paid';
+//     }
+// }
+// /**
+//  * Рассмотрение примсера class PersistedPayment наследует class Payment
+//  * и получает его методы и св-ва тпе же имеет возможность добавления своих
+//  * методов и св-в 
+//  */
+// class PersistedPayment extends Payment {
+//     databaseId: number;
+//     paidAt: Date;
+//     /**
+//      * переоприделение конструктора должно использоваться с методом super()
+//      * 
+//      */
+//     constructor() {
+//         const id = Math.random();
+//         super(id);
+//     }
+//     /**
+//      * Переопределение методов при наследовании
+//      * при так скажем при переиспользовании с нужными нам аргументами получаем ошибку!
+//      *  
+//      * Свойство "pay" в типе "PersistedPayment" невозможно присвоить тому же свойству в базовом типе "Payment".
+//      * Тип "(date: Date) => void" не может быть назначен для типа "() => void".
+//      * 
+//      * правильное использование через super нам говорит используй метод в этом классе со своей логикой 
+//      * для избежания и контроля над методом который может изменится или пропасть из наследования 
+//      * используется приставка override который покажет ошибку и ссылку на то изменение метода 
+//      */
+//      override pay(date?: Date) {
+//         super.pay();
+//         if(date) {
+//             this.paidAt = date;
+//         }
+//     }
+// }
+// /**
+//  * при обьявлении через new class PersistedPayment().
+//  * имеет всче св-ва class Payment + свои
+//  * .databaseId
+//  * .id
+//  * .status
+//  * .databaseId
+//  * .paidAt
+//  */
+// new PersistedPayment().id;
+//  =============================== Особенности наследования ==========================
 class User {
-    /**
-     * @function с приставкой set говорит нам что через эту функцию будет назначено св-во объекту
-     * Через Сеттер происходит назначение полю обьекта _login: user.login = 'login'
-     */
-    set login(i) {
-        this._login = 'user-' + i;
-    }
-    ;
-    /**
-     * @function c приставкой get говорит нам что через эту функцию будет получение того
-     * что эта функция возвращает находясь в объекте
-     */
-    get noLogin() {
-        return (this._login = 'user-nologin');
+    constructor() {
+        this.name = 'user';
+        console.log('this.name :>> ', this.name);
     }
 }
 ;
-const user = new User();
-user.login = 'login';
-console.log('user :>> ', user); /* user :>>  User { _login: 'user-login' } */
-console.log('user.noLogin :>> ', user.noLogin); /* user.noLogin :>>  user-login */
+class Admin extends User {
+    constructor() {
+        super(...arguments);
+        this.name = 'admin';
+    }
+}
+new Admin();
