@@ -1496,3 +1496,41 @@
 // new PersistedPayment().id;
 
 //  =============================== Особенности наследования ==========================
+// /**
+//  * Порядок выполнения кода при вызове new Admin();
+//  * 1) выполняется инициализация свойств классов name: string = 'user';
+//  * 2) выполняется constructor(){console.log('this.name :>> ', this.name);}
+//  * 3) выполняется инициализация свойства name: string = 'admin";
+//  * 4) выполняется constructor(){ super() } говорит нам ну как бы наследование но на этот раз выполняц св-ва этого класса где я прописан)))
+//  * 5) выполняется console.log('this.name :>> ', this.name);
+//  */
+// class User {
+//     name: string = 'user';
+//     constructor() {
+//         console.log('this.name :>> ', this.name);
+//     }
+// };
+
+// class Admin extends User {
+//     name: string = 'admin';
+
+//     constructor() {
+//         super()
+//         console.log('this.name :>> ', this.name);
+//     }
+// }
+
+// new Admin();
+
+// // ============================== Наследование от существующих class
+
+// /**
+//  * Пример new Error создание кастомного class
+//  */
+// class HttpError extends Error {
+//     code: number;
+//     constructor(message: string, code?: number) {
+//         super(message);
+//         throw this.code = code ?? 500;
+//     }
+// } 
