@@ -1288,17 +1288,69 @@
 //  */
 // new PersistedPayment().id;
 //  =============================== Особенности наследования ==========================
+// /**
+//  * Порядок выполнения кода при вызове new Admin();
+//  * 1) выполняется инициализация свойств классов name: string = 'user';
+//  * 2) выполняется constructor(){console.log('this.name :>> ', this.name);}
+//  * 3) выполняется инициализация свойства name: string = 'admin";
+//  * 4) выполняется constructor(){ super() } говорит нам ну как бы наследование но на этот раз выполняц св-ва этого класса где я прописан)))
+//  * 5) выполняется console.log('this.name :>> ', this.name);
+//  */
+// class User {
+//     name: string = 'user';
+//     constructor() {
+//         console.log('this.name :>> ', this.name);
+//     }
+// };
+// class Admin extends User {
+//     name: string = 'admin';
+//     constructor() {
+//         super()
+//         console.log('this.name :>> ', this.name);
+//     }
+// }
+// new Admin();
+// // ============================== Наследование от существующих class
+// /**
+//  * Пример new Error создание кастомного class
+//  */
+// class HttpError extends Error {
+//     code: number;
+//     constructor(message: string, code?: number) {
+//         super(message);
+//         throw this.code = code ?? 500;
+//     }
+// } 
+// ============================== Inheritance vs composition =================
+//  Пример проблем и плюсов работы с классами через extends
 class User {
-    constructor() {
-        this.name = 'user';
-        console.log('this.name :>> ', this.name);
+    constructor(name) {
+        this.name = name;
     }
 }
-;
-class Admin extends User {
-    constructor() {
-        super(...arguments);
-        this.name = 'admin';
+/**
+ * Пример предпологает что мы хотим работать со списком пользователей
+ * extends Array<User> наследуемся от User заводим его в массив
+ */
+class Users extends Array {
+    /**
+     * дополнительный метод (для примера)
+     * @param neme
+     * @returns итог фильтрации
+     */
+    searchByName(neme) {
+        return this.filter(user => user.name === neme);
+    }
+    /**
+     * оверайдить
+     */
+    toString() {
+        return this.map(user => user.name).join(', ');
     }
 }
-new Admin();
+const users = new Users(); /* !!!Внимание интересно при обьявлении константы users отображаются методы работы с массивами*/
+users.push(new User('Vasya')); /* После пуша стринги переменная получает методы toString, toLocaleString
+для получения из обьекта значения name необходимо оверайдить так скажем этот метод то есть прописывать приставку override
+и return вернет уже значение*/
+users.push(new User('Petya'));
+console.log('object :>> ', users.toString());

@@ -1534,3 +1534,86 @@
 //         throw this.code = code ?? 500;
 //     }
 // } 
+
+// ============================== Inheritance vs composition =================
+
+// //  Пример проблем и плюсов работы с классами через extends
+
+// class User {
+//   name: string;
+
+//   constructor(name: string) {
+//     this.name = name;
+//   }
+// }
+// /**
+//  * Пример предпологает что мы хотим работать со списком пользователей
+//  * extends Array<User> наследуемся от User заводим его в массив
+//  */
+// class Users extends Array<User> {
+//   /**
+//    * дополнительный метод (для примера)
+//    * @param neme 
+//    * @returns итог фильтрации 
+//    */
+//   searchByName(neme: string) {
+//     return this.filter(user => user.name === neme);
+//   }
+//   /**
+//    * оверайдить
+//    */
+//   override toString(): string {
+//     return this.map(user => user.name).join(', ');
+//   }
+// }
+// const users = new Users();/* !!!Внимание интересно при обьявлении константы users отображаются методы работы с массивами*/
+
+// users.push(new User('Vasya'));/* После пуша стринги переменная получает методы toString, toLocaleString 
+// для получения из обьекта значения name необходимо оверайдить так скажем этот метод то есть прописывать приставку override
+// и return вернет уже значение*/
+// users.push(new User('Petya'));
+
+// console.log('object :>> ', users.toString()); /* object :>>  Vasya, Petya */
+// // ВЫВОД: ТАК РАБОТАЕТ НАСЛЕДОВАНИЕ МЫ ПОЛУЧИЛИ СМЕШИВАНИЕ ЛОГИКИ КОГДА НАМ НЕ НУЖНО В КЛАССЕ РЕАЛИЗОВЫВАТЬ ПОЛУЧЕНИЕ ЗНАЧЕНИЙ НО
+// // МЕТОДЫ ПОЯВИЛИСЬ И БУДУТ БЫТЬ:) ТАМ ГДЕ ОНИ СОВСЕМ НЕ НУЖНЫ. СЛЕДУЮЩИЙ ПРИМЕР ПОКАЖЕТ В ЧЕМ ХОРОША КОМПОЗИЦИЯ
+
+// /**
+//  * Компазиция при обьявлении переменной const usersList = new UsersList();
+//  * вызов usersList. покажет что данная переменная имеет возможность работать только с двумя методами
+//  * users и push
+//  */
+// class UsersList {
+//   users: User[];
+
+//   push(u: User) {
+//     this.push(u)
+//   };
+// }
+// const usersList = new UsersList();
+// usersList.push
+// // =================================== Еще пример ===================================
+// /**
+//  * Некие данные 
+//  * для большего ужаса со своей доменной областью ))
+//  */
+// class Payment {
+//   date: Date;
+// }
+// /**
+//  * Плохой пример
+//  */
+// class UserWithPayment extends Payment {
+//   name: string;
+// }
+// /**
+//  * Хороший пример который тянет только то что мы позволим тянуть
+//  */
+// class UserWithPayment2 {
+//   user: User;
+//   payment: Payment;
+
+//   constructor(user: User, payment: Payment) {
+//     this.user = user;
+//     this.payment = payment;
+//   }
+// }
