@@ -1620,53 +1620,62 @@
 
 // ============================== Видимость св-в =============================
 /**
- * Пример
+ * Свойства видимости свойств так же работают и с методами private и protected
  */
-class Vehicle {
-    make: string; /* Публичное св-во, аналогичная запись с приставкой public make: string и доступно для изменений из вне new Vehicle().make = 'b';*/
-    private damage: string[]; /* приватное св-во закрыто для изменений из вне то есть при вызове обьекта синтаксис точки не покажет это св-во как имеющееся.
-        Приватным св-вам доступны изменения только внутри класса. Пример метод addDamages()
-     */
+// class Vehicle {
+//   make: string; /* Публичное св-во, аналогичная запись с приставкой public make: string и доступно для изменений из вне new Vehicle().make = 'b';*/
+//   private damage: string[]; /* приватное св-во закрыто для изменений из вне то есть при вызове обьекта синтаксис точки не покажет это св-во как имеющееся.
+//         Приватным св-вам доступны изменения только внутри класса. Пример метод addDamages()
+//      */
 
-    private _model: string; /* Пример приватного свойства во взаимодействии через get и set */
+//   private _model: string; /* Пример приватного свойства во взаимодействии через get и set */
 
-    protected run: number;/* Третий модификатор св-в protected  */
-    /**
-     * 
-     */
-    set model(model:string) {
-        this._model = model;
-    }
-    /**
-     * Через get вполне можно изменять privat свойство обьекта 
-     * Метод доступен при обьявлении обьекта const modelVehicle = new Vehicle(); modelVehicle.model = 'UAZ'
-     */
-    get model(){
-        return this._model
-    }
+//   protected run: number;/* Третий модификатор св-в protected  */
+//   /**
+//    * 
+//    */
+//   set model(model: string) {
+//     this._model = model;
+//   }
+//   /**
+//    * Через get вполне можно изменять privat свойство обьекта 
+//    * Метод доступен при обьявлении обьекта const modelVehicle = new Vehicle(); modelVehicle.model = 'UAZ'
+//    */
+//   get model() {
+//     return this._model
+//   }
 
-    /**
-     * @function addDamages может изменить приватное св-во damage
-     * @param damage : string
-     */
-    addDamages(damage: string) {
-        this.damage.push(damage);
-    };
-};
-/**
- * class EuroTruck какойто еврогрузовик наследуется от Vehicle 
- * он наследует только публичные св-ва обьекта так же метод get и set 
- * приватные ему не доступны.
- */
-class EuroTruck extends Vehicle {
-    /**
-     * то что доступно при наследовании
-     * this.setDamage
-     * this.make
-     * this.model
-     * this.addDamages
-     */
-    setDamage(){
-        this.model
-    }
-}
+//   /**
+//    * @function addDamages может изменить приватное св-во damage
+//    * @param damage : string
+//    */
+//   addDamages(damage: string) {
+//     this.damage.push(damage);
+//   };
+// };
+// /**
+//  * class EuroTruck какойто еврогрузовик наследуется от Vehicle 
+//  * он наследует только публичные св-ва обьекта так же метод get и set 
+//  * приватные ему не доступны.
+//  * наследуется так же свойство protected run: number; и может быть изменино внутри класса родителя 
+//  * так же и в классе его наследующего. Не доступно к изменению из вне.
+//  */
+// class EuroTruck extends Vehicle {
+//   /**
+//    * то что доступно при наследовании
+//    * this.setDamage
+//    * this.make
+//    * this.model
+//    * this.addDamages
+//    */
+//   setDamage() {
+//     this.model
+//   }
+//   /**
+//    * @function пересчитывает км в мили и присваевая значению run которое унаследовано от Vehicle
+//    * @param km: number
+//    */
+//   setRun(km: number) {
+//     this.run = km / 0.62;
+//   }
+// }
