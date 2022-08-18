@@ -1322,35 +1322,202 @@
 //     }
 // } 
 // ============================== Inheritance vs composition =================
-//  Пример проблем и плюсов работы с классами через extends
-class User {
-    constructor(name) {
-        this.name = name;
-    }
-}
+// //  Пример проблем и плюсов работы с классами через extends
+// class User {
+//   name: string;
+//   constructor(name: string) {
+//     this.name = name;
+//   }
+// }
+// /**
+//  * Пример предпологает что мы хотим работать со списком пользователей
+//  * extends Array<User> наследуемся от User заводим его в массив
+//  */
+// class Users extends Array<User> {
+//   /**
+//    * дополнительный метод (для примера)
+//    * @param neme 
+//    * @returns итог фильтрации 
+//    */
+//   searchByName(neme: string) {
+//     return this.filter(user => user.name === neme);
+//   }
+//   /**
+//    * оверайдить
+//    */
+//   override toString(): string {
+//     return this.map(user => user.name).join(', ');
+//   }
+// }
+// const users = new Users();/* !!!Внимание интересно при обьявлении константы users отображаются методы работы с массивами*/
+// users.push(new User('Vasya'));/* После пуша стринги переменная получает методы toString, toLocaleString 
+// для получения из обьекта значения name необходимо оверайдить так скажем этот метод то есть прописывать приставку override
+// и return вернет уже значение*/
+// users.push(new User('Petya'));
+// console.log('object :>> ', users.toString()); /* object :>>  Vasya, Petya */
+// // ВЫВОД: ТАК РАБОТАЕТ НАСЛЕДОВАНИЕ МЫ ПОЛУЧИЛИ СМЕШИВАНИЕ ЛОГИКИ КОГДА НАМ НЕ НУЖНО В КЛАССЕ РЕАЛИЗОВЫВАТЬ ПОЛУЧЕНИЕ ЗНАЧЕНИЙ НО
+// // МЕТОДЫ ПОЯВИЛИСЬ И БУДУТ БЫТЬ:) ТАМ ГДЕ ОНИ СОВСЕМ НЕ НУЖНЫ. СЛЕДУЮЩИЙ ПРИМЕР ПОКАЖЕТ В ЧЕМ ХОРОША КОМПОЗИЦИЯ
+// /**
+//  * Компазиция при обьявлении переменной const usersList = new UsersList();
+//  * вызов usersList. покажет что данная переменная имеет возможность работать только с двумя методами
+//  * users и push
+//  */
+// class UsersList {
+//   users: User[];
+//   push(u: User) {
+//     this.push(u)
+//   };
+// }
+// const usersList = new UsersList();
+// usersList.push
+// // =================================== Еще пример ===================================
+// /**
+//  * Некие данные 
+//  * для большего ужаса со своей доменной областью ))
+//  */
+// class Payment {
+//   date: Date;
+// }
+// /**
+//  * Плохой пример
+//  */
+// class UserWithPayment extends Payment {
+//   name: string;
+// }
+// /**
+//  * Хороший пример который тянет только то что мы позволим тянуть
+//  */
+// class UserWithPayment2 {
+//   user: User;
+//   payment: Payment;
+//   constructor(user: User, payment: Payment) {
+//     this.user = user;
+//     this.payment = payment;
+//   }
+// }
+// ============================== Видимость св-в =============================
 /**
- * Пример предпологает что мы хотим работать со списком пользователей
- * extends Array<User> наследуемся от User заводим его в массив
+ * Свойства видимости: свойства private и protected так же работают и с методами
  */
-class Users extends Array {
-    /**
-     * дополнительный метод (для примера)
-     * @param neme
-     * @returns итог фильтрации
-     */
-    searchByName(neme) {
-        return this.filter(user => user.name === neme);
-    }
-    /**
-     * оверайдить
-     */
-    toString() {
-        return this.map(user => user.name).join(', ');
+// class Vehicle {
+//   make: string; /* Публичное св-во, аналогичная запись с приставкой public make: string и доступно для изменений из вне new Vehicle().make = 'b';*/
+//   private damage: string[]; /* приватное св-во закрыто для изменений из вне то есть при вызове обьекта синтаксис точки не покажет это св-во как имеющееся.
+//         Приватным св-вам доступны изменения только внутри класса. Пример метод addDamages()
+//      */
+//   private _model: string; /* Пример приватного свойства во взаимодействии через get и set */
+//   protected run: number;/* Третий модификатор св-в protected  */
+//   #price: number; /* Еще один способ указать приватность но ужа по правилу JS, перед свойством обозначается решотка #. Это приватное поле родолжает быть
+//   приватным даже после компеляции*/
+//   /**
+//    * 
+//    */
+//   set model(model: string) {
+//     this._model = model;
+//   }
+//   /**
+//    * Через get вполне можно изменять privat свойство обьекта 
+//    * Метод доступен при обьявлении обьекта const modelVehicle = new Vehicle(); modelVehicle.model = 'UAZ'
+//    */
+//   get model() {
+//     return this._model
+//   }
+// /**
+//  * @function провиряет эквивалентность св-в внутренней #price и такого же приватногоJS свойства другого обьекта #price
+//  * для примера взят обьект Vehicle эмитирует внешний обьект
+//  * @param v object
+//  */
+//   isPriceEqual(v: Vehicle){
+//     return this.#price === v.#price
+//   }
+//   /**
+//    * @function addDamages может изменить приватное св-во damage
+//    * @param damage : string
+//    */
+//   addDamages(damage: string) {
+//     this.damage.push(damage);
+//   };
+// };
+// /**
+//  * class EuroTruck какойто еврогрузовик наследуется от Vehicle 
+//  * он наследует только публичные св-ва обьекта так же метод get и set 
+//  * приватные ему не доступны.
+//  * наследуется так же свойство protected run: number; и может быть изменино внутри класса родителя 
+//  * так же и в классе его наследующего. Не доступно к изменению из вне.
+//  */
+// class EuroTruck extends Vehicle {
+//   /**
+//    * то что доступно при наследовании
+//    * this.setDamage
+//    * this.make
+//    * this.model
+//    * this.addDamages
+//    */
+//   setDamage() {
+//     this.model
+//   }
+//   /**
+//    * @function пересчитывает км в мили и присваевая значению run которое унаследовано от Vehicle
+//    * @param km: number
+//    */
+//   setRun(km: number) {
+//     this.run = km / 0.62;
+//   }
+// }
+// ============================================= class Карзина товаров ========================================
+class Product {
+    constructor(id, title, price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
     }
 }
-const users = new Users(); /* !!!Внимание интересно при обьявлении константы users отображаются методы работы с массивами*/
-users.push(new User('Vasya')); /* После пуша стринги переменная получает методы toString, toLocaleString
-для получения из обьекта значения name необходимо оверайдить так скажем этот метод то есть прописывать приставку override
-и return вернет уже значение*/
-users.push(new User('Petya'));
-console.log('object :>> ', users.toString());
+;
+class Delivery {
+    constructor(date) {
+        this.date = date;
+    }
+}
+class HomeDelivery extends Delivery {
+    constructor(date, address) {
+        super(date);
+    }
+}
+class ShopDelivery extends Delivery {
+    constructor(addressId) {
+        super(new Date);
+    }
+}
+;
+class Card {
+    constructor() {
+        this.products = [];
+    }
+    addProduct(produc) {
+        this.products.push(produc);
+    }
+    deleteProduct(producId) {
+        this.products = this.products.filter((p) => p.id !== producId);
+    }
+    getSumm() {
+        return this.products.map((p) => p.price).reduce((p1, p2) => p1 + p2);
+    }
+    setDelivery(delivery) {
+        this.delivery = delivery;
+    }
+    checkOut() {
+        if (this.products.length === 0) {
+            throw new Error('Нет товаров в корзине');
+        }
+        if (!this.delivery) {
+            throw new Error('Не указан способ доставки');
+        }
+        return { success: true };
+    }
+}
+const card = new Card();
+card.addProduct(new Product(1, 'Печенье', 50));
+card.addProduct(new Product(2, 'Пряник', 50));
+card.addProduct(new Product(3, 'Печенье', 50));
+card.deleteProduct(1);
+card.checkOut();
+console.log(' card.:>> ', card.getSumm());
