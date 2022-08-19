@@ -1691,77 +1691,126 @@
 //     this.run = km / 0.62;
 //   }
 // }
-// ============================================= class Карзина товаров ========================================
+// ============================================= class Корзина товаров ========================================
 
-class Product {
-  constructor(
-    public id: number,
-    public title: string,
-    public price: number,
-  ) { }
-};
+// class Product {
+//   constructor(
+//     public id: number,
+//     public title: string,
+//     public price: number,
+//   ) { }
+// };
 
-class Delivery {
-  constructor(
-    public date: Date,
-  ) { }
-}
+// class Delivery {
+//   constructor(
+//     public date: Date,
+//   ) { }
+// }
 
-class HomeDelivery extends Delivery {
-  constructor(date: Date, address: string) {
-    super(date)
-  }
-}
-class ShopDelivery extends Delivery {
-  constructor(addressId: number) {
-    super(new Date)
-  }
-};
+// class HomeDelivery extends Delivery {
+//   constructor(date: Date, address: string) {
+//     super(date)
+//   }
+// }
+// class ShopDelivery extends Delivery {
+//   constructor(addressId: number) {
+//     super(new Date)
+//   }
+// };
 
-type DeliveryOptions = HomeDelivery | ShopDelivery;
-class Card {
-  private products: Product[] = [];
-  private delivery: DeliveryOptions;
+// type DeliveryOptions = HomeDelivery | ShopDelivery;
+// class Card {
+//   private products: Product[] = [];
+//   private delivery: DeliveryOptions;
 
-  public addProduct(produc: Product): void {
-    this.products.push(produc)
-  }
+//   public addProduct(produc: Product): void {
+//     this.products.push(produc)
+//   }
 
-  public deleteProduct(producId: number): void {
-    this.products = this.products.filter((p: Product) => p.id !== producId)
-  }
+//   public deleteProduct(producId: number): void {
+//     this.products = this.products.filter((p: Product) => p.id !== producId)
+//   }
 
-  public getSumm(): number {
-    return this.products.map((p: Product) => p.price).reduce((p1: number, p2: number) => p1 + p2);
-  }
+//   public getSumm(): number {
+//     return this.products.map((p: Product) => p.price).reduce((p1: number, p2: number) => p1 + p2);
+//   }
 
-  public setDelivery(delivery: DeliveryOptions) {
-    this.delivery = delivery;
-  }
+//   public setDelivery(delivery: DeliveryOptions) {
+//     this.delivery = delivery;
+//   }
 
-  public checkOut() {
+//   public checkOut() {
 
-    if (this.products.length === 0) {
-      throw new Error('Нет товаров в корзине')
-    }
+//     if (this.products.length === 0) {
+//       throw new Error('Нет товаров в корзине')
+//     }
 
-    if (!this.delivery) {
-      throw new Error('Не указан способ доставки')
-    }
-    return { success: true }
-  }
-}
+//     if (!this.delivery) {
+//       throw new Error('Не указан способ доставки')
+//     }
+//     return { success: true }
+//   }
+// }
 
-const card = new Card();
-card.addProduct(new Product(1, 'Печенье', 50));
-card.addProduct(new Product(2, 'Пряник', 50));
-card.addProduct(new Product(3, 'Печенье', 50));
-card.deleteProduct(1);
-card.checkOut()
+// const card = new Card();
+// card.addProduct(new Product(1, 'Печенье', 50));
+// card.addProduct(new Product(2, 'Пряник', 50));
+// card.addProduct(new Product(3, 'Печенье', 50));
+// card.deleteProduct(1);
+// card.checkOut()
 
-console.log(' card.:>> ',card.getSumm() );
+// console.log(' card.:>> ', card.getSumm());
 
+// // ============================== СТатические свойства =============================
 
+// /**
+//  * class для примера типа сервис юзера которого мы вытаскиваем 
+//  * поле с приставкой статик
+//  * 1) для доступа не требуют создания инстанса через new то есть синтаксис таков UserService.db
+//  * 2) static св-во может быть приватным или защищенным private/protected static db: any;
+//  * 3) static может быть и метод static getUser()
+//  */
+// class UserService {
+// /**
+//  * статикам запрещено использовать зарезервированные имена полей
+//  * Статическое свойство "name" конфликтует со встроенным свойством "Function.name" функции-конструктора "UserService".
+//  */
+//   // static name: string = "UserService";
+
+//   static db: any;
+// /**
+//  * 
+//  * @param id 
+//  * @returns UserService.db.findDyId(id); такой синтаксис обращается не к инстансу через this а к статическому св-ву db
+//  * 
+//  */
+//   static getUser(id: number) {
+//     return UserService.db.findDyId(id);
+//   }
+// /**
+//  * через конструктор можно задать данные только для инстанса
+//  * @param id 
+//  */
+//   constructor(id: number){}
+// /**
+//  * можно обращатся из нестатических матодов к статическим методоам внутри обьекта 
+//  */
+//   create() {
+//     UserService.db
+//   }
+//   /**
+//    * Статик блок
+//    * в блоке происходет выполнение кода сразу после обьявления класса
+//    * в блоке не могут исползоваться асинхронные задачи но async выполним вне блока в статистисеском св-ве 
+//    * Пример static async getUser(id: number){}
+//    */
+//   static {
+//     UserService.db = 'string'
+//   }
+// }
+
+// const inst = new UserService(1);
+// inst.create();
 
 
 
