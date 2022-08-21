@@ -1812,5 +1812,58 @@
 // const inst = new UserService(1);
 // inst.create();
 
+// ========================================= РАбота с This ======================================================
 
+/**
+ * В этой теме контролим контекст 
+ * @methot getDate() использует приватный метод класса
+ * 
+ */
+class Payment {
 
+  private date: Date = new Date();
+  /**
+   * @returns private date: Date = new Date();
+   * @param this: Payment позволит создать ошибку потери контекста 
+   */
+  getDate(this: Payment) {
+    return `'class Payment:>>' ${this.date}`;
+  }
+/**
+ * Еще способ при котором можно сохранить контекст использование стрелчной функции
+ * где бы не была вызвана эта функция она сохранит контекст того обьекта или класса в котором была создана
+ * @returns 'class Payment getDateArrow:>>' ${this.date}
+ * с стрелочной функцией может возникнуть проблема при наследовании класса от класса
+ */
+  getDateArrow = () => {
+    return `'class Payment getDateArrow:>>' ${this.date}`;
+  }
+
+}
+
+const payment = new Payment();
+/**
+ * В этом обьекта обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
+ * Для получения доступа к данным из класса нужно сохранить контекст данного класса 
+ * метод для сохранения контекста класса .bind(payment) в скобки вписывается тот класс или обьект контекст которого
+ * хотим сохранить что бы получить доступ к св-вам или методам этого класса 
+ */
+const user = {
+  id: 1,
+  paymentDate: payment.getDate.bind(payment),
+}
+
+// console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
+// console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
+
+class PaymentPersistent extends Payment {
+  /**
+   * super.getDateArrow(); выбрасывает ошибку
+   * super.getDate(); дает корректные данные
+   * @returns 
+   */
+  save(){
+    return super.getDate();
+  }
+}
+console.log('PaymentPersistent :>> ',new PaymentPersistent().save());
