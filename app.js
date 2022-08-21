@@ -1463,61 +1463,152 @@
 //     this.run = km / 0.62;
 //   }
 // }
-// ============================================= class Карзина товаров ========================================
-class Product {
-    constructor(id, title, price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
-}
-;
-class Delivery {
-    constructor(date) {
-        this.date = date;
-    }
-}
-class HomeDelivery extends Delivery {
-    constructor(date, address) {
-        super(date);
-    }
-}
-class ShopDelivery extends Delivery {
-    constructor(addressId) {
-        super(new Date);
-    }
-}
-;
-class Card {
+// ============================================= class Корзина товаров ========================================
+// class Product {
+//   constructor(
+//     public id: number,
+//     public title: string,
+//     public price: number,
+//   ) { }
+// };
+// class Delivery {
+//   constructor(
+//     public date: Date,
+//   ) { }
+// }
+// class HomeDelivery extends Delivery {
+//   constructor(date: Date, address: string) {
+//     super(date)
+//   }
+// }
+// class ShopDelivery extends Delivery {
+//   constructor(addressId: number) {
+//     super(new Date)
+//   }
+// };
+// type DeliveryOptions = HomeDelivery | ShopDelivery;
+// class Card {
+//   private products: Product[] = [];
+//   private delivery: DeliveryOptions;
+//   public addProduct(produc: Product): void {
+//     this.products.push(produc)
+//   }
+//   public deleteProduct(producId: number): void {
+//     this.products = this.products.filter((p: Product) => p.id !== producId)
+//   }
+//   public getSumm(): number {
+//     return this.products.map((p: Product) => p.price).reduce((p1: number, p2: number) => p1 + p2);
+//   }
+//   public setDelivery(delivery: DeliveryOptions) {
+//     this.delivery = delivery;
+//   }
+//   public checkOut() {
+//     if (this.products.length === 0) {
+//       throw new Error('Нет товаров в корзине')
+//     }
+//     if (!this.delivery) {
+//       throw new Error('Не указан способ доставки')
+//     }
+//     return { success: true }
+//   }
+// }
+// const card = new Card();
+// card.addProduct(new Product(1, 'Печенье', 50));
+// card.addProduct(new Product(2, 'Пряник', 50));
+// card.addProduct(new Product(3, 'Печенье', 50));
+// card.deleteProduct(1);
+// card.checkOut()
+// console.log(' card.:>> ', card.getSumm());
+// // ============================== СТатические свойства =============================
+// /**
+//  * class для примера типа сервис юзера которого мы вытаскиваем 
+//  * поле с приставкой статик
+//  * 1) для доступа не требуют создания инстанса через new то есть синтаксис таков UserService.db
+//  * 2) static св-во может быть приватным или защищенным private/protected static db: any;
+//  * 3) static может быть и метод static getUser()
+//  */
+// class UserService {
+// /**
+//  * статикам запрещено использовать зарезервированные имена полей
+//  * Статическое свойство "name" конфликтует со встроенным свойством "Function.name" функции-конструктора "UserService".
+//  */
+//   // static name: string = "UserService";
+//   static db: any;
+// /**
+//  * 
+//  * @param id 
+//  * @returns UserService.db.findDyId(id); такой синтаксис обращается не к инстансу через this а к статическому св-ву db
+//  * 
+//  */
+//   static getUser(id: number) {
+//     return UserService.db.findDyId(id);
+//   }
+// /**
+//  * через конструктор можно задать данные только для инстанса
+//  * @param id 
+//  */
+//   constructor(id: number){}
+// /**
+//  * можно обращатся из нестатических матодов к статическим методоам внутри обьекта 
+//  */
+//   create() {
+//     UserService.db
+//   }
+//   /**
+//    * Статик блок
+//    * в блоке происходет выполнение кода сразу после обьявления класса
+//    * в блоке не могут исползоваться асинхронные задачи но async выполним вне блока в статистисеском св-ве 
+//    * Пример static async getUser(id: number){}
+//    */
+//   static {
+//     UserService.db = 'string'
+//   }
+// }
+// const inst = new UserService(1);
+// inst.create();
+// ========================================= РАбота с This ======================================================
+/**
+ * В этой теме контролим контекст
+ * @methot getDate() использует приватный метод класса
+ *
+ */
+class Payment {
     constructor() {
-        this.products = [];
+        this.date = new Date();
+        /**
+         * Еще способ при котором можно сохранить контекст использование стрелчной функции
+         * где бы не была вызвана эта функция она сохранит контекст того обьекта или класса в котором была создана
+         * @returns 'class Payment getDateArrow:>>' ${this.date}
+         * с стрелочной функцией может возникнуть проблема при наследовании класса от класса
+         */
+        this.getDateArrow = () => {
+            return `'class Payment getDateArrow:>>' ${this.date}`;
+        };
     }
-    addProduct(produc) {
-        this.products.push(produc);
-    }
-    deleteProduct(producId) {
-        this.products = this.products.filter((p) => p.id !== producId);
-    }
-    getSumm() {
-        return this.products.map((p) => p.price).reduce((p1, p2) => p1 + p2);
-    }
-    setDelivery(delivery) {
-        this.delivery = delivery;
-    }
-    checkOut() {
-        if (this.products.length === 0) {
-            throw new Error('Нет товаров в корзине');
-        }
-        if (!this.delivery) {
-            throw new Error('Не указан способ доставки');
-        }
-        return { success: true };
+    /**
+     * @returns private date: Date = new Date();
+     * @param this: Payment позволит создать ошибку потери контекста
+     */
+    getDate() {
+        return `'class Payment:>>' ${this.date}`;
     }
 }
-const card = new Card();
-card.addProduct(new Product(1, 'Печенье', 50));
-card.addProduct(new Product(2, 'Пряник', 50));
-card.addProduct(new Product(3, 'Печенье', 50));
-card.deleteProduct(1);
-card.checkOut();
-console.log(' card.:>> ', card.getSumm());
+const payment = new Payment();
+/**
+ * В этом обьекта обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
+ * Для получения доступа к данным из класса нужно сохранить контекст данного класса
+ * метод для сохранения контекста класса .bind(payment) в скобки вписывается тот класс или обьект контекст которого
+ * хотим сохранить что бы получить доступ к св-вам или методам этого класса
+ */
+const user = {
+    id: 1,
+    paymentDate: payment.getDate.bind(payment),
+};
+// console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
+// console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
+class PaymentPersistent extends Payment {
+    save() {
+        return super.getDateArrow();
+    }
+}
+console.log('PaymentPersistent :>> ', new PaymentPersistent().save());
