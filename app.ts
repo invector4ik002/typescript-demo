@@ -1814,56 +1814,98 @@
 
 // ========================================= РАбота с This ======================================================
 
-/**
- * В этой теме контролим контекст 
- * @methot getDate() использует приватный метод класса
- * 
- */
-class Payment {
+// /**
+//  * В этой теме контролим контекст 
+//  * @methot getDate() использует приватный метод класса
+//  * 
+//  */
+// class Payment {
 
-  private date: Date = new Date();
-  /**
-   * @returns private date: Date = new Date();
-   * @param this: Payment позволит создать ошибку потери контекста 
-   */
-  getDate(this: Payment) {
-    return `'class Payment:>>' ${this.date}`;
-  }
-/**
- * Еще способ при котором можно сохранить контекст использование стрелчной функции
- * где бы не была вызвана эта функция она сохранит контекст того обьекта или класса в котором была создана
- * @returns 'class Payment getDateArrow:>>' ${this.date}
- * с стрелочной функцией может возникнуть проблема при наследовании класса от класса
- */
-  getDateArrow = () => {
-    return `'class Payment getDateArrow:>>' ${this.date}`;
-  }
+//     private date: Date = new Date();
+//     /**
+//      * @returns private date: Date = new Date();
+//      * @param this: Payment позволит создать ошибку потери контекста 
+//      */
+//     getDate(this: Payment) {
+//         return `'class Payment:>>' ${this.date}`;
+//     }
+//     /**
+//      * Еще способ при котором можно сохранить контекст использование стрелчной функции
+//      * где бы не была вызвана эта функция она сохранит контекст того обьекта или класса в котором была создана
+//      * @returns 'class Payment getDateArrow:>>' ${this.date}
+//      * с стрелочной функцией может возникнуть проблема при наследовании класса от класса
+//      */
+//     getDateArrow = () => {
+//         return `'class Payment getDateArrow:>>' ${this.date}`;
+//     }
 
-}
+// }
 
-const payment = new Payment();
-/**
- * В этом обьекта обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
- * Для получения доступа к данным из класса нужно сохранить контекст данного класса 
- * метод для сохранения контекста класса .bind(payment) в скобки вписывается тот класс или обьект контекст которого
- * хотим сохранить что бы получить доступ к св-вам или методам этого класса 
- */
-const user = {
-  id: 1,
-  paymentDate: payment.getDate.bind(payment),
-}
+// const payment = new Payment();
+// /**
+//  * В этом обьекте обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
+//  * Для получения доступа к данным из класса нужно сохранить контекст данного класса 
+//  * метод для сохранения контекста класса .bind(payment) в скобки вписывается тот класс или обьект контекст которого
+//  * хотим сохранить что бы получить доступ к св-вам или методам этого класса 
+//  */
+// const user = {
+//     id: 1,
+//     paymentDate: payment.getDate.bind(payment),
+// }
 
-// console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
-// console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
+// // console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
+// // console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
 
-class PaymentPersistent extends Payment {
-  /**
-   * super.getDateArrow(); выбрасывает ошибку
-   * super.getDate(); дает корректные данные
-   * @returns 
-   */
-  save(){
-    return super.getDate();
-  }
-}
-console.log('PaymentPersistent :>> ',new PaymentPersistent().save());
+// class PaymentPersistent extends Payment {
+//     /**
+//      * super.getDateArrow(); выбрасывает ошибку
+//      * super.getDate(); дает корректные данные
+//      * @returns 
+//      */
+//     save() {
+//         return super.getDate();
+//     }
+// }
+// console.log('PaymentPersistent :>> ', new PaymentPersistent().save());
+
+// ============================== Типизация this =========================================
+// /**
+//  * Привет класса по типизации this. 
+//  */
+// class UserBuilder {
+//     name: string;
+// /**
+//  * @function метод обьета по присвоению имени и возврату контекста этого обьекта то есть этого обьекта
+//  * @param name type string
+//  * @returns обьект UserBuilder
+//  */
+//     setName(name: string): this {
+//         this.name = name;
+//         return this
+//     }
+
+//     isAdmin(): this is AdminBuilder {
+//         return this instanceof AdminBuilder;
+//     }
+// }
+// /**
+//  * Type Guards/тип охранников
+//  * позволит точно определить кем является тот или иной обьект при наследовании
+//  * полезное если убрать поле roles: string[]; тогда будет определено что обьекты идентичны и
+//  * строка 1908  покажет let user: UserBuilder | AdminBuilder так нет определение какой именно это обьект
+//  */
+// class AdminBuilder extends UserBuilder {
+//     // roles: string[];
+// }
+
+// const res = new UserBuilder().setName('Michail');
+// console.log('res :>> ', res); /*res :>>  UserBuilder { name: 'Michail' }*/
+// const res2 = new AdminBuilder().setName('AdminMichail')
+
+// let user: AdminBuilder | UserBuilder = new UserBuilder();
+
+// if(user.isAdmin()) {
+//     console.log('user: AdminBuilder :>> ', user);
+// } else {
+//     console.log('user: UserBuilder ', user);
+// }
