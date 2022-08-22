@@ -1595,7 +1595,7 @@ class Payment {
 }
 const payment = new Payment();
 /**
- * В этом обьекта обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
+ * В этом обьекте обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
  * Для получения доступа к данным из класса нужно сохранить контекст данного класса
  * метод для сохранения контекста класса .bind(payment) в скобки вписывается тот класс или обьект контекст которого
  * хотим сохранить что бы получить доступ к св-вам или методам этого класса
@@ -1607,8 +1607,30 @@ const user = {
 // console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
 // console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
 class PaymentPersistent extends Payment {
+    /**
+     * super.getDateArrow(); выбрасывает ошибку
+     * super.getDate(); дает корректные данные
+     * @returns
+     */
     save() {
-        return super.getDateArrow();
+        return super.getDate();
     }
 }
 console.log('PaymentPersistent :>> ', new PaymentPersistent().save());
+// ============================== Типизация this =========================================
+/**
+ * Привет класса по типизации this.
+ */
+class UserBuilder {
+    /**
+     * @function метод обьета по присвоению имени и возврату контекста этого обьекта то есть этого обьекта
+     * @param name type string
+     * @returns обьект UserBuilder
+     */
+    setName(name) {
+        this.name = name;
+        return this;
+    }
+}
+const res = new UserBuilder().setName('Michail');
+console.log('res :>> ', res);
