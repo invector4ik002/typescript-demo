@@ -1909,3 +1909,41 @@
 // } else {
 //     console.log('user: UserBuilder ', user);
 // }
+
+// =============================== Абстрактные классы =================================
+// /**
+//  * абстрактные слассы обьявляются приставкой abstract
+//  * так же могут содержать обычные и абстрактные методы и св-ва
+//  * абстрактные классы нельзя инстанцировать чепрез new Controller();
+//  */
+// abstract class Controller {
+//     abstract handle(req: any): void;
+//     /**
+//      * обычный метод то-есть не абстрактный
+//      * @param req 
+//      */
+//     handleWithLogs(req: any) {
+//         console.log('Start');
+//         this.handle(req);/* таже есть доступ к внутреннму абстрактному методу */
+//         console.log('End');
+//     }
+// }
+// /**
+//  * при наследовании от абстрактного класса нужно имлиментить его абстрактные методы и св-ва иначе будет ошибка
+//  * имплементация абстрактного метода  handle(req: any): void {}
+//  * после создания класса который отнаследовал абстрактный класс сласс можно инстанцировать new UserController();
+//  */
+// class UserController extends Controller {
+//     handle(req: any): void {
+//         console.log('req :>> ', req);
+//     }
+// }
+
+// new UserController();
+// const c = new UserController();
+// /**
+//  * после инстанциирования теперь доступны в константе с методы как абстрактные так и обычные 
+//  * c.handleWithLogs
+//  * c.handle
+//  */
+// c.handleWithLogs('Request');
