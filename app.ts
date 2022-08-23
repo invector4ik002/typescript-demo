@@ -1947,3 +1947,25 @@
 //  * c.handle
 //  */
 // c.handleWithLogs('Request');
+// ============================== Упражнение 
+
+abstract class Logger {
+    abstract log(message: string): void;
+
+    printDate(date: Date){
+        this.log(date.toString());
+    }
+}
+
+class MyLogger extends Logger {
+    log(message: string): void {
+        console.log(message);
+    }
+
+    logWihtData(message: string) {
+        this.printDate(new Date());
+        this.log(message);
+    }
+}
+const logger = new MyLogger();
+logger.logWihtData('My message');
