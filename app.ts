@@ -2094,3 +2094,52 @@
     "useUnknownInCatchVariables": true, - Переменные предложения catch по умолчанию как "неизвестные  'unknown' " вместо "любых 'any'".
     "alwaysStrict": true, - Убедитесь, что "use strict" всегда выдается.
 */
+
+// ================================================= checking the code/Проверки кода ================================================
+
+// /**
+//  * Пример1
+// * Настройки улучшения кода но не являющиееся "strict" режимом     
+//  */
+// class User {
+//     name: string
+//     constructor(name: string) {
+//         this.name = name;
+//     }
+// }
+// /**
+//  *"noUnusedLocals": true, - Включить сообщение об ошибках, когда локальные переменные не считываются.
+//  * const defaultUsere = new User('defaultUser'); Свойство "defaultUsere" объявлено, но его значение не было прочитано.ts(6133)
+//  * !Нужно быть аккуратно на пример с невер где нужна переменная которая не используется то этот варенник можно игнорить коментарием
+//  * который исключает из TS следующую строчку @ts-ignore
+//  */
+// function createUser() {
+//     // какая то логика
+//     const defaultUsere = new User('defaultUser');
+// }
+
+// //"noUnusedParameters": true, - Выдает ошибку, когда параметр функции не считывается.
+// /**
+//  * Пример2
+//  * Сокращенная запись Примера1
+//  * constructor(public name: string) если в конструктор в аргумент прописать приставку public 
+//  * то автомачиески аргумент прописывается в свойства как публичное
+//  */
+// class User {
+//     constructor(private name: string) {
+//         this.name = name;
+//     }
+// }
+// // "exactOptionalPropertyTypes": true, - Интерпретируйте необязательные типы свойств так, как написано, а не добавляйте "undefined".
+
+/**
+ * Пример3
+ */
+class User {
+
+    role?: 'admin'| 'user'
+
+    constructor(private name: string) {
+        this.name = name;
+    }
+}
