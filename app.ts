@@ -2130,16 +2130,94 @@
 //         this.name = name;
 //     }
 // }
+
 // // "exactOptionalPropertyTypes": true, - Интерпретируйте необязательные типы свойств так, как написано, а не добавляйте "undefined".
 
-/**
- * Пример3
+// /**
+//  * Пример3
+//  */
+// class User {
+
+//     role?: 'admin' | 'user'
+
+//     constructor(private name: string) {
+//         this.name = name;
+//     }
+// }
+
+// function createUser(user: User) {
+//     // логика
+//     const defaultUser = new User('Michail');
+//     defaultUser.role = undefined; /* Невозможно назначить тип "undefined" типу ""admin" | "user"", когда свойство "exactOptionalPropertyTypes" имеет значение "true". */
+// }
+
+// // "noFallthroughCasesInSwitch": true, 
+// /* Включить отчет об ошибках для случаев сбоя в операторах switch. Сообщит об отсутствии return или break
+// Случай передачи управления в операторе switch.ts(7029)
+// */
+
+// class User {
+
+//     role?: 'admin' | 'user'
+
+//     constructor(private name: string) {
+//         this.name = name;
+//     }
+// }
+
+// function createUser(user: User) {
+//     // логика
+//     const defaultUser = new User('Michail');
+//     defaultUser.role = "admin";
+
+//     switch(user.role){
+//         case 'admin' :
+//             const a = 7;
+
+//         case 'user' :
+//             return;
+//     }
+// }
+
+// "allowUnreachableCode": true,
+/* Отключите сообщение об ошибках для недоступного кода.
+const a = 1; Невозможно повторно объявить переменную "a" с областью видимости "Блок".ts(2451)
  */
-class User {
 
-    role?: 'admin'| 'user'
+// class User {
 
-    constructor(private name: string) {
-        this.name = name;
-    }
-}
+//     role?: 'admin' | 'user'
+
+//     constructor(private name: string) {
+//         this.name = name;
+//     }
+// }
+
+// function createUser(user: User) {
+//     // логика
+//     const defaultUser = new User('Michail');
+//     defaultUser.role = "admin";
+
+//     switch(user.role){
+//         case 'admin' :
+//             const a = 7;
+
+//         case 'user' :
+//             return;
+//             const a = 1;
+//     }
+// }
+
+// // "noUncheckedIndexedAccess": true, 
+// /* Добавьте 'undefined' к типу при обращении с использованием индекса.
+
+// */
+
+// interface IChecks {
+//     [check: string]: boolean;
+// }
+
+// const c: IChecks = { 'kpp': true };/* обьет не содержит 'drive' */
+// const d = c['drive']; /* при включенном noUncheckedIndexedAccess": true. типизация покажит, что является правильной типизацией const d: boolean | undefined 
+//     так как значение является строкой но не содержит конкретное значение 'drive следовательно можт быть undefined'
+// */ 
