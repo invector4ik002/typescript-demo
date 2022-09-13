@@ -2221,3 +2221,45 @@ const a = 1; Невозможно повторно объявить переме
 // const d = c['drive']; /* при включенном noUncheckedIndexedAccess": true. типизация покажит, что является правильной типизацией const d: boolean | undefined 
 //     так как значение является строкой но не содержит конкретное значение 'drive следовательно можт быть undefined'
 // */ 
+
+// =============================== Джинерики ==================================
+// /* Джинерики пишутся в специальных скобках < Джинерик > https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
+
+// */
+// const num: Array<number> = [1, 2, 3];
+// /**
+//  * Если не указать джинерик то перепенная a не будет иметь тип не смотря на то что resole очевидно number
+//  * заменяя джинерик другим типом мы распостоняем этот тип по функции
+//  */
+// async function test() {
+//     const a = await new Promise<number>((resolve, reject) => {
+//         resolve(1)
+//     })
+// }
+// /**
+//  * Record Создает тип объекта, ключами свойств которого являются Keys, а значениями свойств являются Type.
+//  */
+// const check: Record<string, boolean> = {
+//     drive: true,
+//     kpp: false
+// }
+
+// /**
+// Пример
+//  * 
+//  */
+// interface CatInfo {
+//   age: number;
+//   breed: string;
+// }
+ 
+// type CatName = "miffy" | "boris" | "mordred";
+ 
+// const cats: Record<CatName, CatInfo> = {
+//   miffy: { age: 10, breed: "Persian" },
+//   boris: { age: 5, breed: "Maine Coon" },
+//   mordred: { age: 16, breed: "British Shorthair" },
+// };
+ 
+// cats.boris;
+// ===============================
