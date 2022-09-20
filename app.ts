@@ -2228,7 +2228,7 @@ const a = 1; Невозможно повторно объявить переме
 // */
 // const num: Array<number> = [1, 2, 3];
 // /**
-//  * Если не указать джинерик то перепенная a не будет иметь тип не смотря на то что resole очевидно number
+//  * Если не указать джинерик то переменная a не будет иметь тип не смотря на то что resole очевидно number
 //  * заменяя джинерик другим типом мы распостоняем этот тип по функции
 //  */
 // async function test() {
@@ -2252,14 +2252,42 @@ const a = 1; Невозможно повторно объявить переме
 //   age: number;
 //   breed: string;
 // }
- 
+
 // type CatName = "miffy" | "boris" | "mordred";
- 
+
 // const cats: Record<CatName, CatInfo> = {
 //   miffy: { age: 10, breed: "Persian" },
 //   boris: { age: 5, breed: "Maine Coon" },
 //   mordred: { age: 16, breed: "British Shorthair" },
 // };
- 
+
 // cats.boris;
-// ===============================
+// =============================== Функция с gineric ======================================
+// /**
+//  * Обопщенная фукция работающая со всеми типами данных
+//  * Т - условное обозначение gineric "условно любая заглавная латинского алфавита"
+//  * 
+//  */
+// function LogMiddlewre<T>(data: T): T {
+//     console.log('data :>> ', data);
+//     return data
+// }
+// /**
+//  * обозначение условия типа который подствит тип по всей функции LogMiddlewre
+//  */
+// const res = LogMiddlewre<number>(10);
+// /**
+//  * 
+//  * @param data в аргументе нужно указывать какой тип приходит если внутри функции работа со свойствами 
+//  * в примере указано что работа идет со свойством lenght которое есть не увсех типов данных
+//  * 
+//  */
+// function getSplitedHalf<T>(data: Array<T>): Array<T> {
+//     const l = data.length / 2;
+//     return data.splice(0, 1);
+// }
+// /**
+//  * тип можно указывать явно, но тип элемнтов TS сам опишет
+//  * например: function getSplitedHalf<string | number>(data: (string | number)[]): (string | number)[]
+//  */
+// getSplitedHalf([1, 2, "3"])
