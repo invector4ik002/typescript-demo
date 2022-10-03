@@ -1,16 +1,13 @@
+"use strict";
 // Простые типы
 // let revenue: number= 1000;
 // let bonus: number= 500;
-
 // let string: string = 'string';
 // let booleanTru: boolean = true;
 // let booleanFal: boolean = false;
-
 // let res: number = revenue + bonus;
 // console.log('res :>> ', res);
-
 // ================================================================
-
 // использование типов в функциях
 /**
  * протипизированна string
@@ -21,7 +18,6 @@
 // function getFullName(firstname: string, surname: string): string {
 //     return `${firstname} + ${surname}`
 // }
-
 /**
  * пример стрелочной фуеции
  * протипизированна string
@@ -32,7 +28,6 @@
 // const getFullNameArrow = (firstname: string, surname: string): string => {
 //     return `${firstname} + ${surname}`
 // }
-
 /**
  * пример без явной/строгой типизации
  * @param firstname any/любой тип
@@ -40,15 +35,12 @@
  * @returns any/любой тип
  */
 // function getFullName(firstname: any, surname: any):any {
-
 //     if(firstname !== 'string') {
 //         throw new Error('!!!!')
 //     }
-
 //     return `${firstname} + ${surname}`
 // }
 // console.log('getFullName :>> ', getFullName(true, false));
-
 // /**
 //  * пример с явной/строгой типизацией
 //  * @param firstname string
@@ -60,11 +52,8 @@
 //     return `${firstname} ${surname}`
 // }
 // console.log('getFullName :>> ', getFullName('Devichensky', 'Michail'));
-
 // =============================================================================
-
 // Типизация обьектов
-
 // const user = {
 //     firstname: 'Devichensky',
 //     surname: 'Michail',
@@ -75,13 +64,10 @@
 //         devops: true,
 //     }
 // };
-
 // function getFullName(userEntity: { firstname: string, surname: string }): string {
 //     return `${userEntity.firstname} ${userEntity.surname}`
 // }
-
 // console.log('getFullName :>> ', getFullName(user));
-
 // ===============================================================================
 // упражнение типизируем обьект
 // let office: officeType = {
@@ -95,7 +81,6 @@
 //         }
 //     }
 // }
-
 // interface officeType: {
 //     officeId: number;
 //     isOpened: boolean;
@@ -107,12 +92,9 @@
 //         };
 //     };
 // }
-
 // =====================================================================
 //  types in arrays
-
 // const skills = ['dev', 'DevOps'];
-
 /**
  * явное типизирование массива
  */
@@ -120,7 +102,6 @@
 // const res = skills
 // .filter(element => element !== 'DevOps')
 // .map(element => element + `${'!'}`)
-
 // console.log('res :>> ', res);
 // =======================================================================
 // Tuples/картеж
@@ -133,16 +114,12 @@
  * Tuples не запрещает работать синтаксису диструктуризации массива
  */
 // const skills: [string,  number] = ['dev', 1];
-
 // const [id, skillName] = skills;
-
 // console.log('id :>> ', id);
 // console.log('skillName :>> ', skillName);
 // // использование спред оператора в Tuples
 // const array: [string,  number, ...boolean[]] = ['dev', 1, true, true, true]
-
 // ==============================================================================
-
 // Readonly/Только для чтения
 /**
  * Readonly преднозначен для модификации массива которая запрещает какие либо изманения с данными
@@ -150,14 +127,10 @@
  * Только для чтения
  */
 // const skills: readonly [string,  number] = ['dev', 1];
-
 // skills[1] = 2;
 // skills.push('!');
-
 // ============================================================================
-
 // Enums/перечисления
-
 // const res = {
 //     message: 'Платеж успешен',
 //     statusCode: 'success',
@@ -168,7 +141,6 @@
  * происходит путаница и раздутия кода
  */
 // const SUCCESS = 'success';
-
 /**
  * По причине ошибки в написании Success с загалавной проверка вернет error
  *
@@ -178,7 +150,6 @@
 // } else {
 //     throw new Error('error');
 // }
-
 // Пример решения с применением enum
 // Пример условий
 // 1- успех
@@ -193,7 +164,6 @@
 //     IN_PROCESS,
 //     FAILED,
 // }
-
 // 's'- успех
 // 'p' - в процессе
 // 'f' - откланен
@@ -206,7 +176,6 @@
 //     IN_PROCESS='p',
 //     FAILED='f',
 // }
-
 //  1 - успех
 // 'p' - в процессе
 // 'f' - откланен
@@ -220,20 +189,16 @@
 //     IN_PROCESS = 'p',
 //     FAILED = 'f',
 // }
-
 // const res = {
 //     message: 'Платеж успешен',
 //     statusCode: StatusCode.SUCCSESS
 // }
-
 // if(res.statusCode === StatusCode.SUCCSESS) {
 //     console.log('res.statusCode :>> ', 'Платеж успешен');
 // } else {
 //     throw new Error('error');
 // }
-
 // function action(status: StatusCode) {
-
 //     if (res.statusCode === StatusCode.SUCCSESS) {
 //         console.log('res.statusCode :>> ', 'Платеж успешен');
 //     } else {
@@ -244,12 +209,9 @@
 // action(1);
 // action('p'); ошибочное обращение к enum
 // action(StatusCode.IN_PROCESS); так как ГидроГенный enum все таки является числовым обращение нужно делать как указано в примере
-
 // ======================== Продвинутые типы =============================================
-
 // Union/союз
 // Дает возможность сказать что в той или иной переменной могут хрониться данные разного типа
-
 /**
  * Пример использования Union и зжатие его до простых типов
  * @param id Union
@@ -263,11 +225,9 @@
 //         console.log('id :>> ', id);
 //     }
 // };
-
 // LogId(1);
 // LogId('>id<');
 // LogId(true);
-
 /**
  * В union могут быть как простые типы так и сложные например массивы и так же сжимаем
  * @param err
@@ -279,7 +239,6 @@
 //         console.log('err :>> ', err);
 //     }
 // }
-
 /**
  * В union могут быть как простые типы так и сложные например массивы и обьекты, так же сжимаем
  * @param obj
@@ -291,7 +250,6 @@
 //         console.log('obj.b :>> ', obj.b);
 //     }
 // }
-
 /**
  * Пример сжатия Union по средству "==="
  * @param a union
@@ -304,11 +262,8 @@
 //         console.log('b :>> ', b);
 //     }
 // }
-
 // =================================================================================================
-
 // Literal/буквальный
-
 /**
  *
  * @param url string
@@ -319,38 +274,29 @@
 // function fetchWithAuth(url: string, methot: 'post'|'get') : 1 | -1 {
 //     return 1
 // };
-
 // fetchWithAuth('s', 'post');
-
 // let methot = 'post';
-
 /**
  * строгое переназначение
  * получилось что то типа константы )
  */
 // let methot: 'post' = 'post';
-
 // Еще один способ привязки типа methot as 'post'
 // fetchWithAuth('s', methot as 'post');
-
 // =============================================================================================
-
 // alias/псевдоним или простым языком type типы используются при частом переиспользовании
 // при типизации тех или иных данных. Пример:
-
 /**
  * type httpMethod
  * Тип который можно переиспользовать обьявляется ключивым словом type
  * который соодержит в себе union
  */
 // type httpMethod = 'post' | 'get';
-
 /**
  * type coolString
  * Этот тип содержит в себе типизирование string и способен к переиспользованию .
  */
 // type coolString = string;
-
 // -------------------- Пример 1 с применением intersection/перекресток  ------------------------------------------------
 /**
  * type-alias типизация обьекта user так же можно переиспользовать для типизации
@@ -368,7 +314,6 @@
 // type Role = {
 //     id: number,
 // }
-
 /**
  * Обьект протипизирован Type-alias User и type-alias Role c использованием &
  * Что позволило обьединить типы и протипизировать один обьект, двумя type-alias
@@ -379,7 +324,6 @@
 //     skills:['dev','DevOps'],
 //     id:1
 // }
-
 // -------------------- Пример 2 с применением intersection  ------------------------------------------------
 /**
  * type-alias User типизируем обьекта user так же можно переиспользовать для типизации
@@ -407,7 +351,6 @@
 //     user: UserWithRole,
 //     role: Role
 // }
-
 /**
  * Обьект протипизирован Type-alias User и type-alias Role c использованием &
  * Что позволило обьединить протипизированные поля в один обьект
@@ -420,7 +363,6 @@
 //     skills:['dev','DevOps'],
 //     id:1
 // }
-
 /**
  *
  * @param url coolString тип string
@@ -430,15 +372,10 @@
 // function fetchWithAuth(url: coolString, methot: httpMethod) : 1 | -1 {
 //     return 1
 // };
-
 // fetchWithAuth('s', 'post');
-
 // let methot = 'post';
-
 // fetchWithAuth('s', methot as 'post');
-
 // ===================================== Интерфейсы interface  ============================================
-
 /**
  * Интерфейс обьявляется через ключивое слово interface без равенства перед фигурной скобкой
  */
@@ -447,16 +384,13 @@
 //     age: number,
 //     skills: string[],
 // }
-
 // =============================== Пример 1 ==============================================================
-
 /**
  * обьединение interface/интерфейсов происходит по средству ключевого слова extends/расширяет
  */
 // interface UserWithRole extends User {
 //     roleId: number,
 // }
-
 // =============================== Пример 2 ==============================================================
 // Пример с обьединением трех интерфейсов
 /**
@@ -472,7 +406,6 @@
 // interface UserWithRole extends User, Role {
 //     createdAt: Date,
 // }
-
 /**
  * Типизация обьекта через обьединение interface User и UserWithRole
  */
@@ -493,7 +426,6 @@
 //     neme: string,
 //     age: number,
 //     skills: string[]
-
 //     log: (id:number) => string;
 // }
 /**
@@ -503,21 +435,17 @@
 //     neme: 'Михаил',
 //     age: 40,
 //     skills: ['dev', 'DevOps'],
-
 //     log(id) {
 //         return ''
 //     },
 // }
-
 // Типизация СЛОВАРЕЙ JS средством interface
-
 /**
  *
  */
 // interface UserDic {
 //     [index: number | string]: User
 // }
-
 // ======================================= РАЗНИЦА TYPE-ALIAS И INTRFACE ==========================================
 /**
  * В интерфейсфх нет конфликта имен если разные interface имеют одинаковые имена
@@ -528,26 +456,20 @@
 // interface User {
 //     name: string;
 // }
-
 // interface User {
 //     age: number;
 // }
-
 // const User: User = {
 //     name: 'Michail',
 //     age: 40
 // }
-
 /**
  * type-alias позволяет рпоще работать с приметивными данными заложены в продвинутые типы Union или intersection
  */
 // type UserOnline = number | boolean;
-
 // type ID = number | string;
-
 // Вывод для типизации обьектов или классов используем interface для простых типов type-alias.
 // ============================================ Optional =========================================
-
 /**
  * Рассмотрим пример оционального св-ва в типах
  * Условия этого interface что поле password может быть а может и не быть
@@ -557,12 +479,10 @@
 //     mail: string;
 //     password?: string;
 // }
-
 // const user: User = {
 //     mail: 'a@a.ru',
 //     password: 'password'
 // }
-
 //  =============================== Пример на функции ================================================
 /**
  * Пример на функции опционального типа
@@ -571,11 +491,8 @@
  * Использование в функциях опционального типа всегдаа сопровождается применением условного ветвления: if, '?'
  */
 // function multiply(a: number, b?: number): number {
-
 //     return !b ? a * a : a * b;
-
 // }
-
 // =============================== Пример опционального типа во вложенном обьекте =================
 /**
  *
@@ -605,7 +522,6 @@
 //     const T = b ?? 'work';
 //     console.log('T :>> ', T);
 // };
-
 // test();
 //  ============================== Упражнение1
 // interface IPayment {
@@ -613,42 +529,33 @@
 //     from: number;
 //     to: number;
 // }
-
 // interface IPaymentRequest extends IPayment { }
-
 // interface IDataSuccess {
 //     databaseId: number;
 //     sum: number;
 //     from: number;
 //     to: number;
 // }
-
 // enum PaymentStatus {
 //     Success = 'success',
 //     Failed = 'failed',
 // }
-
 // interface IDataFailed {
 //     errorMessage: string;
 //     errorCode: number;
 // }
-
 // interface IResponseSuccess {
 //     status: PaymentStatus.Success;
-
 // }
-
 // interface IResponseFailed {
 //     status: PaymentStatus.Failed;
 //     data: IDataFailed;
 // }
-
 // const Payment = {
 //     sum: 10000,
 //     from: 2,
 //     to: 4
 // }
-
 // const response = {
 //     status: "success",
 //     data: {
@@ -658,7 +565,6 @@
 //         to: 4
 //     }
 // }
-
 // const failed: IResponseFailed = {
 //     status: "failed",
 // 	data: {
@@ -666,9 +572,7 @@
 // 		errorCode: 4
 // 	}
 // }
-
 // ====================================== Void ========================================
-
 // /**
 //  * Рассмотрим тип void. Типизация функции как void означает то что функции ничего не возвращает.
 //  * не нужно путать void и undefined
@@ -677,13 +581,11 @@
 // function logId(id: string | number): void {
 //     console.log('id :>> ', id);
 // };
-
 // /**
 //  * так же имеет тип void.
 //  * const a: void
 //  */
 // const a = logId(1);
-
 // /**
 //  * Если в функцци в какой либо ветке что либо возвратилось (return) это будет койнибуть type или undefined.
 //  * Если функция ничего не возвращает то это будет всегда void.
@@ -695,14 +597,12 @@
 //         return f*f
 //     }
 // }
-
 // /**
 //  * Можно так же типизировать функции
 //  * Данный пример явно указивает на то что функция ничего не должна возвращать
 //  * примеры ниже показывают на особенность void по игнору возврата(return);
 //  */
 // type voidFunction = () => void;
-
 // /**
 //  * В данном примере функция протипизирована типом с void.
 //  * Данная функция не смотря на return ничего не вернет.
@@ -711,23 +611,19 @@
 // const f2: voidFunction = () => {
 //     return true;
 // };
-
 // /**
 //  * Пример возврата void
 //  * const b: void
 //  * Далее пример где это применимо точнее как это работает и зачем
 //  */
 // const b = f2();
-
 // /**
 //  * Обработаем массив методом для каждого эл-та и элемент пушим в массив user
 //  */
 // const skills = ['dev', 'DevOps'];
-
 // const user = {
 //     s: [''],
 // };
-
 // /**
 //  * Как тут работает под капотом void
 //  * user.s.push(sk) в методе push в данном примере возвращает новую длинну массива
@@ -737,22 +633,16 @@
 // skills.forEach(sk => {
 //     return user.s.push(sk)
 // });
-
 // =============================== unknown ======================================
-
 // unknown/неизвестный используется для данных которых тип не известен, приходящих па пример из вне
-
 // let input: unknown;
 // /**
 //  * при типизации unknown любой тип данных будет валидным.
 //  */
 // input = 3;
 // input = ['dev', 'DevOps'];
-
 // let res: string = input;
-
 // ============================== пример сужения типов  =============================
-
 // /**
 //  * Пример работы с unknown, в скоупе функции производится проверка на входящий тип данных
 //  * и таким образом при выявлении типа продолжается работа с ним к примеру number тогда допустимы
@@ -761,7 +651,6 @@
 //  * @param i unknown
 //  */
 // function run(i: unknown) {
-
 //     if (typeof i == 'number') {
 //         i++;
 //     } else {
@@ -769,16 +658,13 @@
 //     }
 // }
 // run(input);
-
 // ============================== пример tru/catch с проверкой в блоке if(error instanceof Error) =============================
-
 /**
  * Пример из реального, обработка ошибки в асинхронной функции при запросе
  * Ошибки в TS версии 4,4 имеют тип unknown по этому обязательно нужна проверка
  * на instanceof Error
  */
 // async function getData() {
-
 //     try {
 //        await fetch('');
 //     } catch(error) {
@@ -787,23 +673,19 @@
 //         }
 //     }
 // }
-
 /**
  * Пример приведения к типу Error по средсту кастомизации
  * Используем явное приведение к типу Error. const a = error as Error
  * Возникает возможность поймать ошибку если в catch упадет не Error а на пример строка
  */
 // async function getDataForse() {
-
 //     try {
 //        await fetch('');
 //     } catch(error) {
 //        const a = error as Error
 //     }
 // }
-
 // ============================== пример unknown в union и intersection =============================
-
 /**
  *  В union unknown всегда будет unknown
  */
@@ -813,20 +695,16 @@
 // type U1 = unknown | boolean;
 //// type U1 = unknown
 // type U1 = unknown | number;
-
 /**
  * В intersection unknown всегда будет intersection
  */
-
 // //type U2 = string
 // type U2 = unknown & string; type U2 = string
 // //type U2 = boolean
 // type U2 = unknown & boolean; type U2 = boolean
 // //type U2 = number
 // type U2 = unknown & number;
-
 // ============================== Never ========================================
-
 // Never/Никогда говрит что никогда
 // /**
 //  * @function в явной типизации never означает что функция никогда не возвращается
@@ -835,7 +713,6 @@
 // function generateReeor(message: string): never {
 //     throw new Error(message);
 // }
-
 // /**
 //  * Пример этой функции в том что код в теле функции не возвращается по условию в цикле
 //  * явно типизируется never.
@@ -843,7 +720,6 @@
 // function dumpError(): never {
 //     while(true){}
 // }
-
 // /**
 //  * Запртит return
 //  * @returns
@@ -851,17 +727,13 @@
 // function recursion(): never{
 //     return recursion()
 // }
-
 // ============================== пример отличий never и void ================================
-
 // /**
 //  * Пример отличия void и never
 //  * в void можно присвоить undefined в случае с never ничего нельзя присвоить в переменную
 //  */
 // const a: never = undefined
-
 // ============================== пример с literal ициклом switch ===========================================
-
 // type paymentAction = 'refund' | 'checkout' | 'reject';
 // /**
 //  * Пример применения never.
@@ -883,9 +755,7 @@
 //             throw new Error('Нет такого Action')
 //     }
 // }
-
 // ============================== пример
-
 // /* @function в явной типизации never означает что функция никогда не возвращается
 // * @param message string
 // */
@@ -907,11 +777,8 @@
 //     }
 //     generateReeor('Бряка');
 // }
-
 // // ============================== Null =============================
-
 // //  Null какой он в TS. в TS Null является типом!!!!!
-
 // // ============================= пример =============================
 // /**
 //  * В TS нельзя null ложить никуда кроме null и any. Это можно обойти в настройках strict режима в tsconfig.json
@@ -931,7 +798,6 @@
 // interface User {
 //   name: string;
 // }
-
 // /**
 //  * Важность этого примера в разнице между null и undefined
 //  * Разница между null и undefined.
@@ -948,34 +814,28 @@
 //     } as User;
 //   }
 // }
-
 // const user = getUser();
 // if (user) {
 //   const saveName = user.name;
 // }
-
 // ============================== Приведение типов ===============================================================
-
 // /**
 //  * преобразование в тип из числа в строчку требует применения метода преобразования
 //  * переменная в которой число.toString();
 //  */
 // let a = 5;
 // let b:string = a.toString();
-
 // /**
 //  * преобразование в тип через функцию конструктор требует метода .valueOf();
 //  */
 // let e: string = new String(a).valueOf();
 // let f: boolean = new Boolean(a).valueOf();
-
 // /**
 //  * преобразование строки в число лучше использовать метод parseInt(переменная в которой стока);
 //  * console.log('d :>> ', d); NaN
 //  */
 // let c = 'string';
 // let d: number = parseInt(c);
-
 // interface IUser {
 //     name: string;
 //     email: string;
@@ -989,13 +849,11 @@
 //     email: 'Michail@mail.ru',
 //     login: 'Michail123',
 // }
-
 // const user = {
 //     name: 'Michail',
 //     email: 'Michail@mail.ru',
 //     login: 'Michail123',
 // } as IUser
-
 /**
  * Способ который не валиден в React.js
  * <IUser>
@@ -1005,9 +863,7 @@
 //     email: 'Michail@mail.ru',
 //     login: 'Michail123',
 // }
-
 // =============================== Преобразование одного обьекта к другому =======================
-
 /**
  * тип админа
  */
@@ -1026,30 +882,24 @@
 //     ...user,
 //     role: 1,
 // }
-
 // ============================== ПРавильный способ преобразование обьекта через служебную функцию
-
 // function userToAdmin(user: IUser): IAdmin {
 //     return {
 //         name: user.name,
 //         role: 1,
 //     }
 // }
-
 // =============================== Type Guard/Тип гвардии ======================================
-
 // interface IUser {
 //     name: string;
 //     email: string;
 //     login: string;
 // }
-
 // const user = {
 //     name: 'Michail',
 //     email: 'Michail@mail.ru',
 //     login: 'Michail123',
 // }
-
 // interface IAdmin {
 //     name: string;
 //     role: number;
@@ -1067,7 +917,6 @@
 //         console.log('id: number :>> ', id)
 //     }
 // }
-
 // /**
 //  * Приметивный пример Type Guard
 //  * что то напоминает кастомный хук который используется для экономии количества кода
@@ -1080,9 +929,7 @@
 //         typeof x === 'string'
 //     );
 // }
-
 // ============================== Пример использования Type Guard c union интерфейсов ===========================
-
 // /**
 //  * @function Type Guard выполняет проверку на ноличие поля role у обьекта user
 //  * функция спрашивает является ли user isAdmin/админом имея или не имеет поле 'role'
@@ -1094,7 +941,6 @@
 //     return 'role' in user
 // }
 // // console.log('isAdmin :>> ', isAdmin(user));
-
 // /**
 //  * @function  Type Guard альтернативный вариант проверки на админа
 //  * @param user union
@@ -1103,7 +949,6 @@
 // function isAdminAltrnative(user: IUser | IAdmin) {
 //     return (user as IAdmin).role !== undefined;
 // }
-
 // /**
 //  * @function выполняет проверку на ноличие поля role у обьекта user
 //  * по средству функции Type Guard isAdmin
@@ -1119,50 +964,40 @@
 // }
 //   // Error: user не является админестратором
 // // setRoleZero(user);
-
 // ============================== Упражнение2 =====================================
-
 // interface IPayment {
 //     sum: number;
 //     from: number;
 //     to: number;
 // }
-
 // enum PaymentStatus {
 //     Success = 'success',
 //     Failed = 'failed',
 // }
-
 // interface IPaymentRequest extends IPayment { }
 // interface IDataSuccess extends IPayment {
 //     databaseId: number;
 // }
-
 // interface IDataFailed {
 //     errorMessage: string;
 //     errorCode: number;
 // }
-
 // interface IResponseSuccess {
 //     status: PaymentStatus.Success;
 //     data: IDataSuccess;
 // }
-
 // interface IResponseFailed {
 //     status: PaymentStatus.Failed;
 //     data: IDataFailed;
 // }
-
 // // type f = (res: IResponseFailed | IResponseFailed) => number;
 // type Res = IResponseFailed | IResponseSuccess;
-
 // function isSuccess(res: Res): res is IResponseSuccess {
 //     if (res.status === PaymentStatus.Success) {
 //         return true
 //     }
 //     return false;
 // }
-
 // function getIdFromData(res: Res): number {
 //     if (isSuccess(res)) {
 //         return res.data.databaseId;
@@ -1170,17 +1005,14 @@
 //         throw new Error(res.data.errorMessage)
 //     }
 // }
-
 // ========================================================================================
 // ============================== Class/Классы ============================================
-
 // /**
 //  * Это класс ) Для типизированного класса обязательно нужна инициализация
 //  * в блоке constructor(){}
 //  */
 // class User {
 //   name: string;
-
 //   constructor(name: string) {
 //     this.name = name;
 //   }
@@ -1188,7 +1020,6 @@
 // const user = new User('Michail');
 // console.log('user.name :>> ', user.name);
 // // Настройка TS конфига: меняем компеляцию с js6 в js5 поле  "target": "es2016", меняем на  "target": "es5",
-
 // /**
 //  * Создали класс без инициализации Без конструктора. На его базе создаем admin
 //  * Примечание ошибка в JS нет но TS выдает: Свойство "role" не имеет инициализатора, и ему не гарантировано присваивание в конструкторе.
@@ -1199,12 +1030,9 @@
 // class Admin {
 //   role: number;
 // }
-
 // const admin = new Admin();
 // admin.role = 1;
-
 // ===================================  Констрцктор =================================
-
 // /**
 //  * Это класс ) Для типизированного класса обязательно нужна инициализация
 //  * в блоке constructor(){}
@@ -1238,7 +1066,6 @@
 //  *
 //  */
 //   constructor(ageOrName?: string | number, age?: number) {
-
 //     if (typeof ageOrName === 'string') {
 //       this.name = ageOrName;
 //     } else if (typeof ageOrName === 'number') {
@@ -1247,7 +1074,6 @@
 //     if (typeof age === 'number') {
 //       this.age = age;
 //     }
-
 //   }
 // }
 // // сигнатуры перезагрузки 1-я)
@@ -1258,19 +1084,14 @@
 // const user2 = new User(33);
 // // сигнатуры перезагрузки 4-я)
 // const user3 = new User('Michail', 33);
-
 // console.log('user.name :>> ', user.name);
-
 // ============================== Методы =================================================================
-
 //
-
 // enum PaymentStatus {
 //   Holded,
 //   Processed,
 //   Reversed,
 // }
-
 // /**
 //  * Поля содержат данные. Возможность изменять данные обеспечивается специальными функциями, являющимися частью класса: методами.
 //  */
@@ -1279,17 +1100,14 @@
 //   status: PaymentStatus;
 //   createdAt: Date;
 //   updatedAt: Date;
-
 //   constructor(id:number) {
 //     this.id = id;
 //     this.createdAt = new Date(); /*цвфцвфцвфцвфцвфцвфцв*/
 //     this.status = PaymentStatus.Holded;
 //   }
-
 //   getPaymentLifeTime(): number {
 //     return new Date().getTime() - this.createdAt.getTime();
 //   };
-
 //   unholdPayment(): void {
 //     if (this.status === PaymentStatus.Processed) {
 //       throw new Error('Платеж не может быть возвращен')
@@ -1298,16 +1116,12 @@
 //     this.updatedAt = new Date();
 //   }
 // }
-
 // const payment = new Payment(1);
 // payment.unholdPayment();
 // const time = payment.getPaymentLifeTime();
-
 // console.log('payment :>> ', payment);
 // console.log('timtime :>> ',time);
-
 // ================================= Getter Setter =================================
-
 // // ==================== Пример1 =================
 // // /**
 // //  * Задача в этом примере присвоения текста "user-" полю объекта user
@@ -1321,9 +1135,7 @@
 // // }
 // // const user = new User();
 // // console.log('user :>> ', user.login = 'user-');
-
 // //  =================== Пример2 ==================
-
 // // /**
 // //  * Задача в этом примере присвоения текста "user-" полю объекта user
 // //  * Пример через метод объекта
@@ -1331,15 +1143,11 @@
 // // class User {
 // //   login: string;
 // //   password: string;
-
 // //   getLogin = (i: string) => this.login = 'user-' + i;
-
 // // }
 // // const user = new User();
 // // console.log('user :>> ', user.getLogin('login'));
-
 // // ==================== Пример3 ====================
-
 // /**
 //  * Задача в этом примере присвоения текста "user-" полю объекта user
 //  * Пример через set Сеттер
@@ -1354,7 +1162,6 @@
 //   set login(i: string) {
 //     this._login = 'user-' + i
 //   };
-
 //   /*
 //    некоторые правила set и get в рамках TS
 //    !если нет типизации аргумента set функции то аргумент типизируется согласно возврвщенному типу get функции
@@ -1363,7 +1170,6 @@
 //    !get и set не могут быть асинхронны
 //    !set функции не годятся для операций с паролями, лучше использовать методы они могут быть асинхронны async/await
 //   */
-
 //   /**
 //    * @function c приставкой get говорит нам что через эту функцию будет получение того
 //    * что эта функция возвращает находясь в объекте
@@ -1376,14 +1182,11 @@
 //     )
 //   }
 // };
-
 // const user = new User();
 // user.login = 'login';
 // console.log('user :>> ', user);/* user :>>  User { _login: 'user-login' } */
 // console.log('user.login :>> ', user.login);/* user.login :>>  user-login */
-
 //  =============================== implements/реализует =====================================
-
 // interface ILogger {
 //     log(...args: any[]): void;
 //     error(...args: any[]): void;
@@ -1415,13 +1218,10 @@
 //     pay(paymentId: number): void;
 //     price?: number;
 // }
-
 // interface Ideletable {
 //     delete(): void;
 // }
-
 // class User implements IPayable, Ideletable {
-
 //     delete(): void {
 //         throw new Error("Method not implemented.");
 //     };
@@ -1429,23 +1229,16 @@
 //         //
 //     }
 //     price?: number | undefined;/* не обязательный параметр */
-
 // }
-
 // ============================== Extends/расширяет ====================
-
 // Extends расширение или наследование
-
 // type PaymentStatus = 'new' | 'paid';
-
 // class Payment {
 //     id: number;
 //     status: PaymentStatus = 'new';
-
 //     constructor(id: number) {
 //         this.id = id;
 //     }
-
 //     pay() {
 //         this.status = 'paid';
 //     }
@@ -1494,7 +1287,6 @@
 //  * .paidAt
 //  */
 // new PersistedPayment().id;
-
 //  =============================== Особенности наследования ==========================
 // /**
 //  * Порядок выполнения кода при вызове new Admin();
@@ -1510,20 +1302,15 @@
 //         console.log('this.name :>> ', this.name);
 //     }
 // };
-
 // class Admin extends User {
 //     name: string = 'admin';
-
 //     constructor() {
 //         super()
 //         console.log('this.name :>> ', this.name);
 //     }
 // }
-
 // new Admin();
-
 // // ============================== Наследование от существующих class
-
 // /**
 //  * Пример new Error создание кастомного class
 //  */
@@ -1534,14 +1321,10 @@
 //         throw this.code = code ?? 500;
 //     }
 // }
-
 // ============================== Inheritance vs composition =================
-
 // //  Пример проблем и плюсов работы с классами через extends
-
 // class User {
 //   name: string;
-
 //   constructor(name: string) {
 //     this.name = name;
 //   }
@@ -1567,16 +1350,13 @@
 //   }
 // }
 // const users = new Users();/* !!!Внимание интересно при обьявлении константы users отображаются методы работы с массивами*/
-
 // users.push(new User('Vasya'));/* После пуша стринги переменная получает методы toString, toLocaleString
 // для получения из обьекта значения name необходимо оверайдить так скажем этот метод то есть прописывать приставку override
 // и return вернет уже значение*/
 // users.push(new User('Petya'));
-
 // console.log('object :>> ', users.toString()); /* object :>>  Vasya, Petya */
 // // ВЫВОД: ТАК РАБОТАЕТ НАСЛЕДОВАНИЕ МЫ ПОЛУЧИЛИ СМЕШИВАНИЕ ЛОГИКИ КОГДА НАМ НЕ НУЖНО В КЛАССЕ РЕАЛИЗОВЫВАТЬ ПОЛУЧЕНИЕ ЗНАЧЕНИЙ НО
 // // МЕТОДЫ ПОЯВИЛИСЬ И БУДУТ БЫТЬ:) ТАМ ГДЕ ОНИ СОВСЕМ НЕ НУЖНЫ. СЛЕДУЮЩИЙ ПРИМЕР ПОКАЖЕТ В ЧЕМ ХОРОША КОМПОЗИЦИЯ
-
 // /**
 //  * Компазиция при обьявлении переменной const usersList = new UsersList();
 //  * вызов usersList. покажет что данная переменная имеет возможность работать только с двумя методами
@@ -1584,7 +1364,6 @@
 //  */
 // class UsersList {
 //   users: User[];
-
 //   push(u: User) {
 //     this.push(u)
 //   };
@@ -1611,13 +1390,11 @@
 // class UserWithPayment2 {
 //   user: User;
 //   payment: Payment;
-
 //   constructor(user: User, payment: Payment) {
 //     this.user = user;
 //     this.payment = payment;
 //   }
 // }
-
 // ============================== Видимость св-в =============================
 /**
  * Свойства видимости: свойства private и protected так же работают и с методами
@@ -1627,14 +1404,10 @@
 //   private damage: string[]; /* приватное св-во закрыто для изменений из вне то есть при вызове обьекта синтаксис точки не покажет это св-во как имеющееся.
 //         Приватным св-вам доступны изменения только внутри класса. Пример метод addDamages()
 //      */
-
 //   private _model: string; /* Пример приватного свойства во взаимодействии через get и set */
-
 //   protected run: number;/* Третий модификатор св-в protected  */
-
 //   #price: number; /* Еще один способ указать приватность но ужа по правилу JS, перед свойством обозначается решотка #. Это приватное поле родолжает быть
 //   приватным даже после компеляции*/
-
 //   /**
 //    *
 //    */
@@ -1656,7 +1429,6 @@
 //   isPriceEqual(v: Vehicle){
 //     return this.#price === v.#price
 //   }
-
 //   /**
 //    * @function addDamages может изменить приватное св-во damage
 //    * @param damage : string
@@ -1692,7 +1464,6 @@
 //   }
 // }
 // ============================================= class Корзина товаров ========================================
-
 // class Product {
 //   constructor(
 //     public id: number,
@@ -1700,13 +1471,11 @@
 //     public price: number,
 //   ) { }
 // };
-
 // class Delivery {
 //   constructor(
 //     public date: Date,
 //   ) { }
 // }
-
 // class HomeDelivery extends Delivery {
 //   constructor(date: Date, address: string) {
 //     super(date)
@@ -1717,52 +1486,40 @@
 //     super(new Date)
 //   }
 // };
-
 // type DeliveryOptions = HomeDelivery | ShopDelivery;
 // class Card {
 //   private products: Product[] = [];
 //   private delivery: DeliveryOptions;
-
 //   public addProduct(produc: Product): void {
 //     this.products.push(produc)
 //   }
-
 //   public deleteProduct(producId: number): void {
 //     this.products = this.products.filter((p: Product) => p.id !== producId)
 //   }
-
 //   public getSumm(): number {
 //     return this.products.map((p: Product) => p.price).reduce((p1: number, p2: number) => p1 + p2);
 //   }
-
 //   public setDelivery(delivery: DeliveryOptions) {
 //     this.delivery = delivery;
 //   }
-
 //   public checkOut() {
-
 //     if (this.products.length === 0) {
 //       throw new Error('Нет товаров в корзине')
 //     }
-
 //     if (!this.delivery) {
 //       throw new Error('Не указан способ доставки')
 //     }
 //     return { success: true }
 //   }
 // }
-
 // const card = new Card();
 // card.addProduct(new Product(1, 'Печенье', 50));
 // card.addProduct(new Product(2, 'Пряник', 50));
 // card.addProduct(new Product(3, 'Печенье', 50));
 // card.deleteProduct(1);
 // card.checkOut()
-
 // console.log(' card.:>> ', card.getSumm());
-
 // // ============================== СТатические свойства =============================
-
 // /**
 //  * class для примера типа сервис юзера которого мы вытаскиваем
 //  * поле с приставкой статик
@@ -1776,7 +1533,6 @@
 //  * Статическое свойство "name" конфликтует со встроенным свойством "Function.name" функции-конструктора "UserService".
 //  */
 //   // static name: string = "UserService";
-
 //   static db: any;
 // /**
 //  *
@@ -1808,19 +1564,15 @@
 //     UserService.db = 'string'
 //   }
 // }
-
 // const inst = new UserService(1);
 // inst.create();
-
 // ========================================= РАбота с This ======================================================
-
 // /**
 //  * В этой теме контролим контекст
 //  * @methot getDate() использует приватный метод класса
 //  *
 //  */
 // class Payment {
-
 //     private date: Date = new Date();
 //     /**
 //      * @returns private date: Date = new Date();
@@ -1838,9 +1590,7 @@
 //     getDateArrow = () => {
 //         return `'class Payment getDateArrow:>>' ${this.date}`;
 //     }
-
 // }
-
 // const payment = new Payment();
 // /**
 //  * В этом обьекте обращаемся к методу класса получаем не коректные данные, user :>>  'class Payment:>>' undefined
@@ -1852,10 +1602,8 @@
 //     id: 1,
 //     paymentDate: payment.getDate.bind(payment),
 // }
-
 // // console.log('Payment :>> ', payment.getDate());/*Payment :>>  2022-08-21T12:16:20.819Z*/
 // // console.log('user :>> ', user.paymentDate()); /*user :>>  'class Payment:>>' Sun Aug 21 2022 19:23:03 GMT+0700 (Новосибирск, стандартное время)*/
-
 // class PaymentPersistent extends Payment {
 //     /**
 //      * super.getDateArrow(); выбрасывает ошибку
@@ -1867,7 +1615,6 @@
 //     }
 // }
 // console.log('PaymentPersistent :>> ', new PaymentPersistent().save());
-
 // ============================== Типизация this =========================================
 // /**
 //  * Привет класса по типизации this.
@@ -1883,7 +1630,6 @@
 //         this.name = name;
 //         return this
 //     }
-
 //     isAdmin(): this is AdminBuilder {
 //         return this instanceof AdminBuilder;
 //     }
@@ -1897,19 +1643,15 @@
 // class AdminBuilder extends UserBuilder {
 //     // roles: string[];
 // }
-
 // const res = new UserBuilder().setName('Michail');
 // console.log('res :>> ', res); /*res :>>  UserBuilder { name: 'Michail' }*/
 // const res2 = new AdminBuilder().setName('AdminMichail')
-
 // let user: AdminBuilder | UserBuilder = new UserBuilder();
-
 // if(user.isAdmin()) {
 //     console.log('user: AdminBuilder :>> ', user);
 // } else {
 //     console.log('user: UserBuilder ', user);
 // }
-
 // =============================== Абстрактные классы =================================
 // /**
 //  * абстрактные слассы обьявляются приставкой abstract
@@ -1938,7 +1680,6 @@
 //         console.log('req :>> ', req);
 //     }
 // }
-
 // new UserController();
 // const c = new UserController();
 // /**
@@ -1948,20 +1689,16 @@
 //  */
 // c.handleWithLogs('Request');
 // ============================== Упражнение
-
 // abstract class Logger {
 //     abstract log(message: string): void;
-
 //     printDate(date: Date){
 //         this.log(date.toString());
 //     }
 // }
-
 // class MyLogger extends Logger {
 //     log(message: string): void {
 //         console.log(message);
 //     }
-
 //     logWihtData(message: string) {
 //         this.printDate(new Date());
 //         this.log(message);
@@ -1969,12 +1706,9 @@
 // }
 // const logger = new MyLogger();
 // logger.logWihtData('My message');
-
 // ================================================================== Новая глава ================================================================================================
-
 /*Компелятор TypeScript*/
 /* Проект TS начинается с файла tsconfig.json */
-
 /**
  * настройки конфига по выбору файлов для компеляции
  * 1) Настройка принемает массив с именами файлов котрые нужно кмпелировать "files" [ "app.ts" ]
@@ -2006,9 +1740,7 @@
 "allowJs": true,
 "checkJs": true,
  */
-
 // ====================================== Вывод компиляции ================================================
-
 /* Настройки в tsconfig.json для вывода компеляции. Описаны нужные и популярные настройки конфига
 Секция Emit
     настройка параметр "outDir": "./build/" - создаст папку build и поместит в нее скомпелированные со всей структурой проекта файлы js
@@ -2031,7 +1763,6 @@
     "preserveConstEnums": true, Отключите удаление объявлений const enum в сгенерированном коде.
  */
 // ======================================  Язык и окружение/Language and Environment =================================================
-
 /* Блок настройки tsconfig.json Language and Environment
     "target": "es2016", - Установите языковую версию JavaScript для испускаемого JavaScript и включите объявления совместимых библиотек.
     "lib": [],  Укажите набор файлов объявления библиотеки, которые описывают целевую среду выполнения.
@@ -2041,9 +1772,7 @@
     "noLib": true, Отключить включение любых файлов библиотеки, включая библиотеку по умолчанию.d.ts.
     "useDefineForClassFields": true, Выдает поля класса, совместимые со стандартом ECMAScript. очень редкая опция
  */
-
 //  =============================== Модули/Modules =============================================================================
-
 /* Блок настройки tsconfig.json Modules
 Настройки
     "module": "commonjs", - Укажите, какой код модуля генерируется.
@@ -2060,7 +1789,7 @@
     "resolveJsonModule": true, /* Включить импорт файлов .json. Прреобразует json файлы в обьекты частая полезная опция
 */
 //    ======================================= строгий режим "strict": true,  =====================================
-/* 
+/*
 "strict": true, - Включите все параметры строгой проверки типов.
     "noImplicitAny": true, /* Включить сообщение об ошибках для выражений и объявлений с подразумеваемым типом "any" требует явную типизацию (a:any).
         function test{
@@ -2071,7 +1800,7 @@
         if(a > 0) {
            return a
         }
-         return undefined  не явный undefined 
+         return undefined  не явный undefined
     }
     "strictFunctionTypes": true, - При назначении функций убедитесь, что параметры и возвращаемые значения совместимы с подтипами.
     Организует ошибку:
@@ -2094,9 +1823,7 @@
     "useUnknownInCatchVariables": true, - Переменные предложения catch по умолчанию как "неизвестные  'unknown' " вместо "любых 'any'".
     "alwaysStrict": true, - Убедитесь, что "use strict" всегда выдается.
 */
-
 // ================================================= checking the code/Проверки кода ================================================
-
 // /**
 //  * Пример1
 // * Настройки улучшения кода но не являющиееся "strict" режимом     
@@ -2117,7 +1844,6 @@
 //     // какая то логика
 //     const defaultUsere = new User('defaultUser');
 // }
-
 // //"noUnusedParameters": true, - Выдает ошибку, когда параметр функции не считывается.
 // /**
 //  * Пример2
@@ -2130,101 +1856,76 @@
 //         this.name = name;
 //     }
 // }
-
 // // "exactOptionalPropertyTypes": true, - Интерпретируйте необязательные типы свойств так, как написано, а не добавляйте "undefined".
-
 // /**
 //  * Пример3
 //  */
 // class User {
-
 //     role?: 'admin' | 'user'
-
 //     constructor(private name: string) {
 //         this.name = name;
 //     }
 // }
-
 // function createUser(user: User) {
 //     // логика
 //     const defaultUser = new User('Michail');
 //     defaultUser.role = undefined; /* Невозможно назначить тип "undefined" типу ""admin" | "user"", когда свойство "exactOptionalPropertyTypes" имеет значение "true". */
 // }
-
 // // "noFallthroughCasesInSwitch": true, 
 // /* Включить отчет об ошибках для случаев сбоя в операторах switch. Сообщит об отсутствии return или break
 // Случай передачи управления в операторе switch.ts(7029)
 // */
-
 // class User {
-
 //     role?: 'admin' | 'user'
-
 //     constructor(private name: string) {
 //         this.name = name;
 //     }
 // }
-
 // function createUser(user: User) {
 //     // логика
 //     const defaultUser = new User('Michail');
 //     defaultUser.role = "admin";
-
 //     switch(user.role){
 //         case 'admin' :
 //             const a = 7;
-
 //         case 'user' :
 //             return;
 //     }
 // }
-
 // "allowUnreachableCode": true,
 /* Отключите сообщение об ошибках для недоступного кода.
 const a = 1; Невозможно повторно объявить переменную "a" с областью видимости "Блок".ts(2451)
  */
-
 // class User {
-
 //     role?: 'admin' | 'user'
-
 //     constructor(private name: string) {
 //         this.name = name;
 //     }
 // }
-
 // function createUser(user: User) {
 //     // логика
 //     const defaultUser = new User('Michail');
 //     defaultUser.role = "admin";
-
 //     switch(user.role){
 //         case 'admin' :
 //             const a = 7;
-
 //         case 'user' :
 //             return;
 //             const a = 1;
 //     }
 // }
-
 // // "noUncheckedIndexedAccess": true, 
 // /* Добавьте 'undefined' к типу при обращении с использованием индекса.
-
 // */
-
 // interface IChecks {
 //     [check: string]: boolean;
 // }
-
 // const c: IChecks = { 'kpp': true };/* обьет не содержит 'drive' */
 // const d = c['drive']; /* при включенном noUncheckedIndexedAccess": true. типизация покажит, что является правильной типизацией const d: boolean | undefined 
 //     так как значение является строкой но не содержит конкретное значение 'drive следовательно можт быть undefined'
 // */ 
-
 // =============================== Джинерики ==================================
 // /* Джинерики пишутся в специальных скобках < Джинерик > https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
-
 // */
 // const num: Array<number> = [1, 2, 3];
 // /**
@@ -2243,7 +1944,6 @@ const a = 1; Невозможно повторно объявить переме
 //     drive: true,
 //     kpp: false
 // }
-
 // /**
 // Пример
 //  * 
@@ -2252,15 +1952,12 @@ const a = 1; Невозможно повторно объявить переме
 //   age: number;
 //   breed: string;
 // }
-
 // type CatName = "miffy" | "boris" | "mordred";
-
 // const cats: Record<CatName, CatInfo> = {
 //   miffy: { age: 10, breed: "Persian" },
 //   boris: { age: 5, breed: "Maine Coon" },
 //   mordred: { age: 16, breed: "British Shorthair" },
 // };
-
 // cats.boris;
 // =============================== Функция с gineric ======================================
 // /**
@@ -2292,11 +1989,7 @@ const a = 1; Невозможно повторно объявить переме
 //  */
 // getSplitedHalf([1, 2, "3"])
 // =============================== Пример функции с gineric ==========================================
-/**
- * функция возвращает строку почти из всего 
- * имеет джинерик
- */
-function toString<T>(data: T): string | undefined {
+function toString(data) {
     if (Array.isArray(data)) {
         return data.toString();
     }
@@ -2315,7 +2008,6 @@ function toString<T>(data: T): string | undefined {
             return undefined;
     }
 }
-
 console.log(toString(3));
 console.log(toString(true));
 console.log(toString(['a', 'b']));
